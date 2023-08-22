@@ -1,17 +1,9 @@
-import logo from './images/Logo/Vector.svg';
+import Header from './components/Header.js';
 
 function App() {
   return (
       <div className="page">
-        <header className="header">
-          <h1 className="header__title">Around the U.S.</h1>
-          <img
-            src={logo}
-            alt="Logo"
-            className="header__logo"
-          />
-          <hr className="header__horizontal" />
-        </header>
+        <Header />
         <main className="content">
           <section className="profile">
             <div className="profile__avatar">
