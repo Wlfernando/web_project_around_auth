@@ -1,0 +1,11 @@
+.card {
+  width: 282px;
+  height: 361px;
+  background-color: white;
+  border-radius: 12px;
+  overflow:hidden;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  position: relative;
+  color: black;
+}

@@ -1,0 +1,11 @@
+.button__close_place_form {
+  position: absolute;
+  top: -45px;
+  right: -45px;
+}
+
+@media screen and (width <= 580px) {
+  .button__close_place_form {
+    right: 0;
+  }
+}
