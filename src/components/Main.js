@@ -19,13 +19,13 @@ export default function Main(props) {
         setUserAvatar(userData.avatar)
         setUserID(userData._id)
       })
+      .catch(err=> console.log(err))
   }, [])
 
   React.useEffect(()=> {
     api.do('GET', api.cards)
-      .then(cards=> {
-        setCards(cards)
-      })
+      .then(cards=> setCards(cards))
+      .catch(err=> console.log(err))
   }, [])
 
   return(
@@ -43,6 +43,7 @@ export default function Main(props) {
       </section>
       <ul className="cards">
         {cards.map(card=> <Card data={card} userID={userID} onCardClick={props.onCardClick.handleCardClick}/>)}
+        {/* la propiedad key esta en elmento list item dentro del componente card, lo comento por el mensaje de error en consola */}
       </ul>
       <ImagePopup card={props.onCardClick.selectedCard} onClose={props.onClose} />
       <PopupWithForm title="Editar Perfil" isOpen={props.onEditProfileClick.isEditProfilePopupOpen} onClose={props.onClose}>
@@ -54,8 +55,8 @@ export default function Main(props) {
           value={userName}
           placeholder="Nombre"
           required
-          minlength="2"
-          maxlength="40"
+          minLength="2"
+          maxLength="40"
         />
         <span className="popup__item-error profile-name-error"></span>
         <input
@@ -66,8 +67,8 @@ export default function Main(props) {
           value={userDescription}
           placeholder="Acerca de mí"
           required
-          minlength="2"
-          maxlength="200"
+          minLength="2"
+          maxLength="200"
         />
         <span className="popup__item-error about-me-error"></span>
       </PopupWithForm>
@@ -79,8 +80,8 @@ export default function Main(props) {
           name="name"
           value=""
           placeholder="Título"
-          minlength="2"
-          maxlength="30"
+          minLength="2"
+          maxLength="30"
         />
         <span className="popup__item-error image-name-error"></span>
         <input

@@ -4,7 +4,7 @@ export default function PopupWithForm(props) {
       <form
         className="popup__container profile-form"
         name="profileForm"
-        novalidate
+        noValidate
       >
         <fieldset className="popup__content">
           <h3 className="popup__title">{props.title}</h3>

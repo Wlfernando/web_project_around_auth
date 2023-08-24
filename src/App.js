@@ -38,14 +38,17 @@ function App() {
   }
 
   React.useEffect(()=> {
-    document.addEventListener('click', handleListenerClose)
-    document.addEventListener('keydown', handleListenerClose)
+    if([isEditProfilePopupOpen, isEditAvatarPopupOpen, isAddPlacePopupOpen].some(change=> change === true)
+      || selectedCard.at(1) === true) {
+      document.addEventListener('click', handleListenerClose)
+      document.addEventListener('keydown', handleListenerClose)
+    }
 
     return ()=> {
       document.removeEventListener('keydown', handleListenerClose)
       document.removeEventListener('click', handleListenerClose)
     }
-  }, [isEditProfilePopupOpen, isEditAvatarPopupOpen, isAddPlacePopupOpen, selectedCard])
+  })
 
   return (
     <div className="page">
