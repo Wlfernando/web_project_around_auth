@@ -46,7 +46,7 @@ export default function Main(props) {
         {/* la propiedad key esta en elmento list item dentro del componente card, lo comento por el mensaje de error en consola */}
       </ul>
       <ImagePopup card={props.onCardClick.selectedCard} onClose={props.onClose} />
-      <PopupWithForm title="Editar Perfil" isOpen={props.onEditProfileClick.isEditProfilePopupOpen} onClose={props.onClose}>
+      <PopupWithForm title="Editar Perfil" name={'perfil'} isOpen={props.onEditProfileClick.isEditProfilePopupOpen} onClose={props.onClose}>
         <input
           className="popup__item"
           type="text"
@@ -72,7 +72,7 @@ export default function Main(props) {
         />
         <span className="popup__item-error about-me-error"></span>
       </PopupWithForm>
-      <PopupWithForm title="Nuevo Lugar" btn='Crear' isOpen={props.onAddPlaceClick.isAddPlacePopupOpen} onClose={props.onClose}>
+      <PopupWithForm title="Nuevo Lugar" name={'site'} btn='Crear' isOpen={props.onAddPlaceClick.isAddPlacePopupOpen} onClose={props.onClose}>
         <input
           className="popup__item"
           type="text"
@@ -95,8 +95,8 @@ export default function Main(props) {
         />
         <span className="popup__item-error image-src-error"></span>
       </PopupWithForm>
-      <PopupWithForm title='¿Estás seguro/a?' btn='Si' isOpen={false} />
-      <PopupWithForm title='Cambiar foto de Perfil' isOpen={props.onEditAvatarClick.isEditAvatarPopupOpen} onClose={props.onClose}>
+      <PopupWithForm title='¿Estás seguro/a?' name={'delete'} btn='Si' isOpen={false} />
+      <PopupWithForm title='Cambiar foto de Perfil' name={'avatar'} isOpen={props.onEditAvatarClick.isEditAvatarPopupOpen} onClose={props.onClose}>
         <input
           className="popup__item"
           type="url"

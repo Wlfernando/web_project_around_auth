@@ -2,8 +2,8 @@ export default function PopupWithForm(props) {
   return (
     <div className={'popup ' + (props.isOpen && 'popup_active')}>
       <form
-        className="popup__container profile-form"
-        name="profileForm"
+        className={`popup__container popup__container_type_${props.name}`}
+        name={props.name}
         noValidate
       >
         <fieldset className="popup__content">
