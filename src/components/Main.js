@@ -5,15 +5,16 @@ import api from '../utils/api.js';
 import Card from './Card.js';
 
 export default function Main(props) {
-  const [userName, setUserName] = React.useState('Jack Costeau'),
+  const {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
+  {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
+  {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
+  handleCardClick = props.onCardClick.handleCardClick,
+
+  [userName, setUserName] = React.useState('Jack Costeau'),
   [userDescription, setUserDescription] = React.useState('Explorador'),
   [userAvatar, setUserAvatar] = React.useState(''),
   [userID, setUserID] = React.useState(''),
-  [cards, setCards] = React.useState([]),
-  {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
-  {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
-  {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
-  handleCardClick = props.onCardClick.handleCardClick;
+  [cards, setCards] = React.useState([]);
 
   React.useEffect(()=> {
     api.do('GET', api.me)

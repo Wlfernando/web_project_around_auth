@@ -1,6 +1,6 @@
-import Header from './components/Header.js';
-import Main from './components/Main.js';
-import Footer from './components/Footer.js'
+import Header from './Header.js';
+import Main from './Main.js';
+import Footer from './Footer.js'
 import React from 'react';
 
 function App() {
@@ -9,9 +9,6 @@ function App() {
   [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false),
   [isImageOpen, setImageOpen] = React.useState(false),
   [selectedCard, setSelectedCard] = React.useState({});
-  // siento que me repetí pero si es una mala práctica mi anterior resolución, hecho!!
-  // en el componente de ImagePopup destructuro el objeto,
-  // si paso null o undefined, me arroja error en la consola
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)

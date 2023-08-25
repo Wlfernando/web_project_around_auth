@@ -1,10 +1,14 @@
-export default function Card(props) {
-  const {name, likes, link, owner} = props.data,
-  hasDustbin = owner._id === props.userID,
-  isLiked = likes.some(like=> like._id === props.userID);
+export default function Card({
+  data: {name, likes, link, owner},
+  userID,
+  onCardClick
+}) {
+  
+  const hasDustbin = owner._id === userID,
+  isLiked = likes.some(like=> like._id === userID);
 
   function handleClick() {
-    props.onCardClick(props.data)
+    onCardClick({name, link})
   }
 
   return(
