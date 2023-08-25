@@ -7,7 +7,11 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false),
   [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false),
   [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false),
-  [selectedCard, setSelectedCard] = React.useState([{}, false]);
+  [isImageOpen, setImageOpen] = React.useState(false),
+  [selectedCard, setSelectedCard] = React.useState({});
+  // siento que me repetí pero si es una mala práctica mi anterior resolución, hecho!!
+  // en el componente de ImagePopup destructuro el objeto,
+  // si paso null o undefined, me arroja error en la consola
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
@@ -22,24 +26,29 @@ function App() {
   }
 
   function handleCardClick(card) {
-    setSelectedCard([card, true])
+    setSelectedCard(card)
+    setImageOpen(true)
   }
 
   function closeAllPopups() {
     setEditAvatarPopupOpen(false)
     setEditProfilePopupOpen(false)
     setAddPlacePopupOpen(false)
-    setSelectedCard(selectedCard.with(1, false))
+    setImageOpen(false)
   }
 
   function handleListenerClose(e) {
     if(['popup_active', 'popup__image-container'].some(click=> e.target.classList.contains(click)
-      || e.key === 'Escape')) closeAllPopups()
-  }
+    || e.key === 'Escape')) closeAllPopups()
+}
 
-  React.useEffect(()=> {
-    if([isEditProfilePopupOpen, isEditAvatarPopupOpen, isAddPlacePopupOpen].some(change=> change === true)
-      || selectedCard.at(1) === true) {
+React.useEffect(()=> {
+    if([
+      isEditProfilePopupOpen,
+      isEditAvatarPopupOpen,
+      isAddPlacePopupOpen,
+      isImageOpen
+      ].some(change=> change === true)) {
       document.addEventListener('click', handleListenerClose)
       document.addEventListener('keydown', handleListenerClose)
     }
@@ -48,7 +57,13 @@ function App() {
       document.removeEventListener('keydown', handleListenerClose)
       document.removeEventListener('click', handleListenerClose)
     }
-  })
+    // eslint-disable-next-line
+  }, [
+    isEditProfilePopupOpen,
+    isEditAvatarPopupOpen,
+    isAddPlacePopupOpen,
+    isImageOpen
+  ])
 
   return (
     <div className="page">
@@ -64,7 +79,7 @@ function App() {
           {isEditAvatarPopupOpen, handleEditAvatarClick}
         }
         onCardClick={
-          {selectedCard, handleCardClick}
+          {selectedCard, isImageOpen, handleCardClick}
         }
         onClose={closeAllPopups} />
       <Footer />

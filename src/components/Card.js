@@ -1,5 +1,5 @@
 export default function Card(props) {
-  const {_id: id, name, likes, link, owner} = props.data,
+  const {name, likes, link, owner} = props.data,
   hasDustbin = owner._id === props.userID,
   isLiked = likes.some(like=> like._id === props.userID);
 
@@ -8,7 +8,7 @@ export default function Card(props) {
   }
 
   return(
-    <li className="card" key={id}>
+    <li className="card">
       <img onClick={handleClick} className="card__image" src={link} alt={name} />
       {hasDustbin && <button className="button card__trash-button" />}
       <h2 className="card__place-name">{name}</h2>

@@ -1,6 +1,6 @@
 export default function ImagePopup(props) {
-  const {name, link} = props.card.at(0),
-  isOpen = props.card.at(1);
+  const {name, link} = props.onOpen.selectedCard,
+  isOpen = props.onOpen.isImageOpen;
 
   return(
     <div className={'popup ' + (isOpen && 'popup_active')}>
