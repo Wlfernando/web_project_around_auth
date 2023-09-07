@@ -13,7 +13,36 @@ export default function Main(props) {
 
   [cards, setCards] = React.useState([]),
 
-  {name, about, avatar} = React.useContext(CurrentUserContext);
+  {name, about, avatar, _id: ID} = React.useContext(CurrentUserContext);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(like=> like._id === ID),
+    setLike = isLiked ? 'DELETE' : 'PUT';
+
+    api.do(setLike, api.likes, card._id)
+      .then(()=> {
+        api.do('GET', api.cards)
+          .then(newCard=>
+            setCards(state=>
+              state.map((c, idx)=>
+                c._id === card._id
+                  ? newCard.at(idx)
+                  : c
+              )
+            )
+          )
+      })
+  }
+
+  function handleCardDelete(card) {
+    api.do('DELETE', api.cards, card._id)
+      .then(()=>
+        setCards(state=>
+          state.filter(c=> c._id !== card._id)
+        )
+      )
+  }
+
 
   React.useEffect(()=> {
     api.do('GET', api.cards)
@@ -35,7 +64,15 @@ export default function Main(props) {
         <button onClick={handleAddPlaceClick} className="button profile__add-button"></button>
       </section>
       <ul className="cards">
-        {cards.map(card=> <Card key={card._id} data={card} onCardClick={handleCardClick}/>)}
+        {cards.map(card=>
+          <Card
+            key={card._id}
+            data={card}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onDelete={handleCardDelete}
+          />
+        )}
       </ul>
       <ImagePopup onOpen={props.onCardClick} onClose={props.onClose} />
       <PopupWithForm title="Editar Perfil" name={'perfil'} isOpen={isEditProfilePopupOpen} onClose={props.onClose}>

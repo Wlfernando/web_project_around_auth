@@ -49,7 +49,7 @@ React.useEffect(()=> {
       setCurrentUser(userData)
     })
     .catch(err=> console.log(err))
-})
+}, [])
 
 React.useEffect(()=> {
     if([
