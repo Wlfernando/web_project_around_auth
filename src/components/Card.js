@@ -1,11 +1,15 @@
+import {useContext} from 'react';
+import { CurrentUserContext } from './context/CurrentUserContext';
+
 export default function Card({
   data: {name, likes, link, owner},
-  userID,
   onCardClick
 }) {
-  
-  const hasDustbin = owner._id === userID,
-  isLiked = likes.some(like=> like._id === userID);
+
+  const {_id: ID} = useContext(CurrentUserContext),
+
+  hasDustbin = owner._id === ID,
+  isLiked = likes.some(like=> like._id === ID)
 
   function handleClick() {
     onCardClick({name, link})

@@ -3,6 +3,7 @@ import ImagePopup from './ImagePopup.js';
 import React from 'react';
 import api from '../utils/api.js';
 import Card from './Card.js';
+import { CurrentUserContext } from './context/CurrentUserContext.js';
 
 export default function Main(props) {
   const {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
@@ -10,44 +11,31 @@ export default function Main(props) {
   {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
   handleCardClick = props.onCardClick.handleCardClick,
 
-  [userName, setUserName] = React.useState('Jack Costeau'),
-  [userDescription, setUserDescription] = React.useState('Explorador'),
-  [userAvatar, setUserAvatar] = React.useState(''),
-  [userID, setUserID] = React.useState(''),
-  [cards, setCards] = React.useState([]);
+  [cards, setCards] = React.useState([]),
 
-  React.useEffect(()=> {
-    api.do('GET', api.me)
-      .then(userData=> {
-        setUserName(userData.name)
-        setUserDescription(userData.about)
-        setUserAvatar(userData.avatar)
-        setUserID(userData._id)
-      })
-      .catch(err=> console.log(err))
-  }, [])
+  {name, about, avatar} = React.useContext(CurrentUserContext);
 
   React.useEffect(()=> {
     api.do('GET', api.cards)
-      .then(cards=> setCards(cards))
+      .then(apiCards=> setCards(apiCards))
       .catch(err=> console.log(err))
   }, [])
 
   return(
     <main className="content">
       <section className="profile">
-        <div className="profile__avatar" style={{backgroundImage: 'url(' + userAvatar + ')'}}>
+        <div className="profile__avatar" style={{backgroundImage: 'url(' + avatar + ')'}}>
           <div onClick={handleEditAvatarClick} className="profile__avatar-edit"></div>
         </div>
         <div className="profile__info">
-          <p className="profile__user-name">{userName}</p>
+          <p className="profile__user-name">{name}</p>
           <button onClick={handleEditProfileClick} className="button profile__edit-button"></button>
-          <p className="profile__about-me">{userDescription}</p>
+          <p className="profile__about-me">{about}</p>
         </div>
         <button onClick={handleAddPlaceClick} className="button profile__add-button"></button>
       </section>
       <ul className="cards">
-        {cards.map(card=> <Card key={card._id} data={card} userID={userID} onCardClick={handleCardClick}/>)}
+        {cards.map(card=> <Card key={card._id} data={card} onCardClick={handleCardClick}/>)}
       </ul>
       <ImagePopup onOpen={props.onCardClick} onClose={props.onClose} />
       <PopupWithForm title="Editar Perfil" name={'perfil'} isOpen={isEditProfilePopupOpen} onClose={props.onClose}>
