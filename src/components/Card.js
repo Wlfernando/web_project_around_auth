@@ -1,5 +1,5 @@
 import {useContext, memo} from 'react';
-import {CurrentUserContext} from './context/CurrentUserContext';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 const Card = memo(({
   data,

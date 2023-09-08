@@ -2,7 +2,7 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js'
 import React from 'react';
-import {CurrentUserContext} from './context/CurrentUserContext.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
 import api from '../utils/api.js';
 
 
