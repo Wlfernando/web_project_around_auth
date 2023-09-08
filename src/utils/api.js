@@ -29,7 +29,7 @@ class Api {
         authorization: this._authorization,
         "content-Type": this._contentType
       },
-      body: JSON.stringify(sendBody())
+      body: JSON.stringify(sendBody)
     })
       .then(()=> this.do('GET', root ?? endPoint))
   }

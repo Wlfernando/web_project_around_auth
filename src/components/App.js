@@ -43,15 +43,24 @@ function App() {
     || e.key === 'Escape')) closeAllPopups()
 }
 
-React.useEffect(()=> {
-  api.do('GET', api.me)
-    .then(userData=> {
-      setCurrentUser(userData)
-    })
-    .catch(err=> console.log(err))
-}, [])
+  function handleUpdateUser(form) {
+    api.send('PATCH', api.me, form)
+      .then(userData=> {
+        setCurrentUser(userData)
+        closeAllPopups()
+      })
+      .catch(err=> console.log(err))
+  }
 
-React.useEffect(()=> {
+  React.useEffect(()=> {
+    api.do('GET', api.me)
+      .then(userData=> {
+        setCurrentUser(userData)
+      })
+      .catch(err=> console.log(err))
+  }, [])
+
+  React.useEffect(()=> {
     if([
       isEditProfilePopupOpen,
       isEditAvatarPopupOpen,
@@ -92,6 +101,7 @@ React.useEffect(()=> {
             {selectedCard, isImageOpen, handleCardClick}
           }
           onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
         />
         <Footer />
       </CurrentUserContext.Provider>

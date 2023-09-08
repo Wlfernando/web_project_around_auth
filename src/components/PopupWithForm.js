@@ -1,10 +1,20 @@
-export default function PopupWithForm({isOpen, name, title, children, btn, onClose}) {
+export default function PopupWithForm({
+  isOpen,
+  name,
+  title,
+  children,
+  btn,
+  onClose,
+  onSubmit
+}) {
+
   return (
     <div className={'popup ' + (isOpen && 'popup_active')}>
       <form
         className={`popup__container popup__container_type_${name}`}
         name={name}
         noValidate
+        onSubmit={onSubmit}
       >
         <fieldset className="popup__content">
           <h3 className="popup__title">{title}</h3>
