@@ -12,7 +12,9 @@ function App() {
   [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false),
   [isImageOpen, setImageOpen] = React.useState(false),
   [selectedCard, setSelectedCard] = React.useState({}),
-  [currentUser, setCurrentUser] = React.useState({});
+  [currentUser, setCurrentUser] = React.useState({}),
+  [cards, setCards] = React.useState([]),
+  {_id: ID} = currentUser;
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
@@ -61,11 +63,54 @@ function App() {
       .catch(err=> console.log(err))
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(like=> like._id === ID),
+    setLike = isLiked ? 'DELETE' : 'PUT';
+
+    api.do(setLike, api.likes, card._id)
+      .then(()=> {
+        api.do('GET', api.cards)
+          .then(newCard=>
+            setCards(state=>
+              state.map((c, idx)=>
+                c._id === card._id
+                  ? newCard.at(idx)
+                  : c
+              )
+            )
+          )
+      })
+  }
+
+  function handleCardDelete(card) {
+    api.do('DELETE', api.cards, card._id)
+      .then(()=>
+        setCards(state=>
+          state.filter(c=> c._id !== card._id)
+        )
+      )
+  }
+
+  function handleAddPlaceSubmit(form) {
+    api.send('POST', api.cards, form)
+      .then(apiCards=> {
+        setCards([apiCards.at(0), ...cards])
+        closeAllPopups()
+      })
+      .catch(err=> console.log(err))
+  }
+
   React.useEffect(()=> {
     api.do('GET', api.me)
       .then(userData=> {
         setCurrentUser(userData)
       })
+      .catch(err=> console.log(err))
+  }, [])
+
+  React.useEffect(()=> {
+    api.do('GET', api.cards)
+      .then(apiCards=> setCards(apiCards))
       .catch(err=> console.log(err))
   }, [])
 
@@ -112,6 +157,10 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           onUpdateAvatar={handleUpdateAvatar}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          onCardSubmit={handleAddPlaceSubmit}
         />
         <Footer />
       </CurrentUserContext.Provider>

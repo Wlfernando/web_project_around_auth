@@ -10,7 +10,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
 
   function handleChange(e) {
     const input = e.target
-
+    // eslint-disable-next-line
     switch(input.name) {
       case 'name':
         return setName(input.value)
