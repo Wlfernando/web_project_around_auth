@@ -5,13 +5,14 @@ import api from '../utils/api.js';
 import Card from './Card.js';
 import { CurrentUserContext } from './context/CurrentUserContext.js';
 import EditProfilePopup from './EditProfilePopup.js';
+import EditAvatarPopup from './EditAvatarPopup.js';
 
 export default function Main(props) {
   const {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
   {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
   {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
   handleCardClick = props.onCardClick.handleCardClick,
-  onUpdateUser = props.onUpdateUser,
+  {onUpdateUser, onClose, onUpdateAvatar} = props,
 
   [cards, setCards] = React.useState([]),
 
@@ -76,12 +77,11 @@ export default function Main(props) {
           />
         )}
       </ul>
-      <ImagePopup onOpen={props.onCardClick} onClose={props.onClose} />
+      <ImagePopup onOpen={props.onCardClick} onClose={onClose} />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={props.onClose}
         onUpdateUser={onUpdateUser}
-
       />
       <PopupWithForm title="Nuevo Lugar" name={'site'} btn='Crear' isOpen={isAddPlacePopupOpen} onClose={props.onClose}>
         <input
@@ -105,17 +105,11 @@ export default function Main(props) {
         <span className="popup__item-error image-src-error"></span>
       </PopupWithForm>
       <PopupWithForm title='¿Estás seguro/a?' name={'delete'} btn='Si' isOpen={false} />
-      <PopupWithForm title='Cambiar foto de Perfil' name={'avatar'} isOpen={isEditAvatarPopupOpen} onClose={props.onClose}>
-        <input
-          className="popup__item"
-          type="url"
-          id="avatar"
-          name="avatar"
-          required
-          placeholder="Enlace del avatar"
-        />
-        <span className="popup__item-error avatar-error"></span>
-      </PopupWithForm>
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={onClose}
+        onUpdateAvatar={onUpdateAvatar}
+      />
       <div className="popup">
         <div className="popup__container popup__error">
           <p className="popup__text-error"></p>

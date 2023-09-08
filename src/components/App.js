@@ -52,6 +52,15 @@ function App() {
       .catch(err=> console.log(err))
   }
 
+  function handleUpdateAvatar(form) {
+    api.send('PATCH', api.avatar, form, api.me)
+      .then(userData=> {
+        setCurrentUser(userData)
+        closeAllPopups()
+      })
+      .catch(err=> console.log(err))
+  }
+
   React.useEffect(()=> {
     api.do('GET', api.me)
       .then(userData=> {
@@ -102,6 +111,7 @@ function App() {
           }
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          onUpdateAvatar={handleUpdateAvatar}
         />
         <Footer />
       </CurrentUserContext.Provider>
