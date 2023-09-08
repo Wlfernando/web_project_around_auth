@@ -1,7 +1,7 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function AddPlacePopup({isOpen, onClose, onCardSubmit}) {
+const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
   const [name, setName] = React.useState(''),
   [link, setLink] = React.useState('')
 
@@ -60,4 +60,6 @@ export default function AddPlacePopup({isOpen, onClose, onCardSubmit}) {
       <span className="popup__item-error image-src-error"></span>
     </PopupWithForm>
   )
-}
+})
+
+export default AddPlacePopup

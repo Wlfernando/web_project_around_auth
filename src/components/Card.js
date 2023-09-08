@@ -1,12 +1,12 @@
-import {useContext} from 'react';
+import {useContext, memo} from 'react';
 import {CurrentUserContext} from './context/CurrentUserContext';
 
-export default function Card({
+const Card = memo(({
   data,
   onCardClick,
   onCardLike,
   onDelete
-}) {
+})=> {
 
   const {_id: ID} = useContext(CurrentUserContext),
 
@@ -38,4 +38,6 @@ export default function Card({
       </div>
     </li>
   )
-}
+})
+
+export default Card

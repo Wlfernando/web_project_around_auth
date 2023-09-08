@@ -14,7 +14,7 @@ function App() {
   [selectedCard, setSelectedCard] = React.useState({}),
   [currentUser, setCurrentUser] = React.useState({}),
   [cards, setCards] = React.useState([]),
-  {_id: ID} = currentUser;
+  ID = currentUser._id;
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)

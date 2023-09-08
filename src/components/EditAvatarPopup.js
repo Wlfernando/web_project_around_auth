@@ -1,7 +1,7 @@
 import React from "react"
 import PopupWithForm from "./PopupWithForm"
 
-export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
+const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
   const avatardRef = React.useRef()
 
   function handleSubmit(e) {
@@ -30,4 +30,6 @@ export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
       <span className="popup__item-error avatar-error"></span>
     </PopupWithForm>
   )
-}
+})
+
+export default EditAvatarPopup

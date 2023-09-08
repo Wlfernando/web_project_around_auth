@@ -1,4 +1,6 @@
-export default function ImagePopup(props) {
+import React from "react";
+
+const ImagePopup = React.memo((props)=> {
   const {name, link} = props.onOpen.selectedCard,
   isOpen = props.onOpen.isImageOpen;
 
@@ -15,4 +17,6 @@ export default function ImagePopup(props) {
       </figure>
     </div>
   )
-}
+})
+
+export default ImagePopup

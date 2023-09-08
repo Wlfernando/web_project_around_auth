@@ -1,4 +1,6 @@
-export default function PopupWithForm({
+import React from "react";
+
+const PopupWithForm = React.memo(({
   isOpen,
   name,
   title,
@@ -6,7 +8,7 @@ export default function PopupWithForm({
   btn,
   onClose,
   onSubmit
-}) {
+})=> {
 
   return (
     <div className={'popup ' + (isOpen && 'popup_active')}>
@@ -36,4 +38,6 @@ export default function PopupWithForm({
       </form>
     </div>
   )
-}
+})
+
+export default PopupWithForm

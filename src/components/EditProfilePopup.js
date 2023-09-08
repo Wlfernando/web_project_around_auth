@@ -2,7 +2,7 @@ import React from "react"
 import PopupWithForm from "./PopupWithForm"
 import { CurrentUserContext } from "./context/CurrentUserContext"
 
-export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
+const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
   const [name, setName] = React.useState(''),
   [description, setDescription] = React.useState(''),
 
@@ -68,4 +68,6 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
       <span className="popup__item-error about-me-error"></span>
     </PopupWithForm>
   )
-}
+})
+
+export default EditProfilePopup

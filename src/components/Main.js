@@ -7,7 +7,7 @@ import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 
-export default function Main(props) {
+const Main = React.memo((props)=> {
   const {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
   {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
   {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
@@ -76,4 +76,6 @@ export default function Main(props) {
       </div>
     </main>
   )
-}
+})
+
+export default Main
