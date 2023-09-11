@@ -6,15 +6,11 @@ const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
   [link, setLink] = React.useState('')
 
   function handleChange(e) {
-    // antes de usar ref,
-    // quise probar este acercamiento con el objeto literal
-    const input = e.target,
-    set = {
+    const input = e.target
+    return {
       name() {setName(input.value)},
       link() {setLink(input.value)}
-    }
-
-    return set[input.name]()
+    }[input.name]()
   }
 
   function handleSubmit(e) {

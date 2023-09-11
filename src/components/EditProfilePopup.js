@@ -10,13 +10,10 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
 
   function handleChange(e) {
     const input = e.target
-    // eslint-disable-next-line
-    switch(input.name) {
-      case 'name':
-        return setName(input.value)
-      case 'about':
-        return setDescription(input.value)
-    }
+    return {
+      name() {setName(input.value)},
+      about() {setDescription(input.value)}
+    }[input.name]()
   }
 
   function handleSubmit(e) {
