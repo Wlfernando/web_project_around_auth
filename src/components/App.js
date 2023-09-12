@@ -30,6 +30,13 @@ function App() {
   }, [])
 
   React.useEffect(()=> {
+    function handleListenerClose(e) {
+      if(['popup_active', 'popup__image-container'].some(click=>
+        e.target.classList.contains(click))
+      || e.key === 'Escape')
+        closeAllPopups()
+    }
+
     if([
       isEditProfilePopupOpen,
       isEditAvatarPopupOpen,
@@ -44,12 +51,11 @@ function App() {
       document.removeEventListener('keydown', handleListenerClose)
       document.removeEventListener('click', handleListenerClose)
     }
-    // eslint-disable-next-line
   }, [
     isEditProfilePopupOpen,
     isEditAvatarPopupOpen,
     isAddPlacePopupOpen,
-    isImageOpen
+    isImageOpen,
   ])
 
   function handleEditAvatarClick() {
@@ -75,11 +81,6 @@ function App() {
     setAddPlacePopupOpen(false)
     setImageOpen(false)
   }
-
-  function handleListenerClose(e) {
-    if(['popup_active', 'popup__image-container'].some(click=> e.target.classList.contains(click)
-    || e.key === 'Escape')) closeAllPopups()
-}
 
   function handleUpdateUser(form) {
     api.send('PATCH', api.me, form)
