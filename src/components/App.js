@@ -7,14 +7,50 @@ import api from '../utils/api.js';
 
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false),
-  [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false),
-  [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false),
-  [isImageOpen, setImageOpen] = React.useState(false),
-  [selectedCard, setSelectedCard] = React.useState({}),
-  [currentUser, setCurrentUser] = React.useState({}),
-  [cards, setCards] = React.useState([]),
-  ID = currentUser._id;
+  const
+    [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false),
+    [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false),
+    [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false),
+    [isImageOpen, setImageOpen] = React.useState(false),
+    [selectedCard, setSelectedCard] = React.useState({}),
+    [currentUser, setCurrentUser] = React.useState({}),
+    [cards, setCards] = React.useState([]),
+    ID = currentUser._id;
+
+  React.useEffect(()=> {
+    api.do('GET', api.me)
+      .then(userData=> {
+        setCurrentUser(userData)
+      })
+      .catch(err=> console.log(err))
+
+    api.do('GET', api.cards)
+      .then(apiCards=> setCards(apiCards))
+      .catch(err=> console.log(err))
+  }, [])
+
+  React.useEffect(()=> {
+    if([
+      isEditProfilePopupOpen,
+      isEditAvatarPopupOpen,
+      isAddPlacePopupOpen,
+      isImageOpen
+      ].some(change=> change === true)) {
+      document.addEventListener('click', handleListenerClose)
+      document.addEventListener('keydown', handleListenerClose)
+    }
+
+    return ()=> {
+      document.removeEventListener('keydown', handleListenerClose)
+      document.removeEventListener('click', handleListenerClose)
+    }
+    // eslint-disable-next-line
+  }, [
+    isEditProfilePopupOpen,
+    isEditAvatarPopupOpen,
+    isAddPlacePopupOpen,
+    isImageOpen
+  ])
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
@@ -99,43 +135,6 @@ function App() {
       })
       .catch(err=> console.log(err))
   }
-
-  React.useEffect(()=> {
-    api.do('GET', api.me)
-      .then(userData=> {
-        setCurrentUser(userData)
-      })
-      .catch(err=> console.log(err))
-  }, [])
-
-  React.useEffect(()=> {
-    api.do('GET', api.cards)
-      .then(apiCards=> setCards(apiCards))
-      .catch(err=> console.log(err))
-  }, [])
-
-  React.useEffect(()=> {
-    if([
-      isEditProfilePopupOpen,
-      isEditAvatarPopupOpen,
-      isAddPlacePopupOpen,
-      isImageOpen
-      ].some(change=> change === true)) {
-      document.addEventListener('click', handleListenerClose)
-      document.addEventListener('keydown', handleListenerClose)
-    }
-
-    return ()=> {
-      document.removeEventListener('keydown', handleListenerClose)
-      document.removeEventListener('click', handleListenerClose)
-    }
-    // eslint-disable-next-line
-  }, [
-    isEditProfilePopupOpen,
-    isEditAvatarPopupOpen,
-    isAddPlacePopupOpen,
-    isImageOpen
-  ])
 
   return (
     <div className="page">

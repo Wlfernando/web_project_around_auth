@@ -8,13 +8,14 @@ import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 
 const Main = React.memo((props)=> {
-  const {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
-  {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
-  {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
-  handleCardClick = props.onCardClick.handleCardClick,
-  {onUpdateUser, onClose, onUpdateAvatar, cards, onCardLike, onCardDelete, onCardSubmit} = props,
+  const
+    {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
+    {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
+    {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
+    handleCardClick = props.onCardClick.handleCardClick,
+    {onUpdateUser, onClose, onUpdateAvatar, cards, onCardLike, onCardDelete, onCardSubmit} = props,
 
-  {name, about, avatar} = React.useContext(CurrentUserContext);
+    {name, about, avatar} = React.useContext(CurrentUserContext);
 
   return(
     <main className="content">

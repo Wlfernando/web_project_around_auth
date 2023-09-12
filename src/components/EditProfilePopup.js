@@ -3,10 +3,16 @@ import PopupWithForm from "./PopupWithForm"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
 const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
-  const [name, setName] = React.useState(''),
-  [description, setDescription] = React.useState(''),
+  const
+    [name, setName] = React.useState(''),
+    [description, setDescription] = React.useState(''),
 
-  {name: nameFromApi, about} = React.useContext(CurrentUserContext)
+    {name: nameFromApi, about} = React.useContext(CurrentUserContext)
+
+  React.useEffect(()=> {
+    setName(nameFromApi ?? '')
+    setDescription(about ?? '')
+  }, [nameFromApi, about])
 
   function handleChange(e) {
     const input = e.target
@@ -23,11 +29,6 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
       about: description
     })
   }
-
-  React.useEffect(()=> {
-    setName(nameFromApi)
-    setDescription(about)
-  }, [nameFromApi, about])
 
   return (
     <PopupWithForm

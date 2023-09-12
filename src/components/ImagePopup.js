@@ -1,8 +1,9 @@
 import React from "react";
 
 const ImagePopup = React.memo((props)=> {
-  const {name, link} = props.onOpen.selectedCard,
-  isOpen = props.onOpen.isImageOpen;
+  const
+    {name, link} = props.onOpen.selectedCard,
+    isOpen = props.onOpen.isImageOpen;
 
   return(
     <div className={'popup ' + (isOpen && 'popup_active')}>

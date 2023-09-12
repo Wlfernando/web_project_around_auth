@@ -2,8 +2,9 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
 const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
-  const [name, setName] = React.useState(''),
-  [link, setLink] = React.useState('')
+  const
+    [name, setName] = React.useState(''),
+    [link, setLink] = React.useState('')
 
   function handleChange(e) {
     const input = e.target

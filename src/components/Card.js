@@ -8,12 +8,13 @@ const Card = memo(({
   onDelete
 })=> {
 
-  const {_id: ID} = useContext(CurrentUserContext),
+  const
+    {_id: ID} = useContext(CurrentUserContext),
 
-  {name, likes, link, owner} = data,
+    {name, likes, link, owner} = data,
 
-  hasDustbin = owner._id === ID,
-  isLiked = likes.some(like=> like._id === ID)
+    hasDustbin = owner._id === ID,
+    isLiked = likes.some(like=> like._id === ID)
 
   function handleClick() {
     onCardClick({name, link})
