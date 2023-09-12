@@ -84,35 +84,32 @@ function App() {
 
   function handleUpdateUser(form) {
     api.send('PATCH', api.me, form)
-      .then(userData=> {
-        setCurrentUser(userData)
-        closeAllPopups()
-      })
+      .then(userData=> setCurrentUser(userData))
       .catch(err=> console.log(err))
+      .finally(closeAllPopups.bind(this))
   }
 
   function handleUpdateAvatar(form) {
     api.send('PATCH', api.avatar, form, api.me)
-      .then(userData=> {
-        setCurrentUser(userData)
-        closeAllPopups()
-      })
+      .then(userData=> setCurrentUser(userData))
       .catch(err=> console.log(err))
+      .finally(closeAllPopups.bind(this))
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(like=> like._id === ID),
-    setLike = isLiked ? 'DELETE' : 'PUT';
+    const
+      isLiked = card.likes.some(like=> like._id === ID),
+      setLike = isLiked ? 'DELETE' : 'PUT';
 
     api.do(setLike, api.likes, card._id)
       .then(()=> {
         api.do('GET', api.cards)
           .then(newCard=>
             setCards(state=>
-              state.map((c, idx)=>
-                c._id === card._id
+              state.map((crd, idx)=>
+                crd._id === card._id
                   ? newCard.at(idx)
-                  : c
+                  : crd
               )
             )
           )
@@ -123,18 +120,16 @@ function App() {
     api.do('DELETE', api.cards, card._id)
       .then(()=>
         setCards(state=>
-          state.filter(c=> c._id !== card._id)
+          state.filter(crd=> crd._id !== card._id)
         )
       )
   }
 
   function handleAddPlaceSubmit(form) {
     api.send('POST', api.cards, form)
-      .then(apiCards=> {
-        setCards([apiCards.at(0), ...cards])
-        closeAllPopups()
-      })
+      .then(apiCards=> setCards([apiCards.at(0), ...cards]))
       .catch(err=> console.log(err))
+      .finally(closeAllPopups.bind(this))
   }
 
   return (
