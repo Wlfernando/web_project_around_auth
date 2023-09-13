@@ -6,6 +6,7 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
   const
     [name, setName] = React.useState(''),
     [description, setDescription] = React.useState(''),
+    [disabled, setDisabled] = React.useState(true),
 
     {name: nameFromApi, about} = React.useContext(CurrentUserContext)
 
@@ -13,6 +14,17 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
     setName(nameFromApi ?? '')
     setDescription(about ?? '')
   }, [nameFromApi, about])
+
+  function handleFieldChange(e) {
+    const
+      field = e.target,
+      valid = field.validity.valid
+
+    if(valid)
+      setDisabled(false)
+    else
+      setDisabled(true)
+  }
 
   function handleChange(e) {
     const input = e.target
@@ -28,6 +40,7 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
       name,
       about: description
     })
+    setTimeout(setDisabled, 1250, true)
   }
 
   return (
@@ -37,6 +50,8 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isDisabled={disabled}
+      onChange={handleFieldChange}
     >
       <input
         className="popup__item"

@@ -4,7 +4,19 @@ import PopupWithForm from "./PopupWithForm";
 const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
   const
     [name, setName] = React.useState(''),
-    [link, setLink] = React.useState('')
+    [link, setLink] = React.useState(''),
+    [disabled, setDisabled] = React.useState(true)
+
+  function handleFieldChange(e) {
+    const
+      field = e.target,
+      valid = field.validity.valid
+
+    if(valid)
+      setDisabled(false)
+    else
+      setDisabled(true)
+  }
 
   function handleChange(e) {
     const input = e.target
@@ -20,6 +32,7 @@ const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
     setTimeout(()=> {
       setName('')
       setLink('')
+      setDisabled(true)
     }, 1250)
   }
 
@@ -31,6 +44,8 @@ const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isDisabled={disabled}
+      onChange={handleFieldChange}
     >
       <input
         className="popup__item"

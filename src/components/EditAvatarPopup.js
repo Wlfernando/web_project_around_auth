@@ -2,12 +2,29 @@ import React from "react"
 import PopupWithForm from "./PopupWithForm"
 
 const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
-  const avatardRef = React.useRef()
+  const
+    avatardRef = React.useRef(null),
+
+    [disabled, setDisabled] = React.useState(true)
+
+  function handleFieldChange(e) {
+    const
+      field = e.target,
+      valid = field.validity.valid
+
+    if(valid)
+      setDisabled(false)
+    else
+      setDisabled(true)
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
     onUpdateAvatar({avatar: avatardRef.current.value})
-    setTimeout(()=> avatardRef.current.value = '', 1250)
+    setTimeout(()=> {
+      avatardRef.current.value = ''
+      setDisabled(true)
+    }, 1250)
   }
 
   return(
@@ -17,6 +34,8 @@ const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isDisabled={disabled}
+      onChange={handleFieldChange}
     >
       <input
         ref={avatardRef}
@@ -27,7 +46,9 @@ const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
         required
         placeholder="Enlace del avatar"
       />
-      <span className="popup__item-error avatar-error"></span>
+      <span className="popup__item-error avatar-error">
+        {avatardRef.current?.validationMessage}
+      </span>
     </PopupWithForm>
   )
 })
