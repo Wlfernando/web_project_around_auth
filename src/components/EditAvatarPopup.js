@@ -5,14 +5,18 @@ const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
   const
     avatardRef = React.useRef(null),
 
-    [disabled, setDisabled] = React.useState(true)
+    [disabled, setDisabled] = React.useState(true),
+
+    errMessage = disabled && 'popup__item-error_active'
 
   function handleFieldChange(e) {
     const
-      field = e.target,
-      valid = field.validity.valid
+      field = e.currentTarget.elements,
+      hasValid = Array(...field).every(input=>
+        input.validity.valid
+      )
 
-    if(valid)
+    if(hasValid)
       setDisabled(false)
     else
       setDisabled(true)
@@ -46,7 +50,9 @@ const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
         required
         placeholder="Enlace del avatar"
       />
-      <span className="popup__item-error avatar-error">
+      <span
+        className={"popup__item-error avatar-error " + errMessage}
+      >
         {avatardRef.current?.validationMessage}
       </span>
     </PopupWithForm>

@@ -8,7 +8,12 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
     [description, setDescription] = React.useState(''),
     [disabled, setDisabled] = React.useState(true),
 
-    {name: nameFromApi, about} = React.useContext(CurrentUserContext)
+    nameRef = React.useRef(null),
+    aboutRef= React.useRef(null),
+
+    {name: nameFromApi, about} = React.useContext(CurrentUserContext),
+
+    errMessage = disabled && 'popup__item-error_active'
 
   React.useEffect(()=> {
     setName(nameFromApi ?? '')
@@ -17,10 +22,12 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
 
   function handleFieldChange(e) {
     const
-      field = e.target,
-      valid = field.validity.valid
+      field = e.currentTarget.elements,
+      hasValid = Array(...field).every(input=>
+        input.validity.valid
+      )
 
-    if(valid)
+    if(hasValid)
       setDisabled(false)
     else
       setDisabled(true)
@@ -64,8 +71,11 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
         minLength="2"
         maxLength="40"
         onChange={handleChange}
+        ref={nameRef}
       />
-      <span className="popup__item-error profile-name-error"></span>
+      <span className={"popup__item-error profile-name-error " + errMessage}>
+        {nameRef.current?.validationMessage}
+      </span>
       <input
         className="popup__item"
         type="text"
@@ -78,7 +88,9 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
         maxLength="200"
         onChange={handleChange}
       />
-      <span className="popup__item-error about-me-error"></span>
+      <span className={"popup__item-error about-me-error " + errMessage}>
+        {aboutRef.current?.validationMessage}
+      </span>
     </PopupWithForm>
   )
 })

@@ -5,14 +5,21 @@ const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
   const
     [name, setName] = React.useState(''),
     [link, setLink] = React.useState(''),
-    [disabled, setDisabled] = React.useState(true)
+    [disabled, setDisabled] = React.useState(true),
+
+    nameRef = React.useRef(null),
+    linkRef = React.useRef(null),
+
+    errMessage = disabled && 'popup__item-error_active'
 
   function handleFieldChange(e) {
     const
-      field = e.target,
-      valid = field.validity.valid
+      field = e.currentTarget.elements,
+      hasValid = Array(...field).every(input=>
+        input.validity.valid
+      )
 
-    if(valid)
+    if(hasValid)
       setDisabled(false)
     else
       setDisabled(true)
@@ -57,8 +64,11 @@ const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
         maxLength="30"
         value={name}
         onChange={handleChange}
+        ref={nameRef}
       />
-      <span className="popup__item-error image-name-error"></span>
+      <span className={"popup__item-error image-name-error " + errMessage}>
+        {nameRef.current?.validationMessage}
+      </span>
       <input
         className="popup__item"
         type="url"
@@ -68,8 +78,11 @@ const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
         placeholder="Enlace de la imagen"
         value={link}
         onChange={handleChange}
+        ref={linkRef}
       />
-      <span className="popup__item-error image-src-error"></span>
+      <span className={"popup__item-error image-src-error " + errMessage}>
+        {linkRef.current?.validationMessage}
+      </span>
     </PopupWithForm>
   )
 })
