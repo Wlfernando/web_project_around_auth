@@ -2,7 +2,12 @@ import React from "react"
 import PopupWithForm from "./PopupWithForm"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
-const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
+const EditProfilePopup = React.memo(({
+  isOpen,
+  onClose,
+  onUpdateUser,
+  onFieldChge
+})=> {
   const
     [name, setName] = React.useState(''),
     [description, setDescription] = React.useState(''),
@@ -21,16 +26,7 @@ const EditProfilePopup = React.memo(({isOpen, onClose, onUpdateUser})=> {
   }, [nameFromApi, about])
 
   function handleFieldChange(e) {
-    const
-      field = e.currentTarget.elements,
-      hasValid = Array(...field).every(input=>
-        input.validity.valid
-      )
-
-    if(hasValid)
-      setDisabled(false)
-    else
-      setDisabled(true)
+    onFieldChge(e, setDisabled)
   }
 
   function handleChange(e) {

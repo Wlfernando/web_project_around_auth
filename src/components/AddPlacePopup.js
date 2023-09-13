@@ -1,7 +1,12 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
+const AddPlacePopup = React.memo(({
+  isOpen,
+  onClose,
+  onCardSubmit,
+  onFieldChge
+})=> {
   const
     [name, setName] = React.useState(''),
     [link, setLink] = React.useState(''),
@@ -12,18 +17,9 @@ const AddPlacePopup = React.memo(({isOpen, onClose, onCardSubmit})=> {
 
     errMessage = disabled && 'popup__item-error_active'
 
-  function handleFieldChange(e) {
-    const
-      field = e.currentTarget.elements,
-      hasValid = Array(...field).every(input=>
-        input.validity.valid
-      )
-
-    if(hasValid)
-      setDisabled(false)
-    else
-      setDisabled(true)
-  }
+    function handleFieldChange(e) {
+      onFieldChge(e, setDisabled)
+    }
 
   function handleChange(e) {
     const input = e.target

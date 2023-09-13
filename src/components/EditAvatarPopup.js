@@ -1,7 +1,12 @@
 import React from "react"
 import PopupWithForm from "./PopupWithForm"
 
-const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
+const EditAvatarPopup = React.memo(({
+  isOpen,
+  onClose,
+  onUpdateAvatar,
+  onFieldChge
+})=> {
   const
     avatardRef = React.useRef(null),
 
@@ -9,18 +14,9 @@ const EditAvatarPopup = React.memo(({isOpen, onClose, onUpdateAvatar})=> {
 
     errMessage = disabled && 'popup__item-error_active'
 
-  function handleFieldChange(e) {
-    const
-      field = e.currentTarget.elements,
-      hasValid = Array(...field).every(input=>
-        input.validity.valid
-      )
-
-    if(hasValid)
-      setDisabled(false)
-    else
-      setDisabled(true)
-  }
+    function handleFieldChange(e) {
+      onFieldChge(e, setDisabled)
+    }
 
   function handleSubmit(e) {
     e.preventDefault()

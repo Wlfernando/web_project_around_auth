@@ -17,6 +17,19 @@ const Main = React.memo((props)=> {
 
     {name, about, avatar} = React.useContext(CurrentUserContext);
 
+  function handleFieldChange(e, setDisabled) {
+    const
+      field = e.currentTarget.elements,
+      hasValid = Array(...field).every(input=>
+        input.validity.valid
+      )
+
+    if(hasValid)
+      setDisabled(false)
+    else
+      setDisabled(true)
+  }
+
   return(
     <main className="content">
       <section className="profile">
@@ -49,11 +62,13 @@ const Main = React.memo((props)=> {
         isOpen={isEditProfilePopupOpen}
         onClose={onClose}
         onUpdateUser={onUpdateUser}
+        onFieldChge={handleFieldChange}
       />
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={onClose}
         onCardSubmit={onCardSubmit}
+        onFieldChge={handleFieldChange}
       />
       <PopupWithForm
         title='¿Estás seguro/a?'
@@ -65,6 +80,7 @@ const Main = React.memo((props)=> {
         isOpen={isEditAvatarPopupOpen}
         onClose={onClose}
         onUpdateAvatar={onUpdateAvatar}
+        onFieldChge={handleFieldChange}
       />
       <div className="popup">
         <div className="popup__container popup__error">
