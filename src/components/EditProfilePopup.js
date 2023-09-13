@@ -25,7 +25,7 @@ const EditProfilePopup = React.memo(({
     setDescription(about ?? '')
   }, [nameFromApi, about])
 
-  function handleFieldChange(e) {
+  function handleValidation(e) {
     onFieldChge(e, setDisabled)
   }
 
@@ -54,7 +54,7 @@ const EditProfilePopup = React.memo(({
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleFieldChange}
+      onChange={handleValidation}
     >
       <input
         className="popup__item"
@@ -83,6 +83,7 @@ const EditProfilePopup = React.memo(({
         minLength="2"
         maxLength="200"
         onChange={handleChange}
+        ref={aboutRef}
       />
       <span className={"popup__item-error about-me-error " + errMessage}>
         {aboutRef.current?.validationMessage}

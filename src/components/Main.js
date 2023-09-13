@@ -17,7 +17,7 @@ const Main = React.memo((props)=> {
 
     {name, about, avatar} = React.useContext(CurrentUserContext);
 
-  function handleFieldChange(e, setDisabled) {
+  function handleValidation(e, setDisabled) {
     const
       field = e.currentTarget.elements,
       hasValid = Array(...field).every(input=>
@@ -62,13 +62,13 @@ const Main = React.memo((props)=> {
         isOpen={isEditProfilePopupOpen}
         onClose={onClose}
         onUpdateUser={onUpdateUser}
-        onFieldChge={handleFieldChange}
+        onFieldChge={handleValidation}
       />
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={onClose}
         onCardSubmit={onCardSubmit}
-        onFieldChge={handleFieldChange}
+        onFieldChge={handleValidation}
       />
       <PopupWithForm
         title='¿Estás seguro/a?'
@@ -80,7 +80,7 @@ const Main = React.memo((props)=> {
         isOpen={isEditAvatarPopupOpen}
         onClose={onClose}
         onUpdateAvatar={onUpdateAvatar}
-        onFieldChge={handleFieldChange}
+        onFieldChge={handleValidation}
       />
       <div className="popup">
         <div className="popup__container popup__error">

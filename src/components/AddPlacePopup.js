@@ -17,7 +17,7 @@ const AddPlacePopup = React.memo(({
 
     errMessage = disabled && 'popup__item-error_active'
 
-    function handleFieldChange(e) {
+    function handleValidation(e) {
       onFieldChge(e, setDisabled)
     }
 
@@ -48,7 +48,7 @@ const AddPlacePopup = React.memo(({
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleFieldChange}
+      onChange={handleValidation}
     >
       <input
         className="popup__item"
