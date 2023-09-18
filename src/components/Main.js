@@ -24,10 +24,9 @@ const Main = React.memo((props)=> {
         input.validity.valid
       )
 
-    if(hasValid)
-      setDisabled(false)
-    else
-      setDisabled(true)
+    hasValid
+      ? setDisabled(false)
+      : setDisabled(true)
   }
 
   return(
