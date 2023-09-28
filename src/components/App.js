@@ -106,10 +106,10 @@ function App() {
         api.do('GET', api.cards)
           .then(newCard=>
             setCards(state=>
-              state.map((crd, idx)=>
-                crd._id === card._id
+              state.map((cardState, idx)=>
+                cardState._id === card._id
                   ? newCard.at(idx)
-                  : crd
+                  : cardState
               )
             )
           )
