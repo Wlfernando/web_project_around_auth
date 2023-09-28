@@ -8,33 +8,32 @@ const AddPlacePopup = React.memo(({
   onFieldChge
 })=> {
   const
-    [name, setName] = React.useState(''),
-    [link, setLink] = React.useState(''),
+    voidForm = {name: '', link: ''},
+
+    [form, setForm] = React.useState(voidForm),
     [disabled, setDisabled] = React.useState(true),
 
     nameRef = React.useRef(null),
     linkRef = React.useRef(null),
 
-    errMessage = disabled && 'popup__item-error_active'
+    {name, link} = form,
+    errMessage = disabled && 'popup__item-error_active';
 
-    function handleValidation(e) {
-      onFieldChge(e, setDisabled)
-    }
+  function handleValidation(e) {
+    onFieldChge(e, setDisabled)
+  }
 
   function handleChange(e) {
     const input = e.target
-    return {
-      name() {setName(input.value)},
-      link() {setLink(input.value)}
-    }[input.name]()
+
+    setForm({...form, [input.name]: input.value})
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    onCardSubmit({name, link})
+    onCardSubmit(form)
     setTimeout(()=> {
-      setName('')
-      setLink('')
+      setForm(voidForm)
       setDisabled(true)
     }, 1250)
   }
