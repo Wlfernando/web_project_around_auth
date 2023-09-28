@@ -14,9 +14,9 @@ const EditAvatarPopup = React.memo(({
 
     errMessage = disabled && 'popup__item-error_active'
 
-    function handleValidation(e) {
-      onFieldChge(e, setDisabled)
-    }
+  function handleValidation(e) {
+    onFieldChge(e, setDisabled)
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
