@@ -13,9 +13,7 @@ function App() {
     [isImageOpen, setImageOpen] = useState(false),
     [selectedCard, setSelectedCard] = useState({}),
     [currentUser, setCurrentUser] = useState({}),
-    [cards, setCards] = useState([]),
-
-    userId = currentUser._id;
+    [cards, setCards] = useState([]);
 
   useEffect(()=> {
     api.do('GET', api.me)
@@ -98,12 +96,8 @@ function App() {
       .finally(closeAllPopups)
   }
 
-  function handleCardLike(likes, cardId) {
-    const
-      isLiked = likes.some(({ _id }) => _id === userId),
-      setLike = isLiked ? 'DELETE' : 'PUT';
-
-    api.do(setLike, api.likes, cardId)
+  function handleCardLike(isLiked, cardId) {
+    api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
       .then(() => api.do('GET', api.cards))
       .then(newCard =>
         setCards(state =>

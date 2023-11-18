@@ -8,12 +8,13 @@ const Card = memo(({
   onDelete
 })=> {
   const
-    {_id: ID} = useContext(CurrentUserContext),
+    {_id: userId} = useContext(CurrentUserContext),
 
     {name, likes, link, owner, _id: cardId} = data,
 
-    hasDustbin = owner._id === ID,
-    likeStyle = likes.some(({ _id }) => _id === ID)
+    hasDustbin = owner._id === userId,
+    isLiked = likes.some(({ _id }) => _id === userId),
+    likeStyle = isLiked
       ? 'button card__like-button card__like-button_active'
       : 'button card__like-button';
 
@@ -22,7 +23,7 @@ const Card = memo(({
   }
 
   function handleLikeClick() {
-    onCardLike(likes, cardId)
+    onCardLike(isLiked, cardId)
   }
 
   function handleDelete() {
