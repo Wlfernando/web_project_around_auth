@@ -1,48 +1,50 @@
+import { useState, useEffect } from 'react';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js'
-import React from 'react';
-import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import api from '../utils/api.js';
-
 
 function App() {
   const
-    [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false),
-    [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false),
-    [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false),
-    [isImageOpen, setImageOpen] = React.useState(false),
-    [selectedCard, setSelectedCard] = React.useState({}),
-    [currentUser, setCurrentUser] = React.useState({}),
-    [cards, setCards] = React.useState([]),
-    ID = currentUser._id;
+    [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false),
+    [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false),
+    [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false),
+    [isImageOpen, setImageOpen] = useState(false),
+    [selectedCard, setSelectedCard] = useState({}),
+    [currentUser, setCurrentUser] = useState({}),
+    [cards, setCards] = useState([]),
 
-  React.useEffect(()=> {
+    userId = currentUser._id;
+
+  useEffect(()=> {
     api.do('GET', api.me)
-      .then(userData=> {
-        setCurrentUser(userData)
-      })
-      .catch(err=> console.log(err))
+      .then(setCurrentUser)
+      .catch(console.log)
 
     api.do('GET', api.cards)
-      .then(apiCards=> setCards(apiCards))
-      .catch(err=> console.log(err))
+      .then(setCards)
+      .catch(console.log)
   }, [])
 
-  React.useEffect(()=> {
-    function handleListenerClose(e) {
-      if(['popup_active', 'popup__image-container'].some(click=>
-        e.target.classList.contains(click))
-      || e.key === 'Escape')
-        closeAllPopups()
-    }
-
-    if([
+  useEffect(()=> {
+    const hasOpened = [
       isEditProfilePopupOpen,
       isEditAvatarPopupOpen,
       isAddPlacePopupOpen,
       isImageOpen
-      ].some(change=> change === true)) {
+    ].some(Boolean);
+
+    function handleListenerClose(e) {
+      const
+        hasClicked = ['popup_active', 'popup__image-container']
+          .some(click => e.target.classList.contains(click)),
+        escPressed = e.key === 'Escape';
+
+      if(hasClicked || escPressed) closeAllPopups()
+    }
+
+    if(hasOpened) {
       document.addEventListener('click', handleListenerClose)
       document.addEventListener('keydown', handleListenerClose)
     }
@@ -55,7 +57,7 @@ function App() {
     isEditProfilePopupOpen,
     isEditAvatarPopupOpen,
     isAddPlacePopupOpen,
-    isImageOpen,
+    isImageOpen
   ])
 
   function handleEditAvatarClick() {
@@ -84,52 +86,51 @@ function App() {
 
   function handleUpdateUser(form) {
     api.send('PATCH', api.me, form)
-      .then(userData=> setCurrentUser(userData))
-      .catch(err=> console.log(err))
-      .finally(closeAllPopups.bind(this))
+      .then(setCurrentUser)
+      .catch(console.log)
+      .finally(closeAllPopups)
   }
 
   function handleUpdateAvatar(form) {
     api.send('PATCH', api.avatar, form, api.me)
-      .then(userData=> setCurrentUser(userData))
-      .catch(err=> console.log(err))
-      .finally(closeAllPopups.bind(this))
+      .then(setCurrentUser)
+      .catch(console.log)
+      .finally(closeAllPopups)
   }
 
-  function handleCardLike(card) {
+  function handleCardLike(likes, cardId) {
     const
-      isLiked = card.likes.some(like=> like._id === ID),
+      isLiked = likes.some(({ _id }) => _id === userId),
       setLike = isLiked ? 'DELETE' : 'PUT';
 
-    api.do(setLike, api.likes, card._id)
-      .then(()=> {
-        api.do('GET', api.cards)
-          .then(newCard=>
-            setCards(state=>
-              state.map((cardState, idx)=>
-                cardState._id === card._id
-                  ? newCard.at(idx)
-                  : cardState
-              )
-            )
+    api.do(setLike, api.likes, cardId)
+      .then(() => api.do('GET', api.cards))
+      .then(newCard =>
+        setCards(state =>
+          state.map((cardState, idx) =>
+            cardState._id === cardId
+              ? newCard.at(idx)
+              : cardState
           )
-      })
+        )
+      )
+      .catch(console.log)
   }
 
-  function handleCardDelete(card) {
-    api.do('DELETE', api.cards, card._id)
-      .then(()=>
-        setCards(state=>
-          state.filter(crd=> crd._id !== card._id)
+  function handleCardDelete(cardId) {
+    api.do('DELETE', api.cards, cardId)
+      .then(() =>
+        setCards(state =>
+          state.filter(cardState => cardState._id !== cardId)
         )
       )
   }
 
   function handleAddPlaceSubmit(form) {
     api.send('POST', api.cards, form)
-      .then(apiCards=> setCards([apiCards.at(0), ...cards]))
-      .catch(err=> console.log(err))
-      .finally(closeAllPopups.bind(this))
+      .then(setCards)
+      .catch(console.log)
+      .finally(closeAllPopups)
   }
 
   return (
