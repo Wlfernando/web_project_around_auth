@@ -100,13 +100,12 @@ function App() {
     api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
       .then(() => api.do('GET', api.cards))
       .then(newCard =>
-        setCards(state =>
-          state.map((cardState, idx) =>
-            cardState._id === cardId
-              ? newCard.at(idx)
-              : cardState
-          )
-        )
+        setCards(state => {
+          const cardLiked = state
+            .findIndex(({ _id }) => _id === cardId);
+
+          return state.with(cardLiked, newCard.at(cardLiked))
+        })
       )
       .catch(console.log)
   }
@@ -114,9 +113,14 @@ function App() {
   function handleCardDelete(cardId) {
     api.do('DELETE', api.cards, cardId)
       .then(() =>
-        setCards(state =>
-          state.filter(cardState => cardState._id !== cardId)
-        )
+        setCards(state => {
+          const deletedCard = state
+            .findIndex(({ _id }) => _id === cardId);
+
+          return state
+            .slice(0, deletedCard)
+            .concat(state.slice(deletedCard + 1));
+        })
       )
   }
 
