@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js'
@@ -11,9 +11,12 @@ function App() {
     [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false),
     [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false),
     [isImageOpen, setImageOpen] = useState(false),
+    [isDltPopupOpen, setDltPopupOpen] = useState(false),
     [selectedCard, setSelectedCard] = useState({}),
     [currentUser, setCurrentUser] = useState({}),
-    [cards, setCards] = useState([]);
+    [cards, setCards] = useState([]),
+
+    cardIdRef = useRef('');
 
   useEffect(()=> {
     api.do('GET', api.me)
@@ -30,7 +33,8 @@ function App() {
       isEditProfilePopupOpen,
       isEditAvatarPopupOpen,
       isAddPlacePopupOpen,
-      isImageOpen
+      isImageOpen,
+      isDltPopupOpen,
     ].some(Boolean);
 
     function handleListenerClose(e) {
@@ -55,7 +59,8 @@ function App() {
     isEditProfilePopupOpen,
     isEditAvatarPopupOpen,
     isAddPlacePopupOpen,
-    isImageOpen
+    isImageOpen,
+    isDltPopupOpen,
   ])
 
   function handleEditAvatarClick() {
@@ -80,6 +85,7 @@ function App() {
     setEditProfilePopupOpen(false)
     setAddPlacePopupOpen(false)
     setImageOpen(false)
+    setDltPopupOpen(false)
   }
 
   function handleUpdateUser(form) {
@@ -110,18 +116,22 @@ function App() {
       .catch(console.log)
   }
 
-  function handleCardDelete(cardId) {
-    api.do('DELETE', api.cards, cardId)
+  function handleCardDelete() {
+    const theId = cardIdRef.current;
+
+    api.do('DELETE', api.cards, theId)
       .then(() =>
         setCards(state => {
           const deletedCard = state
-            .findIndex(({ _id }) => _id === cardId);
+            .findIndex(({ _id }) => _id === theId);
 
           return state
             .slice(0, deletedCard)
             .concat(state.slice(deletedCard + 1));
         })
       )
+      .catch(console.error)
+      .finally(closeAllPopups)
   }
 
   function handleAddPlaceSubmit(form) {
@@ -129,6 +139,11 @@ function App() {
       .then(setCards)
       .catch(console.log)
       .finally(closeAllPopups)
+  }
+
+  function willCardDelete(cardId) {
+    cardIdRef.current = cardId;
+    setDltPopupOpen(true)
   }
 
   return (
@@ -147,6 +162,9 @@ function App() {
           }
           onCardClick={
             {selectedCard, isImageOpen, handleCardClick}
+          }
+          onDltClick={
+            {isDltPopupOpen, willCardDelete}
           }
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}

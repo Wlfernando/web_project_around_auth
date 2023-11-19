@@ -1,17 +1,18 @@
 import React from 'react';
-import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import Card from './Card.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.js';
 import Profile from './Profile.jsx';
+import DeletePopup from './DeletePopup.jsx';
 
 const Main = React.memo((props)=> {
   const
     {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
     {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
     {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
+    {isDltPopupOpen, willCardDelete} = props.onDltClick,
     handleCardClick = props.onCardClick.handleCardClick,
     {onUpdateUser, onClose, onUpdateAvatar, cards, onCardLike, onCardDelete, onCardSubmit} = props;
 
@@ -39,7 +40,7 @@ const Main = React.memo((props)=> {
             data={card}
             onCardClick={handleCardClick}
             onCardLike={onCardLike}
-            onDelete={onCardDelete}
+            onDelete={willCardDelete}
           />
         )}
       </ul>
@@ -59,11 +60,10 @@ const Main = React.memo((props)=> {
         onCardSubmit={onCardSubmit}
         onFieldChge={handleValidation}
       />
-      <PopupWithForm
-        title='¿Estás seguro/a?'
-        name={'delete'}
-        btn='Si'
-        isOpen={false}
+      <DeletePopup
+        isOpen={isDltPopupOpen}
+        onDelete={onCardDelete}
+        onClose={onClose}
       />
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}

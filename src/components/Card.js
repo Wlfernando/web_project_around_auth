@@ -5,7 +5,7 @@ const Card = memo(({
   data,
   onCardClick,
   onCardLike,
-  onDelete
+  onDelete,
 })=> {
   const
     {_id: userId} = useContext(CurrentUserContext),
