@@ -101,10 +101,10 @@ function App() {
       .then(() => api.do('GET', api.cards))
       .then(newCard =>
         setCards(state => {
-          const cardLiked = state
+          const likedCard = state
             .findIndex(({ _id }) => _id === cardId);
 
-          return state.with(cardLiked, newCard.at(cardLiked))
+          return state.with(likedCard, newCard.at(likedCard))
         })
       )
       .catch(console.log)
