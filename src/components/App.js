@@ -12,10 +12,10 @@ function App() {
     [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false),
     [isImageOpen, setImageOpen] = useState(false),
     [isDltPopupOpen, setDltPopupOpen] = useState(false),
-    [selectedCard, setSelectedCard] = useState({}),
     [currentUser, setCurrentUser] = useState({}),
     [cards, setCards] = useState([]),
 
+    cardDisplayRef = useRef({}),
     cardIdRef = useRef('');
 
   useEffect(()=> {
@@ -76,7 +76,7 @@ function App() {
   }
 
   function handleCardClick(card) {
-    setSelectedCard(card)
+    cardDisplayRef.current = card;
     setImageOpen(true)
   }
 
@@ -161,7 +161,7 @@ function App() {
             {isEditAvatarPopupOpen, handleEditAvatarClick}
           }
           onCardClick={
-            {selectedCard, isImageOpen, handleCardClick}
+            {clickedCard: cardDisplayRef.current, isImageOpen, handleCardClick}
           }
           onDltClick={
             {isDltPopupOpen, willCardDelete}

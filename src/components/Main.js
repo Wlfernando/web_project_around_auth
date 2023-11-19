@@ -1,5 +1,5 @@
 import React from 'react';
-import ImagePopup from './ImagePopup.js';
+import ImagePopup from './ImagePopup.jsx';
 import Card from './Card.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
