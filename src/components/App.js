@@ -102,18 +102,27 @@ function App() {
       .finally(closeAllPopups)
   }
 
-  function handleCardLike(isLiked, cardId) {
-    api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
-      .then(() => api.do('GET', api.cards))
-      .then(newCard =>
-        setCards(state => {
-          const likedCard = state
-            .findIndex(({ _id }) => _id === cardId);
+  async function handleCardLike(isLiked, cardId) {
+    const
+      getApiCards = await api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
+        .then(() => api.do('GET', api.cards))
+        .catch(console.error),
+      updatedCards = await Promise
+        .all([
+          Promise
+            .resolve()
+            .then(() => cards.findIndex(getTheCard)),
+          Promise
+            .resolve()
+            .then(() => getApiCards.find(getTheCard)),
+          ])
+        .then(theCard => cards.with(...theCard));
 
-          return state.with(likedCard, newCard.at(likedCard))
-        })
-      )
-      .catch(console.log)
+    function getTheCard({ _id }) {
+      return _id === cardId
+    }
+
+    setCards(updatedCards)
   }
 
   function handleCardDelete() {
