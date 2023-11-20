@@ -16,7 +16,9 @@ function App() {
     [cards, setCards] = useState([]),
 
     cardDisplayRef = useRef({}),
-    cardIdRef = useRef('');
+    cardIdRef = useRef(''),
+
+    delayTimer = 250;
 
   useEffect(()=> {
     api.do('GET', api.me)
@@ -94,15 +96,18 @@ function App() {
       .catch(console.log)
       .finally(() => {
         closeAllPopups()
-        setTimeout(setDisabled, 250, true)
+        setTimeout(setDisabled, delayTimer, true)
       })
   }
 
-  function handleUpdateAvatar(form) {
+  function handleUpdateAvatar(form, setDelay) {
     api.send('PATCH', api.avatar, form, api.me)
       .then(setCurrentUser)
-      .catch(console.log)
-      .finally(closeAllPopups)
+      .catch(console.error)
+      .finally(() => {
+        closeAllPopups()
+        setDelay(delayTimer)
+      })
   }
 
   async function handleCardLike(isLiked, cardId) {
@@ -152,7 +157,7 @@ function App() {
       .catch(console.error)
       .finally(() => {
         closeAllPopups()
-        setDelay()
+        setDelay(delayTimer)
       })
   }
 

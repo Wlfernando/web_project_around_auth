@@ -6,13 +6,11 @@ const EditAvatarPopup = React.memo(({
   onClose,
   onUpdateAvatar,
   onFieldChge
-})=> {
+}) => {
   const
-    avatardRef = React.useRef(null),
+    avatarRef = React.useRef(null),
 
-    [disabled, setDisabled] = React.useState(true),
-
-    errMessage = disabled && 'popup__item-error_active'
+    [disabled, setDisabled] = React.useState(true);
 
   function handleValidation(e) {
     onFieldChge(e, setDisabled)
@@ -20,11 +18,15 @@ const EditAvatarPopup = React.memo(({
 
   function handleSubmit(e) {
     e.preventDefault()
-    onUpdateAvatar({avatar: avatardRef.current.value})
-    setTimeout(()=> {
-      avatardRef.current.value = ''
-      setDisabled(true)
-    }, 1250)
+
+    function setDelay(delayTimer) {
+      setTimeout(()=> {
+        avatarRef.current.value = ''
+        setDisabled(true)
+      }, delayTimer)
+    }
+
+    onUpdateAvatar({avatar: avatarRef.current.value}, setDelay)
   }
 
   return(
@@ -38,7 +40,7 @@ const EditAvatarPopup = React.memo(({
       onChange={handleValidation}
     >
       <input
-        ref={avatardRef}
+        ref={avatarRef}
         className="popup__item"
         type="url"
         id="avatar"
@@ -47,9 +49,9 @@ const EditAvatarPopup = React.memo(({
         placeholder="Enlace del avatar"
       />
       <span
-        className={"popup__item-error avatar-error " + errMessage}
+        className="popup__item-error"
       >
-        {avatardRef.current?.validationMessage}
+        {disabled && avatarRef.current?.validationMessage}
       </span>
     </PopupWithForm>
   )

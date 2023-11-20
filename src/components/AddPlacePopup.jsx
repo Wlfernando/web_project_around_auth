@@ -31,11 +31,11 @@ const AddPlacePopup = memo(({
   function handleSubmit(e) {
     e.preventDefault()
 
-    function setDelay() {
+    function setDelay(delayTimer) {
       setTimeout(()=> {
         setForm(voidForm)
         setDisabled(true)
-      }, 250)
+      }, delayTimer)
     }
 
     onCardSubmit(form, setDelay)
