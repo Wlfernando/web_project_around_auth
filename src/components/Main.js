@@ -3,7 +3,7 @@ import ImagePopup from './ImagePopup.jsx';
 import Card from './Card.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
-import AddPlacePopup from './AddPlacePopup.js';
+import AddPlacePopup from './AddPlacePopup.jsx';
 import Profile from './Profile.jsx';
 import DeletePopup from './DeletePopup.jsx';
 

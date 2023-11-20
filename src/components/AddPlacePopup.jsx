@@ -1,23 +1,22 @@
-import React from "react";
+import { memo, useState, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-const AddPlacePopup = React.memo(({
+const AddPlacePopup = memo(({
   isOpen,
   onClose,
   onCardSubmit,
-  onFieldChge
-})=> {
+  onFieldChge,
+}) => {
   const
     voidForm = {name: '', link: ''},
 
-    [form, setForm] = React.useState(voidForm),
-    [disabled, setDisabled] = React.useState(true),
+    [form, setForm] = useState(voidForm),
+    [disabled, setDisabled] = useState(true),
 
-    nameRef = React.useRef(null),
-    linkRef = React.useRef(null),
+    nameRef = useRef(null),
+    linkRef = useRef(null),
 
-    {name, link} = form,
-    errMessage = disabled && 'popup__item-error_active';
+    {name, link} = form;
 
   function handleValidation(e) {
     onFieldChge(e, setDisabled)
@@ -52,8 +51,8 @@ const AddPlacePopup = React.memo(({
       <input
         className="popup__item"
         type="text"
-        id="image-name"
         name="name"
+        required
         placeholder="Título"
         minLength="2"
         maxLength="30"
@@ -61,13 +60,12 @@ const AddPlacePopup = React.memo(({
         onChange={handleChange}
         ref={nameRef}
       />
-      <span className={"popup__item-error image-name-error " + errMessage}>
-        {nameRef.current?.validationMessage}
+      <span className="popup__item-error">
+        {nameRef.current?.value && nameRef.current?.validationMessage}
       </span>
       <input
         className="popup__item"
         type="url"
-        id="image-src"
         name="link"
         required
         placeholder="Enlace de la imagen"
@@ -75,8 +73,8 @@ const AddPlacePopup = React.memo(({
         onChange={handleChange}
         ref={linkRef}
       />
-      <span className={"popup__item-error image-src-error " + errMessage}>
-        {linkRef.current?.validationMessage}
+      <span className="popup__item-error">
+        {linkRef.current?.value && linkRef.current?.validationMessage}
       </span>
     </PopupWithForm>
   )
