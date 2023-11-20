@@ -16,7 +16,9 @@ function App() {
     [cards, setCards] = useState([]),
 
     cardDisplayRef = useRef({}),
-    cardIdRef = useRef('');
+    cardIdRef = useRef(''),
+
+    transitionDelay = 250;
 
   useEffect(()=> {
     api.do('GET', api.me)
@@ -88,11 +90,14 @@ function App() {
     setDltPopupOpen(false)
   }
 
-  function handleUpdateUser(form) {
+  function handleUpdateUser(form, setDisabled) {
     api.send('PATCH', api.me, form)
       .then(setCurrentUser)
       .catch(console.log)
-      .finally(closeAllPopups)
+      .finally(() => {
+        closeAllPopups()
+        setTimeout(setDisabled, transitionDelay, true)
+      })
   }
 
   function handleUpdateAvatar(form) {
