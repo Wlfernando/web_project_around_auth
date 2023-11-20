@@ -16,9 +16,7 @@ function App() {
     [cards, setCards] = useState([]),
 
     cardDisplayRef = useRef({}),
-    cardIdRef = useRef(''),
-
-    transitionDelay = 250;
+    cardIdRef = useRef('');
 
   useEffect(()=> {
     api.do('GET', api.me)
@@ -96,7 +94,7 @@ function App() {
       .catch(console.log)
       .finally(() => {
         closeAllPopups()
-        setTimeout(setDisabled, transitionDelay, true)
+        setTimeout(setDisabled, 250, true)
       })
   }
 
@@ -148,11 +146,14 @@ function App() {
       .finally(closeAllPopups)
   }
 
-  function handleAddPlaceSubmit(form) {
+  function handleAddPlaceSubmit(form, setDelay) {
     api.send('POST', api.cards, form)
       .then(setCards)
-      .catch(console.log)
-      .finally(closeAllPopups)
+      .catch(console.error)
+      .finally(() => {
+        closeAllPopups()
+        setDelay()
+      })
   }
 
   function willCardDelete(cardId) {

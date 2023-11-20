@@ -30,11 +30,15 @@ const AddPlacePopup = memo(({
 
   function handleSubmit(e) {
     e.preventDefault()
-    onCardSubmit(form)
-    setTimeout(()=> {
-      setForm(voidForm)
-      setDisabled(true)
-    }, 1250)
+
+    function setDelay() {
+      setTimeout(()=> {
+        setForm(voidForm)
+        setDisabled(true)
+      }, 250)
+    }
+
+    onCardSubmit(form, setDelay)
   }
 
   return(
@@ -61,7 +65,7 @@ const AddPlacePopup = memo(({
         ref={nameRef}
       />
       <span className="popup__item-error">
-        {nameRef.current?.value && nameRef.current?.validationMessage}
+        {nameRef.current?.value && nameRef.current.validationMessage}
       </span>
       <input
         className="popup__item"
@@ -74,7 +78,7 @@ const AddPlacePopup = memo(({
         ref={linkRef}
       />
       <span className="popup__item-error">
-        {linkRef.current?.value && linkRef.current?.validationMessage}
+        {linkRef.current?.value && linkRef.current.validationMessage}
       </span>
     </PopupWithForm>
   )
