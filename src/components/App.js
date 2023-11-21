@@ -12,22 +12,24 @@ function App() {
     [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false),
     [isImageOpen, setImageOpen] = useState(false),
     [isDltPopupOpen, setDltPopupOpen] = useState(false),
+    [isErrPopupOpen, setErrPopupOpen] = useState(false),
     [currentUser, setCurrentUser] = useState({}),
     [cards, setCards] = useState([]),
 
     cardDisplayRef = useRef({}),
     cardIdRef = useRef(''),
+    errRef = useRef(''),
 
     delayTimer = 250;
 
   useEffect(()=> {
     api.do('GET', api.me)
       .then(setCurrentUser)
-      .catch(console.log)
+      .catch(handleError)
 
     api.do('GET', api.cards)
       .then(setCards)
-      .catch(console.log)
+      .catch(handleError)
   }, [])
 
   useEffect(()=> {
@@ -37,6 +39,7 @@ function App() {
       isAddPlacePopupOpen,
       isImageOpen,
       isDltPopupOpen,
+      isErrPopupOpen,
     ].some(Boolean);
 
     function handleListenerClose(e) {
@@ -63,6 +66,7 @@ function App() {
     isAddPlacePopupOpen,
     isImageOpen,
     isDltPopupOpen,
+    isErrPopupOpen,
   ])
 
   function handleEditAvatarClick() {
@@ -88,12 +92,13 @@ function App() {
     setAddPlacePopupOpen(false)
     setImageOpen(false)
     setDltPopupOpen(false)
+    setErrPopupOpen(false)
   }
 
   function handleUpdateUser(form, setDisabled) {
     api.send('PATCH', api.me, form)
       .then(setCurrentUser)
-      .catch(console.log)
+      .catch(handleError)
       .finally(() => {
         closeAllPopups()
         setTimeout(setDisabled, delayTimer, true)
@@ -103,7 +108,7 @@ function App() {
   function handleUpdateAvatar(form, setDelay) {
     api.send('PATCH', api.avatar, form, api.me)
       .then(setCurrentUser)
-      .catch(console.error)
+      .catch(handleError)
       .finally(() => {
         closeAllPopups()
         setDelay(delayTimer)
@@ -114,7 +119,7 @@ function App() {
     const
       getApiCards = await api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
         .then(() => api.do('GET', api.cards))
-        .catch(console.error),
+        .catch(handleError),
       updatedCards = await Promise
         .all([
           Promise
@@ -147,14 +152,14 @@ function App() {
             .concat(state.slice(deletedCard + 1));
         })
       )
-      .catch(console.error)
+      .catch(handleError)
       .finally(closeAllPopups)
   }
 
   function handleAddPlaceSubmit(form, setDelay) {
     api.send('POST', api.cards, form)
       .then(setCards)
-      .catch(console.error)
+      .catch(handleError)
       .finally(() => {
         closeAllPopups()
         setDelay(delayTimer)
@@ -164,6 +169,11 @@ function App() {
   function willCardDelete(cardId) {
     cardIdRef.current = cardId;
     setDltPopupOpen(true)
+  }
+
+  function handleError(err) {
+    errRef.current = err.message
+    setErrPopupOpen(true)
   }
 
   return (
@@ -185,6 +195,9 @@ function App() {
           }
           onDltClick={
             {isDltPopupOpen, willCardDelete}
+          }
+          onErr={
+            {errMssg: errRef.current, isErrPopupOpen}
           }
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}

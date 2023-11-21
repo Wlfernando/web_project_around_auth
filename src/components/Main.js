@@ -6,6 +6,7 @@ import EditAvatarPopup from './EditAvatarPopup.js';
 import AddPlacePopup from './AddPlacePopup.jsx';
 import Profile from './Profile.jsx';
 import DeletePopup from './DeletePopup.jsx';
+import ShowError from './ShowError.jsx'
 
 const Main = React.memo((props)=> {
   const
@@ -71,15 +72,10 @@ const Main = React.memo((props)=> {
         onUpdateAvatar={onUpdateAvatar}
         onFieldChge={handleValidation}
       />
-      <div className="popup">
-        <div className="popup__container popup__error">
-          <p className="popup__text-error"></p>
-          <button
-            type="button"
-            className="button button__close button__close_place_form"
-          ></button>
-        </div>
-      </div>
+      <ShowError
+        onErr={props.onErr}
+        onClose={onClose}
+      />
     </main>
   )
 })
