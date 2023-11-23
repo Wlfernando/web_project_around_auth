@@ -1,10 +1,8 @@
 import { memo } from 'react';
 
 const ShowError = memo(({
-  onErr: {
-    errMssg,
-    isErrPopupOpen: isOpen
-  },
+  isOpen,
+  errMssg,
   onClose,
 }) => {
   return (

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js'
@@ -7,12 +7,14 @@ import api from '../utils/api.js';
 
 function App() {
   const
-    [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false),
-    [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false),
-    [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false),
-    [isImageOpen, setImageOpen] = useState(false),
-    [isDltPopupOpen, setDltPopupOpen] = useState(false),
-    [isErrPopupOpen, setErrPopupOpen] = useState(false),
+    [isPopupOpen, setPopupOpen] = useState({
+      avatar: false,
+      edit: false,
+      add: false,
+      image: false,
+      remove: false,
+      error: false,
+    }),
     [currentUser, setCurrentUser] = useState({}),
     [cards, setCards] = useState([]),
 
@@ -20,9 +22,14 @@ function App() {
     cardIdRef = useRef(''),
     errRef = useRef(''),
 
+    handleError = useCallback(function (err) {
+      errRef.current = err.message
+      openPopup('error')
+    }, []),
+
     delayTimer = 250;
 
-  useEffect(()=> {
+  useEffect(() => {
     api.do('GET', api.me)
       .then(setCurrentUser)
       .catch(handleError)
@@ -30,17 +37,12 @@ function App() {
     api.do('GET', api.cards)
       .then(setCards)
       .catch(handleError)
-  }, [])
+  }, [handleError])
 
-  useEffect(()=> {
-    const hasOpened = [
-      isEditProfilePopupOpen,
-      isEditAvatarPopupOpen,
-      isAddPlacePopupOpen,
-      isImageOpen,
-      isDltPopupOpen,
-      isErrPopupOpen,
-    ].some(Boolean);
+  useEffect(() => {
+    const hasOpened = Object
+      .values(isPopupOpen)
+      .some(Boolean);
 
     function handleListenerClose(e) {
       const
@@ -60,39 +62,22 @@ function App() {
       document.removeEventListener('keydown', handleListenerClose)
       document.removeEventListener('click', handleListenerClose)
     }
-  }, [
-    isEditProfilePopupOpen,
-    isEditAvatarPopupOpen,
-    isAddPlacePopupOpen,
-    isImageOpen,
-    isDltPopupOpen,
-    isErrPopupOpen,
-  ])
+  }, [isPopupOpen])
 
-  function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(true)
-  }
-
-  function handleEditProfileClick() {
-    setEditProfilePopupOpen(true)
-  }
-
-  function handleAddPlaceClick() {
-    setAddPlacePopupOpen(true)
+  function openPopup(popup) {
+    setPopupOpen((state) => ({...state, [popup]: true}))
   }
 
   function handleCardClick(card) {
     cardDisplayRef.current = card;
-    setImageOpen(true)
+    openPopup('image')
   }
 
   function closeAllPopups() {
-    setEditAvatarPopupOpen(false)
-    setEditProfilePopupOpen(false)
-    setAddPlacePopupOpen(false)
-    setImageOpen(false)
-    setDltPopupOpen(false)
-    setErrPopupOpen(false)
+    setPopupOpen((state) => Object
+      .keys(state)
+      .reduce((obj, key) => ({...obj, [key]: false}), {})
+    )
   }
 
   function handleUpdateUser(form, setDisabled) {
@@ -168,12 +153,7 @@ function App() {
 
   function willCardDelete(cardId) {
     cardIdRef.current = cardId;
-    setDltPopupOpen(true)
-  }
-
-  function handleError(err) {
-    errRef.current = err.message
-    setErrPopupOpen(true)
+    openPopup('remove')
   }
 
   return (
@@ -181,28 +161,16 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Main
-          onEditProfileClick={
-            {isEditProfilePopupOpen, handleEditProfileClick}
-          }
-          onAddPlaceClick={
-            {isAddPlacePopupOpen, handleAddPlaceClick}
-          }
-          onEditAvatarClick={
-            {isEditAvatarPopupOpen, handleEditAvatarClick}
-          }
-          onCardClick={
-            {clickedCard: cardDisplayRef.current, isImageOpen, handleCardClick}
-          }
-          onDltClick={
-            {isDltPopupOpen, willCardDelete}
-          }
-          onErr={
-            {errMssg: errRef.current, isErrPopupOpen}
-          }
+          isOpen={isPopupOpen}
+          onOpenPopup={openPopup}
+          clickedCard={cardDisplayRef.current}
+          cards={cards}
+          errMssg={errRef.current}
+          onCardClick={handleCardClick}
+          onWillDelete={willCardDelete}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           onUpdateAvatar={handleUpdateAvatar}
-          cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
           onCardSubmit={handleAddPlaceSubmit}

@@ -1,17 +1,15 @@
 import React from "react";
 
 const ImagePopup = React.memo(({
-  onOpen: {
-    clickedCard: {
-      name,
-      link,
-    },
-    isImageOpen,
+  isOpen,
+  clickedCard: {
+    name,
+    link,
   },
-  onClose
+  onClose,
 }) => {
   return(
-    <div className={'popup ' + (isImageOpen && 'popup_active')}>
+    <div className={'popup' + (isOpen ? ' popup_active' : '')}>
       <figure className="popup__image-container">
         <img className="popup__image" src={link} alt={name} />
         <figcaption className="popup__title-image">{name}</figcaption>

@@ -8,15 +8,28 @@ import Profile from './Profile.jsx';
 import DeletePopup from './DeletePopup.jsx';
 import ShowError from './ShowError.jsx'
 
-const Main = React.memo((props)=> {
-  const
-    {isEditProfilePopupOpen, handleEditProfileClick} = props.onEditProfileClick,
-    {isAddPlacePopupOpen, handleAddPlaceClick} = props.onAddPlaceClick,
-    {isEditAvatarPopupOpen, handleEditAvatarClick} = props.onEditAvatarClick,
-    {isDltPopupOpen, willCardDelete} = props.onDltClick,
-    handleCardClick = props.onCardClick.handleCardClick,
-    {onUpdateUser, onClose, onUpdateAvatar, cards, onCardLike, onCardDelete, onCardSubmit} = props;
-
+const Main = React.memo(({
+  isOpen: {
+    avatar,
+    edit,
+    add,
+    image,
+    remove,
+    error,
+  },
+  onOpenPopup,
+  clickedCard,
+  cards,
+  errMssg,
+  onCardClick,
+  onWillDelete,
+  onClose,
+  onUpdateUser,
+  onUpdateAvatar,
+  onCardLike,
+  onCardDelete,
+  onCardSubmit,
+}) => {
   function handleValidation(e, setDisabled) {
     const
       field = e.currentTarget.elements,
@@ -30,50 +43,50 @@ const Main = React.memo((props)=> {
   return(
     <main className="content">
       <Profile
-        onEditAvatarClick={handleEditAvatarClick}
-        onEditProfileClick={handleEditProfileClick}
-        onAddPlaceClick={handleAddPlaceClick}
+        onOpen={onOpenPopup}
       />
       <ul className="cards">
         {cards.map(card=>
           <Card
             key={card._id}
             data={card}
-            onCardClick={handleCardClick}
+            onCardClick={onCardClick}
             onCardLike={onCardLike}
-            onDelete={willCardDelete}
+            onDelete={onWillDelete}
           />
         )}
       </ul>
       <ImagePopup
-        onOpen={props.onCardClick}
+        isOpen={image}
+        clickedCard={clickedCard}
         onClose={onClose}
       />
       <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
+        isOpen={edit}
         onClose={onClose}
         onUpdateUser={onUpdateUser}
         onFieldChge={handleValidation}
       />
       <AddPlacePopup
-        isOpen={isAddPlacePopupOpen}
+        isOpen={add}
         onClose={onClose}
         onCardSubmit={onCardSubmit}
         onFieldChge={handleValidation}
       />
       <DeletePopup
-        isOpen={isDltPopupOpen}
+        isOpen={remove}
         onDelete={onCardDelete}
         onClose={onClose}
       />
       <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
+        isOpen={avatar}
         onClose={onClose}
         onUpdateAvatar={onUpdateAvatar}
         onFieldChge={handleValidation}
       />
       <ShowError
-        onErr={props.onErr}
+        isOpen={error}
+        errMssg={errMssg}
         onClose={onClose}
       />
     </main>
