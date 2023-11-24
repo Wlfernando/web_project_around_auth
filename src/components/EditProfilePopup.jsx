@@ -44,12 +44,9 @@ const EditProfilePopup = memo(({
 
   function handleSubmit(e) {
     e.preventDefault()
-    
-    onUpdate({
-      name,
-      about: description
-    }, (delayTimer) => setTimeout(setDisabled, delayTimer, true))
-    .handleUser()
+
+    onUpdate(delayTimer => setTimeout(setDisabled, delayTimer, true))
+      .handleUser({name, about: description})
   }
 
   return (

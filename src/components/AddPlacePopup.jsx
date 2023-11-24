@@ -32,13 +32,13 @@ const AddPlacePopup = memo(({
     e.preventDefault()
 
     function setDelay(delayTimer) {
-      setTimeout(()=> {
+      setTimeout(() => {
         setForm(voidForm)
         setDisabled(true)
       }, delayTimer)
     }
 
-    onUpdate(form, setDelay).handleAddSubmit()
+    onUpdate(setDelay).handleAddSubmit(form)
   }
 
   return(

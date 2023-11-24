@@ -81,27 +81,27 @@ function App() {
     openPopup(popup)
   }
 
-  function updateContent(form, setDelay) {
+  function updateContent(setDelay) {
     function setFinally() {
       closeAllPopups()
       setDelay(250)
     }
 
-    function handleAvatar() {
+    function handleAvatar(form) {
       api.send('PATCH', api.avatar, form, api.me)
         .then(setCurrentUser)
         .catch(handleError)
         .finally(setFinally)
     }
 
-    function handleUser() {
+    function handleUser(form) {
       api.send('PATCH', api.me, form)
         .then(setCurrentUser)
         .catch(handleError)
         .finally(setFinally)
     }
 
-    function handleAddSubmit() {
+    function handleAddSubmit(form) {
       api.send('POST', api.cards, form)
         .then(setCards)
         .catch(handleError)
@@ -110,19 +110,16 @@ function App() {
 
     async function handleLike(isLiked, cardId) {
       const
-        getApiCards = await api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
+        index = Promise
+          .resolve()
+          .then(() => cards.findIndex(getTheCard)),
+        Card = api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
           .then(() => api.do('GET', api.cards))
-          .catch(handleError),
+          .then(getCards => getCards.find(getTheCard)),
         updatedCards = await Promise
-          .all([
-            Promise
-              .resolve()
-              .then(() => cards.findIndex(getTheCard)),
-            Promise
-              .resolve()
-              .then(() => getApiCards.find(getTheCard)),
-            ])
-          .then(theCard => cards.with(...theCard));
+          .all([index, Card])
+          .then(theCard => cards.with(...theCard))
+          .catch(handleError);
 
       function getTheCard({ _id }) {
         return _id === cardId

@@ -20,13 +20,13 @@ const EditAvatarPopup = React.memo(({
     e.preventDefault()
 
     function setDelay(delayTimer) {
-      setTimeout(()=> {
+      setTimeout(() => {
         avatarRef.current.value = ''
         setDisabled(true)
       }, delayTimer)
     }
 
-    onUpdate({avatar: avatarRef.current.value}, setDelay).handleAvatar()
+    onUpdate(setDelay).handleAvatar({avatar: avatarRef.current.value})
   }
 
   return(
