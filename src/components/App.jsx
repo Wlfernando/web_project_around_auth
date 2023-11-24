@@ -113,11 +113,11 @@ function App() {
         index = Promise
           .resolve()
           .then(() => cards.findIndex(getTheCard)),
-        Card = api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
+        aCard = api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
           .then(() => api.do('GET', api.cards))
-          .then(getCards => getCards.find(getTheCard)),
+          .then(cardsFromApi => cardsFromApi.find(getTheCard)),
         updatedCards = await Promise
-          .all([index, Card])
+          .all([index, aCard])
           .then(theCard => cards.with(...theCard))
           .catch(handleError);
 
