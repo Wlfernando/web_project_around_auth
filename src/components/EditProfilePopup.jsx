@@ -6,7 +6,7 @@ const EditProfilePopup = memo(({
   isOpen,
   onClose,
   onUpdate,
-  onFieldChge
+  onValidation,
 }) => {
   const
     [name, setName] = useState(''),
@@ -23,10 +23,6 @@ const EditProfilePopup = memo(({
     setDescription(about ?? '')
   }, [nameFromApi, about])
 
-  function handleValidation(e) {
-    onFieldChge(e, setDisabled)
-  }
-
   function handleChange(e) {
     const input = e.target
 
@@ -40,6 +36,8 @@ const EditProfilePopup = memo(({
       default:
       console.error('how do you arrive here?')
     }
+
+    onValidation(e, setDisabled)
   }
 
   function handleSubmit(setText) {
@@ -61,7 +59,7 @@ const EditProfilePopup = memo(({
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleValidation}
+      onChange={handleChange}
     >
       <input
         className="popup__item"
@@ -73,7 +71,6 @@ const EditProfilePopup = memo(({
         value={name}
         minLength="2"
         maxLength="40"
-        onChange={handleChange}
         ref={nameRef}
       />
       <span className="popup__item-error">
@@ -89,7 +86,6 @@ const EditProfilePopup = memo(({
         value={description}
         minLength="2"
         maxLength="200"
-        onChange={handleChange}
         ref={aboutRef}
       />
       <span className="popup__item-error">

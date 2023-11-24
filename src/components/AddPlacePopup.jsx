@@ -5,7 +5,7 @@ const AddPlacePopup = memo(({
   isOpen,
   onClose,
   onUpdate,
-  onFieldChge,
+  onValidation,
 }) => {
   const
     voidForm = {name: '', link: ''},
@@ -18,14 +18,11 @@ const AddPlacePopup = memo(({
 
     {name, link} = form;
 
-  function handleValidation(e) {
-    onFieldChge(e, setDisabled)
-  }
-
   function handleChange(e) {
-    const input = e.target
+    const input = e.target;
 
     setForm({...form, [input.name]: input.value})
+    onValidation(e, setDisabled)
   }
 
   function handleSubmit(setText) {
@@ -49,7 +46,7 @@ const AddPlacePopup = memo(({
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleValidation}
+      onChange={handleChange}
     >
       <input
         className="popup__item"
@@ -60,7 +57,6 @@ const AddPlacePopup = memo(({
         minLength="2"
         maxLength="30"
         value={name}
-        onChange={handleChange}
         ref={nameRef}
       />
       <span className="popup__item-error">
@@ -73,7 +69,6 @@ const AddPlacePopup = memo(({
         required
         placeholder="Enlace de la imagen"
         value={link}
-        onChange={handleChange}
         ref={linkRef}
       />
       <span className="popup__item-error">

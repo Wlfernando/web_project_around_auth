@@ -5,15 +5,15 @@ const EditAvatarPopup = React.memo(({
   isOpen,
   onClose,
   onUpdate,
-  onFieldChge
+  onValidation,
 }) => {
   const
     avatarRef = React.useRef(null),
 
     [disabled, setDisabled] = React.useState(true);
 
-  function handleValidation(e) {
-    onFieldChge(e, setDisabled)
+  function handleChange(e) {
+    onValidation(e, setDisabled)
   }
 
   function handleSubmit(setText) {
@@ -36,7 +36,7 @@ const EditAvatarPopup = React.memo(({
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleValidation}
+      onChange={handleChange}
     >
       <input
         ref={avatarRef}

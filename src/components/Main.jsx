@@ -59,13 +59,13 @@ const Main = React.memo(({
         isOpen={edit}
         onClose={onClose}
         onUpdate={onUpdate}
-        onFieldChge={handleValidation}
+        onValidation={handleValidation}
       />
       <AddPlacePopup
         isOpen={add}
         onClose={onClose}
         onUpdate={onUpdate}
-        onFieldChge={handleValidation}
+        onValidation={handleValidation}
       />
       <DeletePopup
         isOpen={remove}
@@ -76,7 +76,7 @@ const Main = React.memo(({
         isOpen={avatar}
         onClose={onClose}
         onUpdate={onUpdate}
-        onFieldChge={handleValidation}
+        onValidation={handleValidation}
       />
       <ShowError
         isOpen={error}
