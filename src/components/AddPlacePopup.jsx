@@ -28,11 +28,10 @@ const AddPlacePopup = memo(({
     setForm({...form, [input.name]: input.value})
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-
+  function handleSubmit(setText) {
     function setDelay(delayTimer) {
       setTimeout(() => {
+        setText()
         setForm(voidForm)
         setDisabled(true)
       }, delayTimer)
@@ -45,7 +44,7 @@ const AddPlacePopup = memo(({
     <PopupWithForm
       title="Nuevo Lugar"
       name={'site'}
-      btn='Crear'
+      textBtn='Crear'
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}

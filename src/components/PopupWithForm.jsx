@@ -5,21 +5,31 @@ const PopupWithForm = React.memo(({
   name,
   title,
   children,
-  btn,
+  textBtn,
   onClose,
   onSubmit,
   onChange,
   isDisabled
-})=> {
-  const btnOff = isDisabled && 'button_inactive'
+}) => {
+  const
+    btnRef = React.useRef(null),
+    btnOff = isDisabled ? ' button_inactive' : '';
+
+  function handleSubmit(e) {
+    const btn = btnRef.current
+
+    e.preventDefault()
+    btn.textContent = 'Guardando...'
+    onSubmit(() => btn.textContent = textBtn)
+  }
 
   return (
-    <div className={'popup ' + (isOpen && 'popup_active')}>
+    <div className={'popup' + (isOpen ? ' popup_active' : '')}>
       <form
         className={`popup__container popup__container_type_${name}`}
         name={name}
         noValidate
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
       >
         <fieldset
           className="popup__content"
@@ -29,12 +39,12 @@ const PopupWithForm = React.memo(({
           {children}
           <button
             type="submit"
-            className={"button button__submit " + btnOff}
+            className={"button button__submit" + btnOff}
             name="saveBtn"
             disabled={isDisabled}
+            ref={btnRef}
           >
-            {btn ?? 'Guardar'}
-            <div className="button__submit_processing">Guardando...</div>
+            {textBtn ??= 'Guardar'}
           </button>
         </fieldset>
         <button

@@ -143,7 +143,7 @@ function App() {
           })
         )
         .catch(handleError)
-        .finally(closeAllPopups)
+        .finally(setFinally)
     }
 
     return {

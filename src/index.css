@@ -23,7 +23,6 @@
 @import url(./blocks/button/__close/_place/button__close_place_form.css);
 @import url(./blocks/button/__close/_place/button__close_place_image.css);
 @import url(./blocks/button/__submit/button__submit.css);
-@import url(./blocks/button/__submit/_processing/button__submit_processing.css);
 
 @import url(./blocks/profile/__edit-button/profile__edit-button.css);
 @import url(./blocks/profile/__about-me/profile__about-me.css);
