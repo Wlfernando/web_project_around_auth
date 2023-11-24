@@ -5,7 +5,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext"
 const EditProfilePopup = memo(({
   isOpen,
   onClose,
-  onUpdateUser,
+  onUpdate,
   onFieldChge
 }) => {
   const
@@ -44,10 +44,12 @@ const EditProfilePopup = memo(({
 
   function handleSubmit(e) {
     e.preventDefault()
-    onUpdateUser({
+    
+    onUpdate({
       name,
       about: description
-    }, setDisabled)
+    }, (delayTimer) => setTimeout(setDisabled, delayTimer, true))
+    .handleUser()
   }
 
   return (

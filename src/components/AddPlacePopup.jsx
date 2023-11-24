@@ -4,7 +4,7 @@ import PopupWithForm from "./PopupWithForm";
 const AddPlacePopup = memo(({
   isOpen,
   onClose,
-  onCardSubmit,
+  onUpdate,
   onFieldChge,
 }) => {
   const
@@ -38,7 +38,7 @@ const AddPlacePopup = memo(({
       }, delayTimer)
     }
 
-    onCardSubmit(form, setDelay)
+    onUpdate(form, setDelay).handleAddSubmit()
   }
 
   return(

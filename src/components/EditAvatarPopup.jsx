@@ -4,7 +4,7 @@ import PopupWithForm from "./PopupWithForm"
 const EditAvatarPopup = React.memo(({
   isOpen,
   onClose,
-  onUpdateAvatar,
+  onUpdate,
   onFieldChge
 }) => {
   const
@@ -26,7 +26,7 @@ const EditAvatarPopup = React.memo(({
       }, delayTimer)
     }
 
-    onUpdateAvatar({avatar: avatarRef.current.value}, setDelay)
+    onUpdate({avatar: avatarRef.current.value}, setDelay).handleAvatar()
   }
 
   return(

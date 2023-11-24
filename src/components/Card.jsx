@@ -4,8 +4,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 const Card = memo(({
   data,
   onCardClick,
-  onCardLike,
-  onDelete,
+  onUpdate,
 })=> {
   const
     {_id: userId} = useContext(CurrentUserContext),
@@ -19,15 +18,15 @@ const Card = memo(({
       : 'button card__like-button';
 
   function handleClick() {
-    onCardClick({name, link})
+    onCardClick({name, link}, 'image')
   }
 
   function handleLikeClick() {
-    onCardLike(isLiked, cardId)
+    onUpdate().handleLike(isLiked, cardId)
   }
 
   function handleDelete() {
-    onDelete(cardId)
+    onCardClick(cardId, 'remove')
   }
 
   return(

@@ -1,8 +1,8 @@
 import React from 'react';
 import ImagePopup from './ImagePopup.jsx';
-import Card from './Card.js';
+import Card from './Card.jsx';
 import EditProfilePopup from './EditProfilePopup.jsx';
-import EditAvatarPopup from './EditAvatarPopup.js';
+import EditAvatarPopup from './EditAvatarPopup.jsx';
 import AddPlacePopup from './AddPlacePopup.jsx';
 import Profile from './Profile.jsx';
 import DeletePopup from './DeletePopup.jsx';
@@ -22,13 +22,8 @@ const Main = React.memo(({
   cards,
   errMssg,
   onCardClick,
-  onWillDelete,
   onClose,
-  onUpdateUser,
-  onUpdateAvatar,
-  onCardLike,
-  onCardDelete,
-  onCardSubmit,
+  onUpdate,
 }) => {
   function handleValidation(e, setDisabled) {
     const
@@ -51,8 +46,7 @@ const Main = React.memo(({
             key={card._id}
             data={card}
             onCardClick={onCardClick}
-            onCardLike={onCardLike}
-            onDelete={onWillDelete}
+            onUpdate={onUpdate}
           />
         )}
       </ul>
@@ -64,24 +58,24 @@ const Main = React.memo(({
       <EditProfilePopup
         isOpen={edit}
         onClose={onClose}
-        onUpdateUser={onUpdateUser}
+        onUpdate={onUpdate}
         onFieldChge={handleValidation}
       />
       <AddPlacePopup
         isOpen={add}
         onClose={onClose}
-        onCardSubmit={onCardSubmit}
+        onUpdate={onUpdate}
         onFieldChge={handleValidation}
       />
       <DeletePopup
         isOpen={remove}
-        onDelete={onCardDelete}
+        onUpdate={onUpdate}
         onClose={onClose}
       />
       <EditAvatarPopup
         isOpen={avatar}
         onClose={onClose}
-        onUpdateAvatar={onUpdateAvatar}
+        onUpdate={onUpdate}
         onFieldChge={handleValidation}
       />
       <ShowError

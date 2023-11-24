@@ -3,12 +3,12 @@ import PopupWithForm from './PopupWithForm.js';
 
 const DeletePopup = memo(({
   isOpen,
-  onDelete,
+  onUpdate,
   onClose,
 }) => {
   function handleSubmit(e) {
     e.preventDefault();
-    onDelete();
+    onUpdate().handleDelete();
   }
 
   return (
