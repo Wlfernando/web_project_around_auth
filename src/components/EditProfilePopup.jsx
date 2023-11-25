@@ -34,9 +34,11 @@ const EditProfilePopup = memo(({
         setDescription(input.value)
         break
       default:
-      console.error('how do you arrive here?')
+        console.error('Invalid input')
     }
+  }
 
+  function handleValidation(e) {
     onValidation(e, setDisabled)
   }
 
@@ -59,7 +61,7 @@ const EditProfilePopup = memo(({
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleChange}
+      onChange={handleValidation}
     >
       <input
         className="popup__item"
@@ -69,6 +71,7 @@ const EditProfilePopup = memo(({
         placeholder="Nombre"
         required
         value={name}
+        onChange={handleChange}
         minLength="2"
         maxLength="40"
         ref={nameRef}
@@ -84,6 +87,7 @@ const EditProfilePopup = memo(({
         placeholder="Acerca de mí"
         required
         value={description}
+        onChange={handleChange}
         minLength="2"
         maxLength="200"
         ref={aboutRef}

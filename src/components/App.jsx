@@ -68,8 +68,8 @@ function App() {
 
   function closeAllPopups() {
     setPopupOpen((state) => Object
-    .keys(state)
-    .reduce((obj, key) => ({...obj, [key]: false}), {})
+      .keys(state)
+      .reduce((obj, key) => ({...obj, [key]: false}), {})
     )
   }
 

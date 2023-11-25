@@ -22,6 +22,9 @@ const AddPlacePopup = memo(({
     const input = e.target;
 
     setForm({...form, [input.name]: input.value})
+  }
+
+  function handleValidation(e) {
     onValidation(e, setDisabled)
   }
 
@@ -46,7 +49,7 @@ const AddPlacePopup = memo(({
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleChange}
+      onChange={handleValidation}
     >
       <input
         className="popup__item"
@@ -57,6 +60,7 @@ const AddPlacePopup = memo(({
         minLength="2"
         maxLength="30"
         value={name}
+        onChange={handleChange}
         ref={nameRef}
       />
       <span className="popup__item-error">
@@ -69,6 +73,7 @@ const AddPlacePopup = memo(({
         required
         placeholder="Enlace de la imagen"
         value={link}
+        onChange={handleChange}
         ref={linkRef}
       />
       <span className="popup__item-error">

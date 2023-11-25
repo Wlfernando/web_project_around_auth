@@ -5,6 +5,11 @@ class Api {
     this._contentType = headers['Content-Type'];
   }
 
+  me = '/web_es_07/users/me';
+  cards = '/web_es_07/cards';
+  avatar = this.me + '/avatar';
+  likes = this.cards + '/likes';
+
   do(action, endPoint, id = null) {
     const url = id
       ? this._baseUrl + endPoint + '/' + id
@@ -42,10 +47,5 @@ const api = new Api({
     "Content-Type": "application/json"
   }
 })
-
-api.me = '/web_es_07/users/me';
-api.cards = '/web_es_07/cards';
-api.avatar = api.me + '/avatar';
-api.likes = api.cards + '/likes';
 
 export default api
