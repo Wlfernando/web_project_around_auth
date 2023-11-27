@@ -4,10 +4,9 @@ import { PopupOpenContext } from '../contexts/PopupOpenContext.js';
 
 const DeletePopup = memo(({
   onUpdate,
-  onClose,
 }) => {
   const { remove } = useContext(PopupOpenContext);
-  
+
   function handleSubmit(setText) {
     onUpdate((delayTimer) => setTimeout(setText, delayTimer)).handleDelete();
   }
@@ -19,7 +18,6 @@ const DeletePopup = memo(({
       textBtn='Si'
       isOpen={remove}
       onSubmit={handleSubmit}
-      onClose={onClose}
     />
   )
 })

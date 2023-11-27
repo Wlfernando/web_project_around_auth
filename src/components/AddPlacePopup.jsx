@@ -3,7 +3,6 @@ import PopupWithForm from "./PopupWithForm";
 import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const AddPlacePopup = memo(({
-  onClose,
   onUpdate,
   onValidation,
 }) => {
@@ -48,7 +47,6 @@ const AddPlacePopup = memo(({
       name='site'
       textBtn='Crear'
       isOpen={add}
-      onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
       onChange={handleValidation}

@@ -14,7 +14,6 @@ const Main = React.memo(({
   cards,
   errMssg,
   onCardClick,
-  onClose,
   onUpdate,
 }) => {
   function handleValidation(e, setDisabled) {
@@ -44,30 +43,24 @@ const Main = React.memo(({
       </ul>
       <ImagePopup
         clickedCard={clickedCard}
-        onClose={onClose}
       />
       <EditProfilePopup
-        onClose={onClose}
         onUpdate={onUpdate}
         onValidation={handleValidation}
       />
       <AddPlacePopup
-        onClose={onClose}
         onUpdate={onUpdate}
         onValidation={handleValidation}
       />
       <DeletePopup
         onUpdate={onUpdate}
-        onClose={onClose}
       />
       <EditAvatarPopup
-        onClose={onClose}
         onUpdate={onUpdate}
         onValidation={handleValidation}
       />
       <ShowError
         errMssg={errMssg}
-        onClose={onClose}
       />
     </main>
   )

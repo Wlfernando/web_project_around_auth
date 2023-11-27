@@ -1,4 +1,5 @@
 import React from "react";
+import { CloseContext } from "../contexts/CloseContext";
 
 const PopupWithForm = React.memo(({
   isOpen,
@@ -6,13 +7,15 @@ const PopupWithForm = React.memo(({
   title,
   children,
   textBtn,
-  onClose,
   onSubmit,
   onChange,
   isDisabled
 }) => {
   const
     btnRef = React.useRef(null),
+
+    handleClose = React.useContext(CloseContext),
+
     btnOff = isDisabled ? ' button_inactive' : '';
 
   function handleSubmit(e) {
@@ -50,7 +53,7 @@ const PopupWithForm = React.memo(({
         <button
           type="button"
           className="button button__close button__close_place_form"
-          onClick={onClose}
+          onClick={handleClose}
         ></button>
       </form>
     </div>

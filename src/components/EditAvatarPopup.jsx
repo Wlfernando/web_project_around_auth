@@ -3,7 +3,6 @@ import PopupWithForm from "./PopupWithForm"
 import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const EditAvatarPopup = React.memo(({
-  onClose,
   onUpdate,
   onValidation,
 }) => {
@@ -35,7 +34,6 @@ const EditAvatarPopup = React.memo(({
       title='Cambiar foto de Perfil'
       name={'avatar'}
       isOpen={avatar}
-      onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
       onChange={handleChange}

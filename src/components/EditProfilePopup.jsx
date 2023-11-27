@@ -4,7 +4,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext"
 import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const EditProfilePopup = memo(({
-  onClose,
   onUpdate,
   onValidation,
 }) => {
@@ -59,7 +58,6 @@ const EditProfilePopup = memo(({
       title="Editar Perfil"
       name='perfil'
       isOpen={edit}
-      onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
       onChange={handleValidation}

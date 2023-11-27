@@ -1,14 +1,16 @@
 import { useContext, memo } from "react";
 import { PopupOpenContext } from "../contexts/PopupOpenContext";
+import { CloseContext } from "../contexts/CloseContext";
 
 const ImagePopup = memo(({
   clickedCard: {
     name,
     link,
   },
-  onClose,
 }) => {
-  const { image } = useContext(PopupOpenContext)
+  const
+    { image } = useContext(PopupOpenContext),
+    handleClose = useContext(CloseContext);
 
   return(
     <div className={'popup' + (image ? ' popup_active' : '')}>
@@ -18,7 +20,7 @@ const ImagePopup = memo(({
         <button
           type="button"
           className="button button__close button__close_place_image"
-          onClick={onClose}
+          onClick={handleClose}
         ></button>
       </figure>
     </div>

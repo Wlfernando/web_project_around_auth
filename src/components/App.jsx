@@ -160,7 +160,8 @@ function App() {
       <Context
         currentUser={currentUser}
         isOpen={isPopupOpen}
-        >
+        onClose={closeAllPopups}
+      >
         <Header />
         <Main
           onOpenPopup={openPopup}
@@ -169,7 +170,6 @@ function App() {
           errMssg={errRef.current}
           onCardClick={openPopupCard}
           onUpdate={updateContent}
-          onClose={closeAllPopups}
         />
         <Footer />
       </Context>
