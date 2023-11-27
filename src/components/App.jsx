@@ -159,10 +159,10 @@ function App() {
     <div className="page">
       <Context
         currentUser={currentUser}
-      >
+        isOpen={isPopupOpen}
+        >
         <Header />
         <Main
-          isOpen={isPopupOpen}
           onOpenPopup={openPopup}
           clickedCard={cardDisplayRef.current}
           cards={cards}

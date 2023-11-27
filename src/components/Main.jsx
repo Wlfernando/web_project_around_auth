@@ -9,14 +9,6 @@ import DeletePopup from './DeletePopup.jsx';
 import ShowError from './ShowError.jsx'
 
 const Main = React.memo(({
-  isOpen: {
-    avatar,
-    edit,
-    add,
-    image,
-    remove,
-    error,
-  },
   onOpenPopup,
   clickedCard,
   cards,
@@ -51,35 +43,29 @@ const Main = React.memo(({
         )}
       </ul>
       <ImagePopup
-        isOpen={image}
         clickedCard={clickedCard}
         onClose={onClose}
       />
       <EditProfilePopup
-        isOpen={edit}
         onClose={onClose}
         onUpdate={onUpdate}
         onValidation={handleValidation}
       />
       <AddPlacePopup
-        isOpen={add}
         onClose={onClose}
         onUpdate={onUpdate}
         onValidation={handleValidation}
       />
       <DeletePopup
-        isOpen={remove}
         onUpdate={onUpdate}
         onClose={onClose}
       />
       <EditAvatarPopup
-        isOpen={avatar}
         onClose={onClose}
         onUpdate={onUpdate}
         onValidation={handleValidation}
       />
       <ShowError
-        isOpen={error}
         errMssg={errMssg}
         onClose={onClose}
       />

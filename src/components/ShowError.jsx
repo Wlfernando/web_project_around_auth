@@ -1,12 +1,14 @@
-import { memo } from 'react';
+import { memo, useContext } from 'react';
+import { PopupOpenContext } from '../contexts/PopupOpenContext';
 
 const ShowError = memo(({
-  isOpen,
   errMssg,
   onClose,
 }) => {
+  const { error } = useContext(PopupOpenContext);
+
   return (
-    <div className={"popup" + (isOpen ? ' popup_active' : '')}>
+    <div className={"popup" + (error ? ' popup_active' : '')}>
       <div className="popup__container popup__error">
         <p className="popup__text-error">{errMssg}</p>
         <button

@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useContext } from "react"
 import PopupWithForm from "./PopupWithForm"
+import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const EditAvatarPopup = React.memo(({
-  isOpen,
   onClose,
   onUpdate,
   onValidation,
@@ -10,7 +10,9 @@ const EditAvatarPopup = React.memo(({
   const
     avatarRef = React.useRef(null),
 
-    [disabled, setDisabled] = React.useState(true);
+    [disabled, setDisabled] = React.useState(true),
+
+    { avatar } = useContext(PopupOpenContext);
 
   function handleChange(e) {
     onValidation(e, setDisabled)
@@ -32,7 +34,7 @@ const EditAvatarPopup = React.memo(({
     <PopupWithForm
       title='Cambiar foto de Perfil'
       name={'avatar'}
-      isOpen={isOpen}
+      isOpen={avatar}
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}

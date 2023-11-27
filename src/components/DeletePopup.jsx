@@ -1,11 +1,13 @@
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 import PopupWithForm from './PopupWithForm.jsx';
+import { PopupOpenContext } from '../contexts/PopupOpenContext.js';
 
 const DeletePopup = memo(({
-  isOpen,
   onUpdate,
   onClose,
 }) => {
+  const { remove } = useContext(PopupOpenContext);
+  
   function handleSubmit(setText) {
     onUpdate((delayTimer) => setTimeout(setText, delayTimer)).handleDelete();
   }
@@ -15,7 +17,7 @@ const DeletePopup = memo(({
       title='¿Estás seguro/a?'
       name='delete'
       textBtn='Si'
-      isOpen={isOpen}
+      isOpen={remove}
       onSubmit={handleSubmit}
       onClose={onClose}
     />

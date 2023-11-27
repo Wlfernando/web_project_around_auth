@@ -1,9 +1,9 @@
 import { memo, useState, useRef, useContext, useEffect } from "react"
 import PopupWithForm from "./PopupWithForm"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
+import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const EditProfilePopup = memo(({
-  isOpen,
   onClose,
   onUpdate,
   onValidation,
@@ -16,7 +16,8 @@ const EditProfilePopup = memo(({
     nameRef = useRef(null),
     aboutRef= useRef(null),
 
-    {name: nameFromApi, about} = useContext(CurrentUserContext);
+    {name: nameFromApi, about} = useContext(CurrentUserContext),
+    { edit } = useContext(PopupOpenContext);
 
   useEffect(()=> {
     setName(nameFromApi ?? '')
@@ -56,8 +57,8 @@ const EditProfilePopup = memo(({
   return (
     <PopupWithForm
       title="Editar Perfil"
-      name={'perfil'}
-      isOpen={isOpen}
+      name='perfil'
+      isOpen={edit}
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}

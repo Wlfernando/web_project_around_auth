@@ -1,8 +1,8 @@
-import { memo, useState, useRef } from "react";
+import { memo, useState, useRef, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
+import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const AddPlacePopup = memo(({
-  isOpen,
   onClose,
   onUpdate,
   onValidation,
@@ -15,6 +15,8 @@ const AddPlacePopup = memo(({
 
     nameRef = useRef(null),
     linkRef = useRef(null),
+
+    { add } = useContext(PopupOpenContext),
 
     {name, link} = form;
 
@@ -43,9 +45,9 @@ const AddPlacePopup = memo(({
   return(
     <PopupWithForm
       title="Nuevo Lugar"
-      name={'site'}
+      name='site'
       textBtn='Crear'
-      isOpen={isOpen}
+      isOpen={add}
       onClose={onClose}
       onSubmit={handleSubmit}
       isDisabled={disabled}
