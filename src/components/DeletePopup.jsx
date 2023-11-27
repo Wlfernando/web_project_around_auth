@@ -7,8 +7,8 @@ const DeletePopup = memo(({
 }) => {
   const { remove } = useContext(PopupOpenContext);
 
-  function handleSubmit(setText) {
-    onUpdate((delayTimer) => setTimeout(setText, delayTimer)).handleDelete();
+  function handleSubmit(setBtn) {
+    onUpdate((delayTimer) => setTimeout(setBtn, delayTimer)).handleDelete();
   }
 
   return (

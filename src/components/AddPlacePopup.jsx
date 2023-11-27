@@ -29,10 +29,10 @@ const AddPlacePopup = memo(({
     onValidation(e, setDisabled)
   }
 
-  function handleSubmit(setText) {
+  function handleSubmit(setBtn) {
     function setDelay(delayTimer) {
       setTimeout(() => {
-        setText()
+        setBtn()
         setForm(voidForm)
         setDisabled(true)
       }, delayTimer)

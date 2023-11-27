@@ -17,11 +17,11 @@ const EditAvatarPopup = React.memo(({
     onValidation(e, setDisabled)
   }
 
-  function handleSubmit(setText) {
+  function handleSubmit(setBtn) {
     function setDelay(delayTimer) {
       setTimeout(() => {
         avatarRef.current.value = ''
-        setText()
+        setBtn()
         setDisabled(true)
       }, delayTimer)
     }

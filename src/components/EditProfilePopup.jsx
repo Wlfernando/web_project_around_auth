@@ -42,11 +42,11 @@ const EditProfilePopup = memo(({
     onValidation(e, setDisabled)
   }
 
-  function handleSubmit(setText) {
+  function handleSubmit(setBtn) {
     function setDelay(delayTimer) {
       setTimeout(() => {
         setDisabled(true)
-        setText()
+        setBtn()
       }, delayTimer)
     }
 
