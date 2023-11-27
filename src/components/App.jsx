@@ -2,8 +2,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Header from './Header.js';
 import Main from './Main.jsx';
 import Footer from './Footer.js'
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import api from '../utils/api.js';
+import Context from './Context.jsx';
 
 function App() {
   const
@@ -157,7 +157,9 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentUserContext.Provider value={currentUser}>
+      <Context
+        currentUser={currentUser}
+      >
         <Header />
         <Main
           isOpen={isPopupOpen}
@@ -170,7 +172,7 @@ function App() {
           onClose={closeAllPopups}
         />
         <Footer />
-      </CurrentUserContext.Provider>
+      </Context>
     </div>
   );
 }
