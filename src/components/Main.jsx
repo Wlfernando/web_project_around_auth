@@ -16,21 +16,9 @@ const Main = React.memo(({
   onCardClick,
   onUpdate,
 }) => {
-  function handleValidation(e, setDisabled) {
-    const
-      field = e.currentTarget.elements,
-      hasValid = Array(...field).every(input=>
-        input.validity.valid
-      )
-
-    setDisabled(hasValid ? false : true)
-  }
-
   return(
     <main className="content">
-      <Profile
-        onOpen={onOpenPopup}
-      />
+      <Profile onOpen={onOpenPopup} />
       <ul className="cards">
         {cards.map(card=>
           <Card
@@ -41,27 +29,12 @@ const Main = React.memo(({
           />
         )}
       </ul>
-      <ImagePopup
-        clickedCard={clickedCard}
-      />
-      <EditProfilePopup
-        onUpdate={onUpdate}
-        onValidation={handleValidation}
-      />
-      <AddPlacePopup
-        onUpdate={onUpdate}
-        onValidation={handleValidation}
-      />
-      <DeletePopup
-        onUpdate={onUpdate}
-      />
-      <EditAvatarPopup
-        onUpdate={onUpdate}
-        onValidation={handleValidation}
-      />
-      <ShowError
-        errMssg={errMssg}
-      />
+      <ImagePopup clickedCard={clickedCard} />
+      <EditProfilePopup onUpdate={onUpdate} />
+      <AddPlacePopup onUpdate={onUpdate} />
+      <DeletePopup onUpdate={onUpdate} />
+      <EditAvatarPopup onUpdate={onUpdate} />
+      <ShowError errMssg={errMssg} />
     </main>
   )
 })

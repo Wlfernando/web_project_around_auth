@@ -4,7 +4,6 @@ import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const EditAvatarPopup = React.memo(({
   onUpdate,
-  onValidation,
 }) => {
   const
     avatarRef = React.useRef(null),
@@ -12,10 +11,6 @@ const EditAvatarPopup = React.memo(({
     [disabled, setDisabled] = React.useState(true),
 
     { avatar } = useContext(PopupOpenContext);
-
-  function handleChange(e) {
-    onValidation(e, setDisabled)
-  }
 
   function handleSubmit(setBtn) {
     function setDelay(delayTimer) {
@@ -36,7 +31,7 @@ const EditAvatarPopup = React.memo(({
       isOpen={avatar}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleChange}
+      setDisabled={setDisabled}
     >
       <input
         ref={avatarRef}

@@ -8,8 +8,8 @@ const PopupWithForm = React.memo(({
   children,
   textBtn,
   onSubmit,
-  onChange,
-  isDisabled
+  setDisabled,
+  isDisabled,
 }) => {
   const
     btnRef = React.useRef(null),
@@ -17,6 +17,16 @@ const PopupWithForm = React.memo(({
     handleClose = React.useContext(CloseContext),
 
     btnOff = isDisabled ? ' button_inactive' : '';
+
+  function handleValidation(e) {
+    const
+    field = e.currentTarget.elements,
+    hasValid = Array(...field).every(input =>
+      input.validity.valid
+    )
+
+  setDisabled(hasValid ? false : true)
+  }
 
   function handleSubmit(e) {
     const btn = btnRef.current
@@ -36,7 +46,7 @@ const PopupWithForm = React.memo(({
       >
         <fieldset
           className="popup__content"
-          onChange={onChange}
+          onChange={handleValidation}
         >
           <h3 className="popup__title">{title}</h3>
           {children}

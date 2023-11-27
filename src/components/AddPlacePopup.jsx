@@ -4,10 +4,18 @@ import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const AddPlacePopup = memo(({
   onUpdate,
-  onValidation,
 }) => {
   const
-    voidForm = {name: '', link: ''},
+    voidForm = {
+      name: {
+        value: '',
+        hasMessage: false,
+      },
+      link: {
+        value: '',
+        hasMessage: false,
+      },
+    },
 
     [form, setForm] = useState(voidForm),
     [disabled, setDisabled] = useState(true),
@@ -20,13 +28,14 @@ const AddPlacePopup = memo(({
     {name, link} = form;
 
   function handleChange(e) {
-    const input = e.target;
+    const
+      input = e.target,
+      aName = input.name;
 
-    setForm({...form, [input.name]: input.value})
-  }
+    form[aName].hasMessage = true
+    form[aName].value = input.value
 
-  function handleValidation(e) {
-    onValidation(e, setDisabled)
+    setForm(JSON.parse(JSON.stringify(form)))
   }
 
   function handleSubmit(setBtn) {
@@ -38,7 +47,11 @@ const AddPlacePopup = memo(({
       }, delayTimer)
     }
 
-    onUpdate(setDelay).handleAddSubmit(form)
+    onUpdate(setDelay)
+      .handleAddSubmit({
+        name: form.name.value,
+        link: form.link.value,
+      })
   }
 
   return(
@@ -49,7 +62,7 @@ const AddPlacePopup = memo(({
       isOpen={add}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleValidation}
+      setDisabled={setDisabled}
     >
       <input
         className="popup__item"
@@ -59,12 +72,12 @@ const AddPlacePopup = memo(({
         placeholder="Título"
         minLength="2"
         maxLength="30"
-        value={name}
+        value={name.value}
         onChange={handleChange}
         ref={nameRef}
       />
       <span className="popup__item-error">
-        {nameRef.current?.value && nameRef.current.validationMessage}
+        {name.hasMessage && nameRef.current.validationMessage}
       </span>
       <input
         className="popup__item"
@@ -72,12 +85,12 @@ const AddPlacePopup = memo(({
         name="link"
         required
         placeholder="Enlace de la imagen"
-        value={link}
+        value={link.value}
         onChange={handleChange}
         ref={linkRef}
       />
       <span className="popup__item-error">
-        {linkRef.current?.value && linkRef.current.validationMessage}
+        {link.hasMessage && linkRef.current.validationMessage}
       </span>
     </PopupWithForm>
   )

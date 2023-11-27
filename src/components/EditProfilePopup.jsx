@@ -5,7 +5,6 @@ import { PopupOpenContext } from "../contexts/PopupOpenContext";
 
 const EditProfilePopup = memo(({
   onUpdate,
-  onValidation,
 }) => {
   const
     [name, setName] = useState(''),
@@ -38,10 +37,6 @@ const EditProfilePopup = memo(({
     }
   }
 
-  function handleValidation(e) {
-    onValidation(e, setDisabled)
-  }
-
   function handleSubmit(setBtn) {
     function setDelay(delayTimer) {
       setTimeout(() => {
@@ -60,7 +55,7 @@ const EditProfilePopup = memo(({
       isOpen={edit}
       onSubmit={handleSubmit}
       isDisabled={disabled}
-      onChange={handleValidation}
+      setDisabled={setDisabled}
     >
       <input
         className="popup__item"
