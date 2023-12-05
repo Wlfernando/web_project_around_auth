@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const Card = memo(({
   data,
-  onCardClick,
+  openPopupCard,
   onUpdate,
 })=> {
   const
@@ -18,7 +18,7 @@ const Card = memo(({
       : 'button card__like-button';
 
   function handleClick() {
-    onCardClick({name, link}, 'image')
+    openPopupCard({name, link})
   }
 
   function handleLikeClick() {
@@ -26,7 +26,7 @@ const Card = memo(({
   }
 
   function handleDelete() {
-    onCardClick(cardId, 'remove')
+    openPopupCard(cardId)
   }
 
   return(

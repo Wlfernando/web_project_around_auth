@@ -13,7 +13,7 @@ const Main = React.memo(({
   clickedCard,
   cards,
   errMssg,
-  onCardClick,
+  openPopupCard,
   onUpdate,
 }) => {
   return(
@@ -24,7 +24,7 @@ const Main = React.memo(({
           <Card
             key={card._id}
             data={card}
-            onCardClick={onCardClick}
+            openPopupCard={openPopupCard}
             onUpdate={onUpdate}
           />
         )}

@@ -4,17 +4,12 @@ import Main from './Main.jsx';
 import Footer from './Footer.js'
 import api from '../utils/api.js';
 import Context from './Context.jsx';
+import usePopupRender from '../customHook/usePopupRender.js'
 
 function App() {
   const
-    [isPopupOpen, setPopupOpen] = useState({
-      avatar: false,
-      edit: false,
-      add: false,
-      image: false,
-      remove: false,
-      error: false,
-    }),
+    { isPopupOpen, openPopup, closeAllPopups } = usePopupRender(),
+
     [currentUser, setCurrentUser] = useState({}),
     [cards, setCards] = useState([]),
 
@@ -25,7 +20,7 @@ function App() {
     handleError = useCallback(function (err) {
       errRef.current = err.message
       openPopup('error')
-    }, []);
+    }, [openPopup]);
 
   useEffect(() => {
     api.do('GET', api.me)
@@ -60,25 +55,16 @@ function App() {
       document.removeEventListener('keydown', handleListenerClose)
       document.removeEventListener('click', handleListenerClose)
     }
-  }, [isPopupOpen])
+  }, [isPopupOpen, closeAllPopups])
 
-  function openPopup(popup) {
-    setPopupOpen((state) => ({...state, [popup]: true}))
-  }
-
-  function closeAllPopups() {
-    setPopupOpen((state) => Object
-      .keys(state)
-      .reduce((obj, key) => ({...obj, [key]: false}), {})
-    )
-  }
-
-  function openPopupCard(card, popup) {
-    typeof card === 'object'
-      ? cardDisplayRef.current = card
-      : cardIdRef.current = card
-
-    openPopup(popup)
+  function openPopupCard(card) {
+    if (typeof card === 'object') {
+      cardDisplayRef.current = card
+      openPopup('image')
+    } else {
+      cardIdRef.current = card
+      openPopup('remove')
+    }
   }
 
   function updateContent(setDelay) {
@@ -168,7 +154,7 @@ function App() {
           clickedCard={cardDisplayRef.current}
           cards={cards}
           errMssg={errRef.current}
-          onCardClick={openPopupCard}
+          openPopupCard={openPopupCard}
           onUpdate={updateContent}
         />
         <Footer />
