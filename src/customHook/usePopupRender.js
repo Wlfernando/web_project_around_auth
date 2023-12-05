@@ -1,15 +1,8 @@
 import { useState, useCallback } from "react";
 
-export default function usePopupRender() {
+export default function usePopupRender(...popups) {
   const
-    [isPopupOpen, setPopupOpen] = useState({
-      avatar: false,
-      edit: false,
-      add: false,
-      image: false,
-      remove: false,
-      error: false,
-    }),
+    [isPopupOpen, setPopupOpen] = useState(popups.reduce(setFalse, {})),
 
     openPopup = useCallback(function (popup) {
       setPopupOpen((state) => ({...state, [popup]: true}))
@@ -18,13 +11,17 @@ export default function usePopupRender() {
     closeAllPopups = function () {
       setPopupOpen((state) => Object
         .keys(state)
-        .reduce((obj, key) => ({...obj, [key]: false}), {})
+        .reduce(setFalse, {})
       )
-    }
+    };
 
-  return {
+  function setFalse(obj, key) {
+    return Object.assign(obj, {[key]: false})
+  }
+
+  return [
     isPopupOpen,
     openPopup,
     closeAllPopups,
-  }
+  ]
 }

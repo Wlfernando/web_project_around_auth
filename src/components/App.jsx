@@ -8,7 +8,14 @@ import usePopupRender from '../customHook/usePopupRender.js'
 
 function App() {
   const
-    { isPopupOpen, openPopup, closeAllPopups } = usePopupRender(),
+    [isPopupOpen, openPopup, closeAllPopups] = usePopupRender(
+      'avatar',
+      'edit',
+      'add',
+      'image',
+      'remove',
+      'error',
+    ),
 
     [currentUser, setCurrentUser] = useState({}),
     [cards, setCards] = useState([]),
