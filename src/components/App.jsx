@@ -4,11 +4,11 @@ import Main from './Main.jsx';
 import Footer from './Footer.js'
 import api from '../utils/api.js';
 import Context from './Context.jsx';
-import usePopupRender from '../customHook/usePopupRender.js'
+import useModal from '../customHook/useModal.js'
 
 function App() {
   const
-    [isPopupOpen, openPopup, closeAllPopups] = usePopupRender(
+    [isPopupOpen, openPopup, closeAllPopups] = useModal(
       'avatar',
       'edit',
       'add',
