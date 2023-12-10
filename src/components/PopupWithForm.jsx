@@ -38,34 +38,36 @@ const PopupWithForm = React.memo(({
 
   return (
     <div className={'popup' + (isOpen ? ' popup_active' : '')}>
-      <form
-        className={`popup__container popup__container_type_${name}`}
-        name={name}
-        noValidate
-        onSubmit={handleSubmit}
-      >
-        <fieldset
-          className="popup__content"
-          onChange={handleValidation}
+      <div className="popup__wrapper">
+        <form
+          className="form form_popup"
+          name={name}
+          noValidate
+          onSubmit={handleSubmit}
         >
-          <h3 className="popup__title">{title}</h3>
-          {children}
-          <button
-            type="submit"
-            className={"button button__submit" + btnOff}
-            name="saveBtn"
-            disabled={isDisabled}
-            ref={btnRef}
+          <fieldset
+            className="form__fieldset"
+            onChange={handleValidation}
           >
-            {textBtn ??= 'Guardar'}
-          </button>
-        </fieldset>
+            <h3 className="form__title">{title}</h3>
+            {children}
+            <button
+              type="submit"
+              className={"button button__submit" + btnOff}
+              name="saveBtn"
+              disabled={isDisabled}
+              ref={btnRef}
+            >
+              {textBtn ??= 'Guardar'}
+            </button>
+          </fieldset>
+        </form>
         <button
           type="button"
           className="button button__close button__close_place_form"
           onClick={handleClose}
         ></button>
-      </form>
+      </div>
     </div>
   )
 })

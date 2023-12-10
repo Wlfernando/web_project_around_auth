@@ -35,7 +35,7 @@ const EditAvatarPopup = React.memo(({
     >
       <input
         ref={avatarRef}
-        className="popup__item"
+        className="form__item"
         type="url"
         id="avatar"
         name="avatar"
@@ -43,7 +43,7 @@ const EditAvatarPopup = React.memo(({
         placeholder="Enlace del avatar"
       />
       <span
-        className="popup__item-error"
+        className="form__item-error"
       >
         {disabled && avatarRef.current?.validationMessage}
       </span>

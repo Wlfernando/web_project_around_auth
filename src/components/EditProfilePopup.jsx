@@ -58,7 +58,7 @@ const EditProfilePopup = memo(({
       setDisabled={setDisabled}
     >
       <input
-        className="popup__item"
+        className="form__item"
         type="text"
         id="profile-name"
         name="name"
@@ -70,11 +70,11 @@ const EditProfilePopup = memo(({
         maxLength="40"
         ref={nameRef}
       />
-      <span className="popup__item-error">
+      <span className="form__item-error">
         {nameRef.current?.value && nameRef.current.validationMessage}
       </span>
       <input
-        className="popup__item"
+        className="form__item"
         type="text"
         id="about-me"
         name="about"
@@ -86,7 +86,7 @@ const EditProfilePopup = memo(({
         maxLength="200"
         ref={aboutRef}
       />
-      <span className="popup__item-error">
+      <span className="form__item-error">
         {aboutRef.current?.value && aboutRef.current.validationMessage}
       </span>
     </PopupWithForm>

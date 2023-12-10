@@ -1,0 +1,6 @@
+.popup__wrapper {
+  max-width: 430px;
+  min-width: calc(320px - 10%);
+  width: 90%;
+  position: relative;
+}

@@ -65,7 +65,7 @@ const AddPlacePopup = memo(({
       setDisabled={setDisabled}
     >
       <input
-        className="popup__item"
+        className="form__item"
         type="text"
         name="name"
         required
@@ -76,11 +76,11 @@ const AddPlacePopup = memo(({
         onChange={handleChange}
         ref={nameRef}
       />
-      <span className="popup__item-error">
+      <span className="form__item-error">
         {name.hasMessage && nameRef.current.validationMessage}
       </span>
       <input
-        className="popup__item"
+        className="form__item"
         type="url"
         name="link"
         required
@@ -89,7 +89,7 @@ const AddPlacePopup = memo(({
         onChange={handleChange}
         ref={linkRef}
       />
-      <span className="popup__item-error">
+      <span className="form__item-error">
         {link.hasMessage && linkRef.current.validationMessage}
       </span>
     </PopupWithForm>
