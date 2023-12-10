@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Header from './Header.js';
+import { Route } from 'react-router-dom';
+import Header from './Header.jsx';
 import Main from './Main.jsx';
 import Footer from './Footer.js'
 import api from '../utils/api.js';
 import Context from './Context.jsx';
 import useModal from '../customHook/useModal.js'
+import { Switch } from 'react-router-dom/cjs/react-router-dom.min.js';
 
 function App() {
   const
@@ -38,31 +40,6 @@ function App() {
       .then(setCards)
       .catch(handleError)
   }, [handleError])
-
-  useEffect(() => {
-    const hasOpened = Object
-      .values(isPopupOpen)
-      .some(Boolean);
-
-    function handleListenerClose(e) {
-      const
-        hasClicked = ['popup_active', 'popup__image-container']
-          .some(click => e.target.classList.contains(click)),
-        escPressed = e.key === 'Escape';
-
-      if(hasClicked || escPressed) closeAllPopups()
-    }
-
-    if(hasOpened) {
-      document.addEventListener('click', handleListenerClose)
-      document.addEventListener('keydown', handleListenerClose)
-    }
-
-    return ()=> {
-      document.removeEventListener('keydown', handleListenerClose)
-      document.removeEventListener('click', handleListenerClose)
-    }
-  }, [isPopupOpen, closeAllPopups])
 
   function openPopupCard(card) {
     if (typeof card === 'object') {
@@ -156,14 +133,21 @@ function App() {
         onClose={closeAllPopups}
       >
         <Header />
-        <Main
-          onOpenPopup={openPopup}
-          clickedCard={cardDisplayRef.current}
-          cards={cards}
-          errMssg={errRef.current}
-          openPopupCard={openPopupCard}
-          onUpdate={updateContent}
-        />
+        <Switch>
+          <Route path="/signup">
+
+          </Route>
+          <Route exact path="/">
+            <Main
+              onOpenPopup={openPopup}
+              clickedCard={cardDisplayRef.current}
+              cards={cards}
+              errMssg={errRef.current}
+              openPopupCard={openPopupCard}
+              onUpdate={updateContent}
+            />
+          </Route>
+        </Switch>
         <Footer />
       </Context>
     </div>

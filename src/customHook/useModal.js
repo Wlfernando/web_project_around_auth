@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 export default function useModal(...theModals) {
   const
@@ -8,12 +8,37 @@ export default function useModal(...theModals) {
       setModalOpen((state) => ({...state, [modal]: true}))
     }, []),
 
-    closeAllModals = function () {
+    closeAllModals = useCallback(function () {
       setModalOpen((state) => Object
         .keys(state)
         .reduce(setFalse, {})
       )
-    };
+    }, []);
+
+  useEffect(() => {
+    const hasOpened = Object
+      .values(modals)
+      .some(Boolean);
+
+    function handleListenerClose(e) {
+      const
+        hasClicked = ['popup_active', 'popup__image-container']
+          .some(click => e.target.classList.contains(click)),
+        escPressed = e.key === 'Escape';
+
+      if(hasClicked || escPressed) closeAllModals()
+    }
+
+    if(hasOpened) {
+      document.addEventListener('click', handleListenerClose)
+      document.addEventListener('keydown', handleListenerClose)
+    }
+
+    return ()=> {
+      document.removeEventListener('keydown', handleListenerClose)
+      document.removeEventListener('click', handleListenerClose)
+    }
+  }, [modals, closeAllModals])
 
   function setFalse(obj, key) {
     return Object.assign(obj, {[key]: false})
