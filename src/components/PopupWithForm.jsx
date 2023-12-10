@@ -1,22 +1,18 @@
 import React from "react";
 import { CloseContext } from "../contexts/CloseContext";
+import Form from './Form.jsx'
 
 const PopupWithForm = React.memo(({
   isOpen,
-  name,
-  title,
-  children,
   textBtn,
   onSubmit,
   setDisabled,
-  isDisabled,
+  ...props
 }) => {
   const
     btnRef = React.useRef(null),
 
-    handleClose = React.useContext(CloseContext),
-
-    btnOff = isDisabled ? ' button_inactive' : '';
+    handleClose = React.useContext(CloseContext);
 
   function handleValidation(e) {
     const
@@ -28,10 +24,9 @@ const PopupWithForm = React.memo(({
   setDisabled(hasValid ? false : true)
   }
 
-  function handleSubmit(e) {
+  function handleSubmit() {
     const btn = btnRef.current
 
-    e.preventDefault()
     btn.textContent = 'Guardando...'
     onSubmit(() => btn.textContent = textBtn)
   }
@@ -39,29 +34,11 @@ const PopupWithForm = React.memo(({
   return (
     <div className={'popup' + (isOpen ? ' popup_active' : '')}>
       <div className="popup__wrapper">
-        <form
-          className="form form_popup"
-          name={name}
-          noValidate
+        <Form {...props}
+          onValidation={handleValidation}
           onSubmit={handleSubmit}
-        >
-          <fieldset
-            className="form__fieldset"
-            onChange={handleValidation}
-          >
-            <h3 className="form__title">{title}</h3>
-            {children}
-            <button
-              type="submit"
-              className={"button button__submit" + btnOff}
-              name="saveBtn"
-              disabled={isDisabled}
-              ref={btnRef}
-            >
-              {textBtn ??= 'Guardar'}
-            </button>
-          </fieldset>
-        </form>
+          btn={{textBtn, btnRef}}
+        />
         <button
           type="button"
           className="button button__close button__close_place_form"
