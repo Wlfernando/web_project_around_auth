@@ -15,7 +15,7 @@ const DeletePopup = memo(({
     <PopupWithForm
       title='¿Estás seguro/a?'
       name='delete'
-      textBtn='Si'
+      btnText='Si'
       isOpen={remove}
       onSubmit={handleSubmit}
     />

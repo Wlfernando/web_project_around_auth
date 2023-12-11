@@ -6,7 +6,7 @@ export default function Form({
   onSubmit,
   onValidation,
   btn: {
-    textBtn,
+    btnText,
     btnRef,
   },
 }) {
@@ -36,7 +36,7 @@ export default function Form({
           disabled={isDisabled}
           ref={btnRef}
         >
-          {textBtn ??= 'Guardar'}
+          {btnText ??= 'Guardar'}
         </button>
       </fieldset>
     </form>

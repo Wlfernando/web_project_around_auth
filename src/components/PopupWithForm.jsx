@@ -4,7 +4,7 @@ import Form from './Form.jsx'
 
 const PopupWithForm = React.memo(({
   isOpen,
-  textBtn,
+  btnText,
   onSubmit,
   setDisabled,
   ...props
@@ -28,7 +28,7 @@ const PopupWithForm = React.memo(({
     const btn = btnRef.current
 
     btn.textContent = 'Guardando...'
-    onSubmit(() => btn.textContent = textBtn)
+    onSubmit(() => btn.textContent = btnText)
   }
 
   return (
@@ -37,7 +37,7 @@ const PopupWithForm = React.memo(({
         <Form {...props}
           onValidation={handleValidation}
           onSubmit={handleSubmit}
-          btn={{textBtn, btnRef}}
+          btn={{btnText, btnRef}}
         />
         <button
           type="button"

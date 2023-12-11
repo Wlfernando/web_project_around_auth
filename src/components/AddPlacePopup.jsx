@@ -58,7 +58,7 @@ const AddPlacePopup = memo(({
     <PopupWithForm
       title="Nuevo Lugar"
       name='site'
-      textBtn='Crear'
+      btnText='Crear'
       isOpen={add}
       onSubmit={handleSubmit}
       isDisabled={disabled}
