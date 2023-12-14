@@ -1,6 +1,4 @@
 .form__item {
-  width: 100%;
-  box-sizing: border-box;
   border: 0;
   border-bottom: 1px solid #C4C4C4;
   font-size: 14px;
@@ -8,7 +6,7 @@
   font-family: inherit;
   transition: border-bottom 250ms ease-in;
 }
-  
+
 .form__item::-webkit-input-placeholder {
   opacity: .5;
 }

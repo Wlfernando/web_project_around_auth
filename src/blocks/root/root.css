@@ -1,9 +1,11 @@
 #root {
+  min-width: 320px;
   display: grid;
   justify-items: center;
   background-color: black;
 }
 
-#root * {
+:root * {
   margin: 0;
+  padding: 0;
 }

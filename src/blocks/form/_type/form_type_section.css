@@ -1,0 +1,5 @@
+.form_type_section {
+  flex-grow: 1;
+  grid-template-columns: minmax(260px, 358px);
+  padding: 0 30px;
+}

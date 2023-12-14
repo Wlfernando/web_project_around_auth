@@ -1,0 +1,9 @@
+.form__item_type_section {
+  background-color: unset;
+  height: 27px;
+  color: white;
+}
+
+.form__item_type_section::placeholder {
+  opacity: 1;
+}
