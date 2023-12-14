@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Header from './Header.jsx';
 import Main from './Main.jsx';
 import Footer from './Footer.js'
 import api from '../utils/api.js';
 import Context from './Context.jsx';
 import useModal from '../customHook/useModal.js'
-import { Switch } from 'react-router-dom/cjs/react-router-dom.min.js';
+import Register from './Register.jsx';
+import Login from './Login.jsx';
 
 function App() {
   const
@@ -135,7 +136,10 @@ function App() {
         <Header />
         <Switch>
           <Route path="/signup">
-
+            <Register />
+          </Route>
+          <Route path="/signin">
+            <Login />
           </Route>
           <Route exact path="/">
             <Main
