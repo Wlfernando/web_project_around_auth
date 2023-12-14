@@ -38,6 +38,7 @@ const PopupWithForm = React.memo(({
           onValidation={handleValidation}
           onSubmit={handleSubmit}
           btn={{btnText, btnRef}}
+          mod="popup"
         />
         <button
           type="button"
