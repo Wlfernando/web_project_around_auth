@@ -4,7 +4,7 @@ import Form from './Form.jsx'
 
 const PopupWithForm = React.memo(({
   isOpen,
-  btnText,
+  btnText = 'Guardar',
   onSubmit,
   setDisabled,
   ...props
@@ -14,28 +14,20 @@ const PopupWithForm = React.memo(({
 
     handleClose = React.useContext(CloseContext);
 
-  function handleValidation(e) {
-    const
-    field = e.currentTarget.elements,
-    hasValid = Array(...field).every(input =>
-      input.validity.valid
-    )
-
-  setDisabled(hasValid ? false : true)
-  }
-
-  function handleSubmit() {
+  function handleSubmit(e, disable) {
     const btn = btnRef.current
 
     btn.textContent = 'Guardando...'
-    onSubmit(() => btn.textContent = btnText)
+    onSubmit(() => {
+      btn.textContent = btnText
+      disable()
+    })
   }
 
   return (
     <div className={'popup' + (isOpen ? ' popup_active' : '')}>
       <div className="popup__wrapper">
         <Form {...props}
-          onValidation={handleValidation}
           onSubmit={handleSubmit}
           btn={{btnText, btnRef}}
           mod="popup"

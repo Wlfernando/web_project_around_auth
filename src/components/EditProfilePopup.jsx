@@ -9,7 +9,6 @@ const EditProfilePopup = memo(({
   const
     [name, setName] = useState(''),
     [description, setDescription] = useState(''),
-    [disabled, setDisabled] = useState(true),
 
     nameRef = useRef(null),
     aboutRef= useRef(null),
@@ -40,7 +39,6 @@ const EditProfilePopup = memo(({
   function handleSubmit(setBtn) {
     function setDelay(delayTimer) {
       setTimeout(() => {
-        setDisabled(true)
         setBtn()
       }, delayTimer)
     }
@@ -54,8 +52,6 @@ const EditProfilePopup = memo(({
       name='perfil'
       isOpen={edit}
       onSubmit={handleSubmit}
-      isDisabled={disabled}
-      setDisabled={setDisabled}
     >
       <input
         className="form__item"

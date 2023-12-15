@@ -1,22 +1,36 @@
+import { useState } from "react";
+
 export default function Form({
   name,
   title,
   mod,
   children,
-  isDisabled,
   para,
   onSubmit,
-  onValidation,
   btn: {
     btnText,
     btnRef,
   },
 }) {
-  const btnOff = isDisabled ? ' button_inactive' : '';
+  const
+    haveInputs = children ? true : false,
+    [disabled, setDisabled] = useState(haveInputs),
+
+    btnOff = disabled ? ' button_inactive' : '';
+
+  function handleValidation(e) {
+    const
+      field = e.currentTarget.elements,
+      hasValid = Array(...field).every(input =>
+        input.validity.valid
+      )
+
+    setDisabled(hasValid ? false : true)
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
-    onSubmit()
+    onSubmit(e, () => setDisabled(haveInputs))
   }
 
   return (
@@ -28,7 +42,7 @@ export default function Form({
     >
       <fieldset
         className={`form__fieldset form__fieldset_type_${mod}`}
-        onChange={onValidation}
+        onChange={handleValidation}
       >
         <h3 className={`form__title form__title_type_${mod}`}>{title}</h3>
         {children}
@@ -36,10 +50,10 @@ export default function Form({
       <button
         type="submit"
         className={`button button__submit button__submit_type_${mod} ${btnOff}`}
-        disabled={isDisabled}
+        disabled={disabled}
         ref={btnRef}
       >
-        {btnText ??= 'Guardar'}
+        {btnText}
       </button>
       {para && <p className="form__question">{para}</p>}
     </form>

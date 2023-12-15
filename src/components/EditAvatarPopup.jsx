@@ -8,8 +8,6 @@ const EditAvatarPopup = React.memo(({
   const
     avatarRef = React.useRef(null),
 
-    [disabled, setDisabled] = React.useState(true),
-
     { avatar } = useContext(PopupOpenContext);
 
   function handleSubmit(setBtn) {
@@ -17,7 +15,6 @@ const EditAvatarPopup = React.memo(({
       setTimeout(() => {
         avatarRef.current.value = ''
         setBtn()
-        setDisabled(true)
       }, delayTimer)
     }
 
@@ -30,8 +27,6 @@ const EditAvatarPopup = React.memo(({
       name={'avatar'}
       isOpen={avatar}
       onSubmit={handleSubmit}
-      isDisabled={disabled}
-      setDisabled={setDisabled}
     >
       <input
         ref={avatarRef}
@@ -42,10 +37,8 @@ const EditAvatarPopup = React.memo(({
         required
         placeholder="Enlace del avatar"
       />
-      <span
-        className="form__item-error"
-      >
-        {disabled && avatarRef.current?.validationMessage}
+      <span className="form__item-error" >
+        {avatarRef.current?.validationMessage}
       </span>
     </PopupWithForm>
   )

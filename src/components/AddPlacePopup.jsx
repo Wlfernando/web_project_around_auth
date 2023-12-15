@@ -18,7 +18,6 @@ const AddPlacePopup = memo(({
     },
 
     [form, setForm] = useState(voidForm),
-    [disabled, setDisabled] = useState(true),
 
     nameRef = useRef(null),
     linkRef = useRef(null),
@@ -43,7 +42,6 @@ const AddPlacePopup = memo(({
       setTimeout(() => {
         setBtn()
         setForm(voidForm)
-        setDisabled(true)
       }, delayTimer)
     }
 
@@ -61,8 +59,6 @@ const AddPlacePopup = memo(({
       btnText='Crear'
       isOpen={add}
       onSubmit={handleSubmit}
-      isDisabled={disabled}
-      setDisabled={setDisabled}
     >
       <input
         className="form__item"
