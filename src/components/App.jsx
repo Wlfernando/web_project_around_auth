@@ -4,6 +4,7 @@ import Header from './Header.jsx';
 import Main from './Main.jsx';
 import Footer from './Footer.js'
 import api from '../utils/api.js';
+import * as auth from '../utils/auth.js'
 import Context from './Context.jsx';
 import useModal from '../customHook/useModal.js'
 import Register from './Register.jsx';
@@ -41,6 +42,12 @@ function App() {
       .then(setCards)
       .catch(handleError)
   }, [handleError])
+
+  function handleRegister(user) {
+    auth.register(user)
+      .then(console.log)
+      .catch(handleError)
+  }
 
   function openPopupCard(card) {
     if (typeof card === 'object') {
@@ -136,7 +143,7 @@ function App() {
         <Header />
         <Switch>
           <Route path="/signup">
-            <Register />
+            <Register onSubmit={handleRegister} />
           </Route>
           <Route path="/signin">
             <Login />

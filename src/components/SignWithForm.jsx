@@ -31,12 +31,15 @@ export default function SignWithForm(props) {
         className={inputClass}
         type="email"
         placeholder="Correo electrónico"
+        required
         ref={emailRef}
       />
       <input
         className={inputClass}
         type="password"
         placeholder="Contraseña"
+        required
+        minLength='4'
         ref={passwordRef}
       />
     </Form>

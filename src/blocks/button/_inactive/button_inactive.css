@@ -5,3 +5,8 @@
   opacity: .2;
   cursor: initial;
 }
+
+.form_type_section > .button_inactive {
+  border: 1px solid white;
+  color: white;
+}
