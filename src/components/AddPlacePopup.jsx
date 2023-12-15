@@ -47,8 +47,8 @@ const AddPlacePopup = memo(({
 
     onUpdate(setDelay)
       .handleAddSubmit({
-        name: form.name.value,
-        link: form.link.value,
+        name: name.value,
+        link: link.value,
       })
   }
 
