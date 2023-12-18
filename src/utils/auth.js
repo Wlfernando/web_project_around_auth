@@ -18,7 +18,7 @@ function confirmBody(user) {
   }
 }
 
-function handleOpt(sendBody) {
+function handlePostOpt(sendBody) {
   return {
     method: "POST",
     headers: {
@@ -28,12 +28,36 @@ function handleOpt(sendBody) {
   }
 }
 
+function handleResponse(res) {
+  if (res.ok) return res.json()
+  return Promise.reject(res)
+}
+
 export function register(user) {
   confirmBody(user)
 
-  return fetch(`${BASE_URL}/signup`, handleOpt(user))
-    .then(res => {
-      if (res.ok) return res.json()
-      return Promise.reject(res)
+  return fetch(`${BASE_URL}/signup`, handlePostOpt(user))
+    .then(handleResponse)
+}
+
+export function login(user) {
+  confirmBody(user)
+
+  return fetch(`${BASE_URL}/signin`, handlePostOpt(user))
+    .then(handleResponse)
+    .then(({ token }) => {
+      localStorage.setItem('token', token)
+
+      return fetch(`${BASE_URL}/users/me`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization" : `Bearer ${token}`
+        }
+      })
+    })
+    .then(handleResponse)
+    .then(( {data: { email } }) => {
+      localStorage.setItem('email', email)
     })
 }

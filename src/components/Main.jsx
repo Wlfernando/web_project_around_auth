@@ -6,13 +6,11 @@ import EditAvatarPopup from './EditAvatarPopup.jsx';
 import AddPlacePopup from './AddPlacePopup.jsx';
 import Profile from './Profile.jsx';
 import DeletePopup from './DeletePopup.jsx';
-import ShowError from './ShowError.jsx'
 
 const Main = React.memo(({
   onOpenPopup,
   clickedCard,
   cards,
-  errMssg,
   openPopupCard,
   onUpdate,
 }) => {
@@ -34,7 +32,6 @@ const Main = React.memo(({
       <AddPlacePopup onUpdate={onUpdate} />
       <DeletePopup onUpdate={onUpdate} />
       <EditAvatarPopup onUpdate={onUpdate} />
-      <ShowError errMssg={errMssg} />
     </main>
   )
 })

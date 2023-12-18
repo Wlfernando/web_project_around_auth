@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header.jsx';
 import Main from './Main.jsx';
 import Footer from './Footer.js'
@@ -9,6 +9,8 @@ import Context from './Context.jsx';
 import useModal from '../customHook/useModal.js'
 import Register from './Register.jsx';
 import Login from './Login.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
+import ShowError from './ShowError.jsx';
 
 function App() {
   const
@@ -25,12 +27,15 @@ function App() {
     [currentUser, setCurrentUser] = useState({}),
     [cards, setCards] = useState([]),
 
+    history = useHistory(),
+
     cardDisplayRef = useRef({}),
     cardIdRef = useRef(''),
     errRef = useRef(''),
     infoToolTipRef = useRef(''),
 
     handleError = useCallback(function (err) {
+      console.log(err)
       errRef.current = err.message
       openPopup('error')
     }, [openPopup]);
@@ -55,6 +60,18 @@ function App() {
         Por favor, inténtalo de nuevo.`
       })
       .finally(() => {
+        openPopup('infoToolTip')
+      })
+  }
+
+  function handleLogin(user) {
+    auth.login(user)
+      .then(() => {
+        history.push('/')
+      })
+      .catch(() => {
+        infoToolTipRef.current = `Uy, algo salió mal.
+        Por favor, inténtalo de nuevo.`
         openPopup('infoToolTip')
       })
   }
@@ -159,19 +176,23 @@ function App() {
             />
           </Route>
           <Route path="/signin">
-            <Login />
-          </Route>
-          <Route exact path="/">
-            <Main
-              onOpenPopup={openPopup}
-              clickedCard={cardDisplayRef.current}
-              cards={cards}
-              errMssg={errRef.current}
-              openPopupCard={openPopupCard}
-              onUpdate={updateContent}
+            <Login
+              onSubmit={handleLogin}
             />
           </Route>
+          <Route exact path="/">
+            <ProtectedRoute>
+              <Main
+                onOpenPopup={openPopup}
+                clickedCard={cardDisplayRef.current}
+                cards={cards}
+                openPopupCard={openPopupCard}
+                onUpdate={updateContent}
+              />
+            </ProtectedRoute>
+          </Route>
         </Switch>
+        <ShowError errMssg={errRef.current} />
         <Footer />
       </Context>
     </div>

@@ -21,8 +21,12 @@ const Header = () => {
       />
       {link[pathname] ??
         <div className='header__menu'>
-          <p className='header__user'>user</p>
-          <Link className={linkClass} to='/signin'>Cerrar sesión</Link>
+          <p className='header__user'>{localStorage.getItem('email')}</p>
+          <Link
+            onClick={() => localStorage.clear()}
+            className={linkClass} to='/signin'>
+              Cerrar sesión
+          </Link>
         </div>
       }
       <hr className="header__horizontal" />
