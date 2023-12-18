@@ -180,17 +180,15 @@ function App() {
               onSubmit={handleLogin}
             />
           </Route>
-          <Route exact path="/">
-            <ProtectedRoute>
-              <Main
-                onOpenPopup={openPopup}
-                clickedCard={cardDisplayRef.current}
-                cards={cards}
-                openPopupCard={openPopupCard}
-                onUpdate={updateContent}
-              />
-            </ProtectedRoute>
-          </Route>
+          <ProtectedRoute exact path="/">
+            <Main
+              onOpenPopup={openPopup}
+              clickedCard={cardDisplayRef.current}
+              cards={cards}
+              openPopupCard={openPopupCard}
+              onUpdate={updateContent}
+            />
+          </ProtectedRoute>
         </Switch>
         <ShowError errMssg={errRef.current} />
         <Footer />
