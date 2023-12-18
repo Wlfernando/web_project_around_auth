@@ -1,9 +1,7 @@
-import InfoToolTip from "./InfoToolTip";
 import SignWithForm from "./SignWithForm";
 
 export default function Register({
   onSubmit,
-  onRef,
 }) {
   return (
     <>
@@ -13,7 +11,6 @@ export default function Register({
         para="¿Ya eres miembro? Inicia sesión"
         onSubmit={onSubmit}
       />
-      <InfoToolTip onRef={onRef}/>
     </>
   )
 }

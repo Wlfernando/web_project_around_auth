@@ -31,12 +31,11 @@ function App() {
 
     cardDisplayRef = useRef({}),
     cardIdRef = useRef(''),
-    errRef = useRef(''),
-    infoToolTipRef = useRef(''),
+    mssgRef = useRef(''),
 
     handleError = useCallback(function (err) {
       console.log(err)
-      errRef.current = err.message
+      mssgRef.current = err.message
       openPopup('error')
     }, [openPopup]);
 
@@ -53,10 +52,10 @@ function App() {
   function handleRegister(user) {
     auth.register(user)
       .then(() => {
-        infoToolTipRef.current = '¡Correcto! Ya estás registrado.'
+        mssgRef.current = '¡Correcto! Ya estás registrado.'
       })
       .catch(() => {
-        infoToolTipRef.current = `Uy, algo salió mal.
+        mssgRef.current = `Uy, algo salió mal.
         Por favor, inténtalo de nuevo.`
       })
       .finally(() => {
@@ -70,7 +69,7 @@ function App() {
         history.push('/')
       })
       .catch(() => {
-        infoToolTipRef.current = `Uy, algo salió mal.
+        mssgRef.current = `Uy, algo salió mal.
         Por favor, inténtalo de nuevo.`
         openPopup('infoToolTip')
       })
@@ -166,13 +165,13 @@ function App() {
         currentUser={currentUser}
         isOpen={isPopupOpen}
         onClose={closeAllPopups}
+        onMssg={mssgRef.current}
       >
         <Header />
         <Switch>
           <Route path="/signup">
             <Register
               onSubmit={handleRegister}
-              onRef={infoToolTipRef.current}
             />
           </Route>
           <Route path="/signin">
@@ -190,7 +189,7 @@ function App() {
             />
           </ProtectedRoute>
         </Switch>
-        <ShowError errMssg={errRef.current} />
+        <ShowError />
         <Footer />
       </Context>
     </div>

@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import Form from "./Form";
+import InfoToolTip from "./InfoToolTip";
 
 export default function SignWithForm(props) {
   const
@@ -24,24 +25,27 @@ export default function SignWithForm(props) {
   }
 
   return(
-    <Form {...config}
-    onSubmit={handleSubmit}
-    >
-      <input
-        className={inputClass}
-        type="email"
-        placeholder="Correo electrónico"
-        required
-        ref={emailRef}
-      />
-      <input
-        className={inputClass}
-        type="password"
-        placeholder="Contraseña"
-        required
-        minLength='4'
-        ref={passwordRef}
-      />
-    </Form>
+    <>
+      <Form {...config}
+      onSubmit={handleSubmit}
+      >
+        <input
+          className={inputClass}
+          type="email"
+          placeholder="Correo electrónico"
+          required
+          ref={emailRef}
+        />
+        <input
+          className={inputClass}
+          type="password"
+          placeholder="Contraseña"
+          required
+          minLength='4'
+          ref={passwordRef}
+        />
+      </Form>
+      <InfoToolTip />
+    </>
   )
 }
