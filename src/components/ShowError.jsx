@@ -1,9 +1,9 @@
-import { memo, useContext } from 'react';
+import { useContext } from 'react';
 import { PopupOpenContext } from '../contexts/PopupOpenContext';
 import { CloseContext } from '../contexts/CloseContext';
 import { MssgContext } from '../contexts/MssgContext';
 
-const ShowError = memo(() => {
+const ShowError = () => {
   const
     { error } = useContext(PopupOpenContext),
     handleClose = useContext(CloseContext),
@@ -21,6 +21,6 @@ const ShowError = memo(() => {
       </div>
     </div>
   )
-})
+}
 
 export default ShowError

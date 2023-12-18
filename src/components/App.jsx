@@ -10,7 +10,6 @@ import useModal from '../customHook/useModal.js'
 import Register from './Register.jsx';
 import Login from './Login.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
-import ShowError from './ShowError.jsx';
 
 function App() {
   const
@@ -189,7 +188,6 @@ function App() {
             />
           </ProtectedRoute>
         </Switch>
-        <ShowError />
         <Footer />
       </Context>
     </div>
