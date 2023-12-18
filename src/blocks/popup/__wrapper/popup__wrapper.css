@@ -2,5 +2,11 @@
   max-width: 430px;
   min-width: calc(320px - 10%);
   width: 90%;
+  max-height: 90vh;
   position: relative;
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px 0;
+  display: grid;
+  align-content: center;
 }

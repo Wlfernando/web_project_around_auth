@@ -8,4 +8,5 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility 250ms, opacity 250ms ease-in-out;
+  color: black;
 }

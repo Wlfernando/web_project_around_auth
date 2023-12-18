@@ -19,6 +19,7 @@ function App() {
       'image',
       'remove',
       'error',
+      'infoToolTip',
     ),
 
     [currentUser, setCurrentUser] = useState({}),
@@ -27,6 +28,7 @@ function App() {
     cardDisplayRef = useRef({}),
     cardIdRef = useRef(''),
     errRef = useRef(''),
+    infoToolTipRef = useRef(''),
 
     handleError = useCallback(function (err) {
       errRef.current = err.message
@@ -45,8 +47,16 @@ function App() {
 
   function handleRegister(user) {
     auth.register(user)
-      .then(console.log)
-      .catch(handleError)
+      .then(() => {
+        infoToolTipRef.current = '¡Correcto! Ya estás registrado.'
+      })
+      .catch(() => {
+        infoToolTipRef.current = `Uy, algo salió mal.
+        Por favor, inténtalo de nuevo.`
+      })
+      .finally(() => {
+        openPopup('infoToolTip')
+      })
   }
 
   function openPopupCard(card) {
@@ -143,7 +153,10 @@ function App() {
         <Header />
         <Switch>
           <Route path="/signup">
-            <Register onSubmit={handleRegister} />
+            <Register
+              onSubmit={handleRegister}
+              onRef={infoToolTipRef.current}
+            />
           </Route>
           <Route path="/signin">
             <Login />

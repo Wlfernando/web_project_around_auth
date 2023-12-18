@@ -11,8 +11,8 @@ const ShowError = memo(({
 
   return (
     <div className={"popup" + (error ? ' popup_active' : '')}>
-      <div className="popup__container popup__error">
-        <p className="popup__text-error">{errMssg}</p>
+      <div className="popup__wrapper">
+        <p className="popup__mssg">{errMssg}</p>
         <button
           onClick={handleClose}
           type="button"
