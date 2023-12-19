@@ -1,0 +1,5 @@
+@media screen and (width < 880px) {
+  .header__item:where(:first-child) {
+    padding-top: 45px;
+  }
+}

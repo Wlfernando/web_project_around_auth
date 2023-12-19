@@ -1,0 +1,5 @@
+@media screen and (width >= 880px) {
+  .header__horizontal_hidden {
+    display: none;
+  }
+}

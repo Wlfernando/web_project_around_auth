@@ -1,4 +1,12 @@
 .header__menu {
-  display: flex;
-  column-gap: 23px;
+  display: grid;
+}
+
+@media screen and (width < 880px) {
+  .header__menu {
+    grid-column: span 2;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 250ms ease-in-out;
+    grid-row-start: 1;
+  }
 }

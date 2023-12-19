@@ -1,0 +1,9 @@
+.button_hidden {
+  display: none;
+}
+
+@media screen and (width < 880px) {
+  .button_hidden {
+    display: initial;
+  }
+}

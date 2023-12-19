@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Header from './Header.jsx';
+import useModal from '../customHook/useModal.js'
 import Main from './Main.jsx';
 import Footer from './Footer.js'
 import api from '../utils/api.js';
 import * as auth from '../utils/auth.js'
 import Context from './Context.jsx';
-import useModal from '../customHook/useModal.js'
 import Register from './Register.jsx';
 import Login from './Login.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';

@@ -1,0 +1,15 @@
+.header__list {
+  display: grid;
+  list-style-type: none;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 23px;
+}
+
+@media screen and (width < 880px) {
+  .header__list {
+    row-gap: 18px;
+    text-align: center;
+    overflow: hidden;
+    grid-template-columns: auto;
+  }
+}

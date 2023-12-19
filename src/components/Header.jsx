@@ -1,35 +1,59 @@
+import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import logo from '../images/Logo/Vector.svg';
 
 const Header = () => {
   const
     { pathname } = useLocation(),
+    [clicked, setClicked] = useState(false),
 
-    linkClass = 'link',
+    block = 'header',
+    blockLink = 'link',
+    elmHr = block + '__horizontal',
+    elItem = block + '__item',
+    modHidden = '_hidden',
+    login = '/signin',
+    register = '/signup',
     link = {
-      '/signup': <Link className={linkClass} to='/signin'>Iniciar sesión</Link>,
-      '/signin': <Link className={linkClass} to='/signup'>Regístrate</Link>,
+      [register]: <Link className={blockLink} to={login}>Iniciar sesión</Link>,
+      [login]: <Link className={blockLink} to={register}>Regístrate</Link>,
     };
 
   return (
-    <header className="header">
-      <h1 className="header__title">Around the U.S.</h1>
+    <header className={block} >
+      <h1 className={block + '__title'}>Around the U.S.</h1>
       <img
         src={logo}
         alt="Logo"
-        className="header__logo"
+        className={block + '__logo'}
       />
       {link[pathname] ??
-        <div className='header__menu'>
-          <p className='header__user'>{localStorage.getItem('email')}</p>
-          <Link
-            onClick={() => localStorage.clear()}
-            className={linkClass} to='/signin'>
-              Cerrar sesión
-          </Link>
-        </div>
+      <>
+        <nav className={block + '__menu' + (clicked ? ` ${block}__menu_open` : '')}>
+          <ul className={block + '__list'}>
+            <li className={elItem}>
+              <p className={block + '__user'} >{localStorage.getItem('email')}</p>
+            </li>
+            <li className={elItem}>
+              <Link
+                onClick={() => localStorage.clear()}
+                className={blockLink} to={login}>
+                  Cerrar sesión
+              </Link>
+            </li>
+            <li className={elItem}>
+              <hr className={elmHr + ' ' + elmHr + modHidden} />
+            </li>
+          </ul>
+        </nav>
+        <button
+          type='button'
+          className={`button button${modHidden} ${clicked ? 'button__close' : 'button__menu'}`}
+          onClick={() => setClicked(!clicked)}
+        />
+      </>
       }
-      <hr className="header__horizontal" />
+      <hr className={elmHr} />
     </header>
   )
 }
