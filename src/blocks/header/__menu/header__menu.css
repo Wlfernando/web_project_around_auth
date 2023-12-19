@@ -7,6 +7,7 @@
     grid-column: span 2;
     grid-template-rows: 0fr;
     transition: grid-template-rows 250ms ease-in-out;
+    transition: grid-template-rows 250ms ease-in-out, -ms-grid-rows 250ms ease-in-out;
     grid-row-start: 1;
   }
 }
