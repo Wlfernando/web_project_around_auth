@@ -33,7 +33,6 @@ function App() {
     mssgRef = useRef(''),
 
     handleError = useCallback(function (err) {
-      console.log(err)
       mssgRef.current = err.message
       openPopup('error')
     }, [openPopup]);
