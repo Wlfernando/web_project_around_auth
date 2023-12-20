@@ -55,7 +55,7 @@ export default function Form({
       >
         {btnText}
       </button>
-      {para && <p className="form__question">{para}</p>}
+      {para}
     </form>
   )
 }
