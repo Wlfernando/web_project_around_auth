@@ -10,13 +10,13 @@ class Api {
   avatar = this.me + '/avatar';
   likes = this.cards + '/likes';
 
-  do(action, endPoint, id = null) {
+  do(method, endPoint, id = null) {
     const url = id
       ? this._baseUrl + endPoint + '/' + id
       : this._baseUrl + endPoint;
 
     return fetch(url, {
-      method: action,
+      method,
       headers: {
         authorization: this._authorization
       }
@@ -27,9 +27,9 @@ class Api {
       })
   }
 
-  send(action, endPoint, sendBody, root) {
+  send(method, endPoint, sendBody, root) {
     return fetch(this._baseUrl + endPoint, {
-      method: action,
+      method,
       headers: {
         authorization: this._authorization,
         "content-Type": this._contentType

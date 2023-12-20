@@ -6,7 +6,7 @@ export default function ProtectedRoute({
 }) {
   return (
     <Route {...props}>
-      {localStorage.getItem('email') ? children : <Redirect to='/signin' />}
+      {sessionStorage.getItem('email') ? children : <Redirect to='/signin' />}
     </Route>
   )
 }

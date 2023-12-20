@@ -46,7 +46,7 @@ export function login(user) {
   return fetch(`${BASE_URL}/signin`, handlePostOpt(user))
     .then(handleResponse)
     .then(({ token }) => {
-      localStorage.setItem('token', token)
+      sessionStorage.setItem('token', token)
 
       return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
@@ -58,6 +58,6 @@ export function login(user) {
     })
     .then(handleResponse)
     .then(( {data: { email } }) => {
-      localStorage.setItem('email', email)
+      sessionStorage.setItem('email', email)
     })
 }
