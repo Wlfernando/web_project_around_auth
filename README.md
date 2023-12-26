@@ -9,6 +9,7 @@
 * Encabezado
 * Compatibilidad
 * Técnica
+* CustomHook
 * Resumen
 
 ## Introducción
@@ -161,3 +162,25 @@ Recibe tres contextos: PopupOpen, Close y Mssg. Este componente se encuentra alo
 En su contenido estan los inputs debido a que son iguales en el login y en el registro. Su modificador se llama *section*. Se asegura que el contenido del botón sea igual al de titulo. La función **handleSubmit** recoge los valores de los campos para su envio, los resetea y reestablece el comportamiento del botón de envio.
 
 Además del formulario, aquí se aloja el componente infoToolTip.
+
+## CustomHook
+
+### UseModal
+
+Función que recibe strings de las ventanas que se hará responsable usando un parametro rest.
+
+En su interior tiene un useState, se pasan los nombres de los modales con un reduce para convertirlo en un objeto configurandolo todo a false.
+
+La función **openModal** se le pasa un useCallback. Responsable de cambiar a true la ventana correspondiente que se le pase como argumento. 
+
+La función **closeAllModals** también tiene un useCallback. Deja a todas las propiedades el valor de false.
+
+El useEffect tiene una constante que reconoce si el valor de alguna propiedad cambia a true. Si es asi, monta *addEventListener* para cerrar las ventanas correspondientes. Se asegura que esta acción sea limpia al no repetir el listener cada vez que se abre una ventana modal.
+
+Tiene una función **setFalse** que se pasa como callback en las funciones correspondientes.
+
+Para finalizar, retorna el objeto de los modales, la funcion de abrir y la funcion para cerrar. Se hace a travez de un array para personalizar los nombres si así se desea dentro del componente.
+
+### UseSize
+
+Función que recibe el valor primitivo número como parámetro. El useState decide entre dos strings (*desktop* y *other*). El useEffect tiene el metodo-controlador onresize de window; este puede mejorarse cambiandolo por un *addEventListener* lo cual sería también necesario un return para eliminar con *removeEventListener*, esta acción permitiría llamar useSize en cualquier componente.
