@@ -10,6 +10,7 @@
 * Compatibilidad
 * Técnica
 * CustomHook
+* Contexts
 * Resumen
 
 ## Introducción
@@ -183,4 +184,8 @@ Para finalizar, retorna el objeto de los modales, la funcion de abrir y la funci
 
 ### UseSize
 
-Función que recibe el valor primitivo número como parámetro. El useState decide entre dos strings (*desktop* y *other*). El useEffect tiene el metodo-controlador onresize de window; este puede mejorarse cambiandolo por un *addEventListener* lo cual sería también necesario un return para eliminar con *removeEventListener*, esta acción permitiría llamar useSize en cualquier componente.
+Función que recibe el valor primitivo número como parámetro. El useState decide entre dos strings (*desktop* y *other*). El useEffect tiene el método-controlador onresize de window; este puede mejorarse cambiándolo por un *addEventListener* lo cual sería también necesario un return para eliminar con *removeEventListener*, esta acción permitiría llamar useSize en cualquier componente.
+
+## Contexts
+
+La carpeta Contexts tiene en su interior: Close, CurrentUser, Mssg y PopupOpen.
