@@ -2,7 +2,10 @@ import { useRef } from "react";
 import Form from "./Form";
 import InfoToolTip from "./InfoToolTip";
 
-export default function SignWithForm(props) {
+export default function SignWithForm({
+  onSubmit,
+  ...props
+}) {
   const
     emailRef = useRef(null),
     passwordRef = useRef(null),
@@ -15,7 +18,7 @@ export default function SignWithForm(props) {
     inputClass = 'form__item form__item_type_' + config.mod;
 
   function handleSubmit(e, disable) {
-    config.onSubmit({
+    onSubmit({
       email: emailRef.current.value,
       password: passwordRef.current.value,
     })
