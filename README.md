@@ -12,6 +12,7 @@
 * CustomHook
 * Contexts
 * Resumen
+* Link
 
 ## Introducción
 
@@ -193,3 +194,7 @@ La carpeta Contexts tiene en su interior: Close, CurrentUser, Mssg y PopupOpen.
 ## Resumen
 
 Este proyecto se ha refactorizado con respecto a su antecesor automatizando ciertas funciones que aun pueden seguirse mejorando como se menciona en el apartado de técnica en su respectivo componente. A mostrado ser bastante adaptativo con respecto al crecimiento del proyecto. Aspectos importantes que se deben manejar aqui en la autorización, es que los datos deben ser tratados desde las cookies en los sieguientes trabajos del mismo para disminuir las vulnerabilidades.
+
+## Link
+
+[Pagina web](https://wlfernando.github.io/web_project_around_auth/)
