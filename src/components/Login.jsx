@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
 import SignWithForm from "./SignWithForm";
+import { useContext } from "react";
+import { RouteContext } from "../contexts/RouteContext";
 
 export default function Login({
   onSubmit,
 }) {
-  const link = <p className="form__question">
-    ¿Aún no eres miembro? Regístrate
-    <Link className="link" to='/signup'> aqui</Link>.
-  </p>;
+  const
+    { register } = useContext(RouteContext),
+    
+    link = <p className="form__question">
+      ¿Aún no eres miembro? Regístrate
+      <Link className="link" to={register}> aqui</Link>.
+    </p>;
 
   return (
     <SignWithForm

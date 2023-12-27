@@ -1,19 +1,20 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { RouteContext } from '../contexts/RouteContext';
 import logo from '../images/Logo/Vector.svg';
 
 const Header = () => {
   const
     { pathname } = useLocation(),
     [clicked, setClicked] = useState(false),
+    { register, login } = useContext(RouteContext),
 
     block = 'header',
     blockLink = 'link',
     elmHr = block + '__horizontal',
     elItem = block + '__item',
     modHidden = '_hidden',
-    login = '/signin',
-    register = '/signup',
+
     link = {
       [register]: <Link className={blockLink} to={login}>Iniciar sesión</Link>,
       [login]: <Link className={blockLink} to={register}>Regístrate</Link>,

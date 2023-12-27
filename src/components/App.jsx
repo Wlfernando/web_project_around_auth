@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import { routeDev } from '../contexts/RouteContext.js';
 import Header from './Header.jsx';
 import useModal from '../customHook/useModal.js'
 import Main from './Main.jsx';
@@ -35,7 +36,9 @@ function App() {
     handleError = useCallback(function (err) {
       mssgRef.current = err.message
       openPopup('error')
-    }, [openPopup]);
+    }, [openPopup]),
+    
+    { main, register, login} = routeDev;
 
   useEffect(() => {
     api.do('GET', api.me)
@@ -64,7 +67,7 @@ function App() {
   function handleLogin(user) {
     auth.login(user)
       .then(() => {
-        history.push('/')
+        history.push(main)
       })
       .catch(() => {
         mssgRef.current = `Uy, algo salió mal.
@@ -167,17 +170,17 @@ function App() {
       >
         <Header />
         <Switch>
-          <Route path="/signup">
+          <Route path={register}>
             <Register
               onSubmit={handleRegister}
             />
           </Route>
-          <Route path="/signin">
+          <Route path={login}>
             <Login
               onSubmit={handleLogin}
             />
           </Route>
-          <ProtectedRoute exact path="/">
+          <ProtectedRoute exact path={main}>
             <Main
               onOpenPopup={openPopup}
               clickedCard={cardDisplayRef.current}
