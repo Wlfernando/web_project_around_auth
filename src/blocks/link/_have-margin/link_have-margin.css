@@ -1,0 +1,9 @@
+.link_have-margin {
+  margin-inline-end: 15px;
+}
+
+@media screen and (width < 880px) {
+  .header__menu :where(.link_have-margin) {
+    margin-inline-end: 0;
+  }
+}

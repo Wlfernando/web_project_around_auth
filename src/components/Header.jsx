@@ -10,14 +10,14 @@ const Header = () => {
     { register, login } = useContext(RouteContext),
 
     block = 'header',
-    blockLink = 'link',
+    linkHaveMargin = 'link link_have-margin',
     elmHr = block + '__horizontal',
     elItem = block + '__item',
     modHidden = '_hidden',
 
     link = {
-      [register]: <Link className={blockLink} to={login}>Iniciar sesión</Link>,
-      [login]: <Link className={blockLink} to={register}>Regístrate</Link>,
+      [register]: <Link className={linkHaveMargin} to={login}>Iniciar sesión</Link>,
+      [login]: <Link className={linkHaveMargin} to={register}>Regístrate</Link>,
     };
 
   return (
@@ -38,7 +38,7 @@ const Header = () => {
             <li className={elItem}>
               <Link
                 onClick={() => sessionStorage.clear()}
-                className={blockLink} to={login}>
+                className={linkHaveMargin} to={login}>
                   Cerrar sesión
               </Link>
             </li>
