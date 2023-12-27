@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/web_project_around_auth/static/css/main.80c75bc1.css",
-    "main.js": "/web_project_around_auth/static/js/main.115a9069.js",
+    "main.js": "/web_project_around_auth/static/js/main.fabc260f.js",
     "static/js/787.33e33395.chunk.js": "/web_project_around_auth/static/js/787.33e33395.chunk.js",
     "static/media/Inter-Medium.woff?v=3.19": "/web_project_around_auth/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
     "static/media/Inter-Black.woff?v=3.19": "/web_project_around_auth/static/media/Inter-Black.c6938660eec019fefd68.woff",
@@ -23,11 +23,11 @@
     "static/media/Add.svg": "/web_project_around_auth/static/media/Add.3caa4a7ccb38aafff388.svg",
     "static/media/HamburgerIcon.svg": "/web_project_around_auth/static/media/HamburgerIcon.b48295f27451db6d639c.svg",
     "main.80c75bc1.css.map": "/web_project_around_auth/static/css/main.80c75bc1.css.map",
-    "main.115a9069.js.map": "/web_project_around_auth/static/js/main.115a9069.js.map",
+    "main.fabc260f.js.map": "/web_project_around_auth/static/js/main.fabc260f.js.map",
     "787.33e33395.chunk.js.map": "/web_project_around_auth/static/js/787.33e33395.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.80c75bc1.css",
-    "static/js/main.115a9069.js"
+    "static/js/main.fabc260f.js"
   ]
 }
