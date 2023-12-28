@@ -3,6 +3,7 @@
 ## Descripción general
 
 * Introducción
+* Demo
 * Figma
 * Autorización
 * Componentes
@@ -17,6 +18,10 @@
 ## Introducción
 
 El proyecto actual busca implementar el registro y la autorización.
+
+## Demo
+
+[![Autorización](./src/images/readme/miniatura-auth.png)](https://drive.google.com/file/d/1o5d08ndyWWm-ZJlvDOQ0EPN_p-OSNVrB/view?usp=sharing)
 
 ## Figma
 
