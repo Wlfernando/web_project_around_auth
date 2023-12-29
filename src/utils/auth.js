@@ -18,7 +18,7 @@ function confirmBody(user) {
   }
 }
 
-function handlePostOpt(sendBody) {
+function setPostOpt(sendBody) {
   return {
     method: "POST",
     headers: {
@@ -36,14 +36,14 @@ function handleResponse(res) {
 export function register(user) {
   confirmBody(user)
 
-  return fetch(`${BASE_URL}/signup`, handlePostOpt(user))
+  return fetch(`${BASE_URL}/signup`, setPostOpt(user))
     .then(handleResponse)
 }
 
 export function login(user) {
   confirmBody(user)
 
-  return fetch(`${BASE_URL}/signin`, handlePostOpt(user))
+  return fetch(`${BASE_URL}/signin`, setPostOpt(user))
     .then(handleResponse)
     .then(({ token }) => {
       sessionStorage.setItem('token', token)
