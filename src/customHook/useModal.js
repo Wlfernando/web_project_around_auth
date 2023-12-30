@@ -1,19 +1,21 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 export default function useModal(...theModals) {
   const
-    [modals, setModalOpen] = useState(theModals.reduce(setFalse, {})),
+    settedFalse = useRef(Object.fromEntries(theModals.map(key => [key, false]))),
+    [modals, setModalOpen] = useState(settedFalse.current),
 
     openModal = useCallback(function (modal) {
+      if (!settedFalse.current[modal]) {
+        throw new Error('Unknown modal\'s name')
+      }
+
       setModalOpen((state) => ({...state, [modal]: true}))
-    }, []),
+    }, [settedFalse]),
 
     closeAllModals = useCallback(function () {
-      setModalOpen((state) => Object
-        .keys(state)
-        .reduce(setFalse, {})
-      )
-    }, []);
+      setModalOpen(settedFalse.current)
+    }, [settedFalse]);
 
   useEffect(() => {
     const hasOpened = Object
@@ -39,10 +41,6 @@ export default function useModal(...theModals) {
       document.removeEventListener('click', handleListenerClose)
     }
   }, [modals, closeAllModals])
-
-  function setFalse(obj, key) {
-    return Object.assign(obj, {[key]: false})
-  }
 
   return [
     modals,
