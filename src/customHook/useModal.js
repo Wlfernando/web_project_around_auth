@@ -1,17 +1,19 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 
-export default function useModal(...theModals) {
+export default function useModal() {
   const
-    settedFalse = useRef(Object.fromEntries(theModals.map(key => [key, false]))),
+    settedFalse = useRef(Object.fromEntries([...arguments].map(key => [key, false]))),
     [modals, setModalOpen] = useState(settedFalse.current),
 
     openModal = useCallback(function (modal) {
-      if (!settedFalse.current[modal]) {
-        throw new Error('Unknown modal\'s name')
-      }
+      setModalOpen((state) => {
+        if (state[modal] === undefined) {
+          throw new Error(`Typed wrong the argument "${modal}" for openModal name.`)
+        }
 
-      setModalOpen((state) => ({...state, [modal]: true}))
-    }, [settedFalse]),
+        return {...state, [modal]: true}
+      })
+    }, []),
 
     closeAllModals = useCallback(function () {
       setModalOpen(settedFalse.current)
