@@ -1,4 +1,4 @@
-const BASE_URL = "https://register.nomoreparties.co";
+import { authNomoreparties } from "./api";
 
 function confirmBody(user) {
   if (typeof user !== 'object') {
@@ -18,45 +18,21 @@ function confirmBody(user) {
   }
 }
 
-function setPostOpt(sendBody) {
-  return {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(sendBody)
-  }
-}
-
-function handleResponse(res) {
-  if (res.ok) return res.json()
-  return Promise.reject(res)
-}
-
 export function register(user) {
   confirmBody(user)
 
-  return fetch(`${BASE_URL}/signup`, setPostOpt(user))
-    .then(handleResponse)
+  return authNomoreparties.post(authNomoreparties.register, user)
 }
 
 export function login(user) {
   confirmBody(user)
 
-  return fetch(`${BASE_URL}/signin`, setPostOpt(user))
-    .then(handleResponse)
+  return authNomoreparties.post(authNomoreparties.login, user)
     .then(({ token }) => {
       sessionStorage.setItem('token', token)
 
-      return fetch(`${BASE_URL}/users/me`, {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization" : `Bearer ${token}`
-        }
-      })
+      return authNomoreparties.get(authNomoreparties.me, token)
     })
-    .then(handleResponse)
     .then(( {data: { email } }) => {
       sessionStorage.setItem('email', email)
     })

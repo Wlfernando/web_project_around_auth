@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { routeDev } from '../contexts/RouteContext.js';
+import { aroundNomoreparties } from '../utils/api.js';
 import Header from './Header.jsx';
 import useModal from '../customHook/useModal.js'
 import Main from './Main.jsx';
 import Footer from './Footer.js'
-import api from '../utils/api.js';
 import * as auth from '../utils/auth.js'
 import Context from './Context.jsx';
 import Register from './Register.jsx';
@@ -41,14 +41,18 @@ function App() {
     { main, register, login} = routeDev;
 
   useEffect(() => {
-    api.do('GET', api.me)
-      .then(setCurrentUser)
-      .catch(handleError)
+    if ([register, login].every(route => route !== history.location.pathname)) {
+      const {me, cards, get} = aroundNomoreparties;
+    
+      get(me)
+        .then(setCurrentUser)
+        .catch(handleError)
 
-    api.do('GET', api.cards)
-      .then(setCards)
-      .catch(handleError)
-  }, [handleError])
+      get(cards)
+        .then(setCards)
+        .catch(handleError)
+    }
+  }, [history.location.pathname, login, register, handleError])
 
   function handleRegister(user) {
     auth.register(user)
@@ -87,27 +91,39 @@ function App() {
   }
 
   function updateContent(setDelay) {
+    const {
+      me, 
+      avatar, 
+      cards: cardsRoute, 
+      likes, 
+      patch, 
+      post, 
+      toggle, 
+      get, 
+      remove,
+    } = aroundNomoreparties;
+
     function setFinally() {
       closeAllPopups()
       setDelay(250)
     }
 
     function handleAvatar(form) {
-      api.send('PATCH', api.avatar, form, api.me)
+      patch(avatar, form, me)
         .then(setCurrentUser)
         .catch(handleError)
         .finally(setFinally)
     }
 
     function handleUser(form) {
-      api.send('PATCH', api.me, form)
+      patch(me, form)
         .then(setCurrentUser)
         .catch(handleError)
         .finally(setFinally)
     }
 
     function handleAddSubmit(form) {
-      api.send('POST', api.cards, form)
+      post(cardsRoute, form)
         .then(setCards)
         .catch(handleError)
         .finally(setFinally)
@@ -115,28 +131,26 @@ function App() {
 
     async function handleLike(isLiked, cardId) {
       const
+        getTheCard = ({ _id }) => _id === cardId,
+
         index = Promise
           .resolve()
           .then(() => cards.findIndex(getTheCard)),
-        aCard = api.do(isLiked ? 'DELETE' : 'PUT', api.likes, cardId)
-          .then(() => api.do('GET', api.cards))
+        aCard = toggle(isLiked, likes, cardId)
+          .then(() => get(cardsRoute))
           .then(cardsFromApi => cardsFromApi.find(getTheCard)),
-        updatedCards = await Promise
+        updatedLike = await Promise
           .all([index, aCard])
           .then(theCard => cards.with(...theCard))
           .catch(handleError);
 
-      function getTheCard({ _id }) {
-        return _id === cardId
-      }
-
-      setCards(updatedCards)
+      setCards(updatedLike)
     }
 
     function handleDelete() {
       const theId = cardIdRef.current;
 
-      api.do('DELETE', api.cards, theId)
+      remove(cardsRoute, theId)
         .then(() =>
           setCards(state => {
             const deletedCard = state
