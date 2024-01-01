@@ -5,7 +5,7 @@ import { aroundNomoreparties } from '../utils/api.js';
 import Header from './Header.jsx';
 import useModal from '../customHook/useModal.js'
 import Main from './Main.jsx';
-import Footer from './Footer.js'
+import Footer from './Footer.jsx'
 import * as auth from '../utils/auth.js'
 import Context from './Context.jsx';
 import Register from './Register.jsx';
