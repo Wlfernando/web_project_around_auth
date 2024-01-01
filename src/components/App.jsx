@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { routeDev } from '../contexts/RouteContext.js';
 import { aroundNomoreparties } from '../utils/api.js';
 import Header from './Header.jsx';
@@ -28,6 +28,7 @@ function App() {
     [cards, setCards] = useState([]),
 
     history = useHistory(),
+    { pathname } = useLocation(),
 
     cardDisplayRef = useRef({}),
     cardIdRef = useRef(''),
@@ -41,7 +42,7 @@ function App() {
     { main, register, login} = routeDev;
 
   useEffect(() => {
-    if ([register, login].every(route => route !== history.location.pathname)) {
+    if ([register, login].every(route => route !== pathname)) {
       const {me, cards, get} = aroundNomoreparties;
     
       get(me)
@@ -52,7 +53,7 @@ function App() {
         .then(setCards)
         .catch(handleError)
     }
-  }, [history.location.pathname, login, register, handleError])
+  }, [pathname, login, register, handleError])
 
   function handleRegister(user) {
     auth.register(user)
@@ -91,17 +92,9 @@ function App() {
   }
 
   function updateContent(setDelay) {
-    const {
-      me, 
-      avatar, 
-      cards: cardsRoute, 
-      likes, 
-      patch, 
-      post, 
-      toggle, 
-      get, 
-      remove,
-    } = aroundNomoreparties;
+    const 
+      {me, avatar, cards: cardsRoute, likes } = aroundNomoreparties,
+      {patch, post, toggle, get, remove} = aroundNomoreparties;
 
     function setFinally() {
       closeAllPopups()
