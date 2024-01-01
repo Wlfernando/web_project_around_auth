@@ -1,61 +1,37 @@
-import { memo, useState, useRef, useContext } from "react";
+import { memo, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { PopupOpenContext } from "../contexts/PopupOpenContext";
+import useForm from "../customHook/useForm";
 
 const AddPlacePopup = memo(({
   onUpdate,
 }) => {
   const
-    voidForm = {
-      name: {
-        value: '',
-        hasMessage: false,
-      },
-      link: {
-        value: '',
-        hasMessage: false,
-      },
-    },
+    formName = 'site',
+    
+    [inputs, handleChange, resetForm] = useForm(formName),
 
-    [form, setForm] = useState(voidForm),
-
-    nameRef = useRef(null),
-    linkRef = useRef(null),
-
-    { add } = useContext(PopupOpenContext),
-
-    {name, link} = form;
-
-  function handleChange(e) {
-    const
-      input = e.target,
-      aName = input.name;
-
-    form[aName].hasMessage = true
-    form[aName].value = input.value
-
-    setForm(JSON.parse(JSON.stringify(form)))
-  }
+    { add } = useContext(PopupOpenContext);
 
   function handleSubmit(setBtn) {
     function setDelay(delayTimer) {
       setTimeout(() => {
         setBtn()
-        setForm(voidForm)
+        resetForm()
       }, delayTimer)
     }
 
     onUpdate(setDelay)
       .handleAddSubmit({
-        name: name.value,
-        link: link.value,
+        name: inputs.name.value,
+        link: inputs.link.value,
       })
   }
 
   return(
     <PopupWithForm
       title="Nuevo Lugar"
-      name='site'
+      name={formName}
       btnText='Crear'
       isOpen={add}
       onSubmit={handleSubmit}
@@ -68,12 +44,11 @@ const AddPlacePopup = memo(({
         placeholder="Título"
         minLength="2"
         maxLength="30"
-        value={name.value}
+        value={inputs?.name.value ?? ''}
         onChange={handleChange}
-        ref={nameRef}
       />
       <span className="form__item-error">
-        {name.hasMessage && nameRef.current.validationMessage}
+        {inputs?.name.haveMssg && inputs.name.validationMessage}
       </span>
       <input
         className="form__item"
@@ -81,12 +56,11 @@ const AddPlacePopup = memo(({
         name="link"
         required
         placeholder="Enlace de la imagen"
-        value={link.value}
+        value={inputs?.link.value ?? ''}
         onChange={handleChange}
-        ref={linkRef}
       />
       <span className="form__item-error">
-        {link.hasMessage && linkRef.current.validationMessage}
+        {inputs?.link.haveMssg && inputs.link.validationMessage}
       </span>
     </PopupWithForm>
   )
