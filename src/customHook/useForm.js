@@ -11,7 +11,7 @@ export default function useForm(formName) {
           target = e.target,
           aName = target.name;
 
-        i[aName].haveMssg = true
+        i[aName].hasMssg = true
         i[aName].value = target.value;
         i[aName].validationMessage = target.validationMessage
 
@@ -28,7 +28,7 @@ export default function useForm(formName) {
       Array
         .from(document.forms[formName].elements)
         .filter(({ nodeName }) => nodeName === 'INPUT')
-        .map(({ name, value }) => [name, {value, haveMssg: false}])
+        .map(({ name, value }) => [name, {value, hasMssg: false}])
     )
 
     setInputs(formInputs)

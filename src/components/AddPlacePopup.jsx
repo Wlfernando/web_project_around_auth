@@ -48,7 +48,7 @@ const AddPlacePopup = memo(({
         onChange={handleChange}
       />
       <span className="form__item-error">
-        {inputs?.name.haveMssg && inputs.name.validationMessage}
+        {inputs?.name.hasMssg && inputs.name.validationMessage}
       </span>
       <input
         className="form__item"
@@ -60,7 +60,7 @@ const AddPlacePopup = memo(({
         onChange={handleChange}
       />
       <span className="form__item-error">
-        {inputs?.link.haveMssg && inputs.link.validationMessage}
+        {inputs?.link.hasMssg && inputs.link.validationMessage}
       </span>
     </PopupWithForm>
   )
