@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function useForm(formName) {
   const
-    [inputs, setInputs] = useState(undefined),
+    [inputs, setInputs] = useState({}),
     base = useRef(undefined),
     
     handleChange = useCallback((e) => {
@@ -40,8 +40,8 @@ export default function useForm(formName) {
   }, [formName])
 
   return {
-    inputs: inputs ?? {},
-    form: inputs && reduceToValue(),
+    inputs,
+    form: reduceToValue(),
     handleChange,
     resetForm,
   }
