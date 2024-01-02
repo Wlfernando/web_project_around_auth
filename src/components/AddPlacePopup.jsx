@@ -9,7 +9,7 @@ const AddPlacePopup = memo(({
   const
     formName = 'site',
     
-    [inputs, handleChange, resetForm] = useForm(formName),
+    {inputs: { name, link }, form, handleChange, resetForm} = useForm(formName),
 
     { add } = useContext(PopupOpenContext);
 
@@ -22,10 +22,7 @@ const AddPlacePopup = memo(({
     }
 
     onUpdate(setDelay)
-      .handleAddSubmit({
-        name: inputs.name.value,
-        link: inputs.link.value,
-      })
+      .handleAddSubmit(form)
   }
 
   return(
@@ -44,11 +41,11 @@ const AddPlacePopup = memo(({
         placeholder="Título"
         minLength="2"
         maxLength="30"
-        value={inputs?.name.value ?? ''}
+        value={name?.value ?? ''}
         onChange={handleChange}
       />
       <span className="form__item-error">
-        {inputs?.name.hasMssg && inputs.name.validationMessage}
+        {name?.hasMssg && name.validationMessage}
       </span>
       <input
         className="form__item"
@@ -56,11 +53,11 @@ const AddPlacePopup = memo(({
         name="link"
         required
         placeholder="Enlace de la imagen"
-        value={inputs?.link.value ?? ''}
+        value={link?.value ?? ''}
         onChange={handleChange}
       />
       <span className="form__item-error">
-        {inputs?.link.hasMssg && inputs.link.validationMessage}
+        {link?.hasMssg && link.validationMessage}
       </span>
     </PopupWithForm>
   )

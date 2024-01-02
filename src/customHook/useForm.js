@@ -6,23 +6,27 @@ export default function useForm(formName) {
     base = useRef(undefined),
     
     handleChange = useCallback((e) => {
-      setInputs((i) => {
+      setInputs((input) => {
         const 
           target = e.target,
           aName = target.name;
 
-        i[aName].hasMssg = true
-        i[aName].value = target.value;
-        i[aName].validationMessage = target.validationMessage
+        input[aName].hasMssg = true
+        input[aName].value = target.value;
+        input[aName].validationMessage = target.validationMessage
 
-        return JSON.parse(JSON.stringify(i))
+        return JSON.parse(JSON.stringify(input))
       })
     }, []),
 
     resetForm = useCallback(() => {
       setInputs(base.current)
-    }, [])
+    }, []),
 
+    reduceToValue = () => Object
+      .entries(inputs)
+      .reduce((obj, [key, { value }]) => Object.assign(obj, {[key]: value}), {});
+  
   useEffect(() => {
     const formInputs = Object.fromEntries(
       Array
@@ -35,9 +39,10 @@ export default function useForm(formName) {
     base.current = structuredClone(formInputs)
   }, [formName])
 
-  return [
-    inputs,
+  return {
+    inputs: inputs ?? {},
+    form: inputs && reduceToValue(),
     handleChange,
     resetForm,
-  ]
+  }
 }
