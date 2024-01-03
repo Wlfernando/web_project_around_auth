@@ -7,7 +7,7 @@ export default function useModal() {
 
     openModal = useCallback(function (modal) {
       setModalOpen((state) => {
-        if (state[modal] === undefined) {
+        if (!state.hasOwnProperty(modal)) {
           throw new Error(`Typed wrong the argument "${modal}" for openModal name.`)
         }
 
@@ -17,7 +17,7 @@ export default function useModal() {
 
     closeAllModals = useCallback(function () {
       setModalOpen(settedFalse.current)
-    }, [settedFalse]);
+    }, []);
 
   useEffect(() => {
     const hasOpened = Object
@@ -30,7 +30,7 @@ export default function useModal() {
           .some(click => e.target.classList.contains(click)),
         escPressed = e.key === 'Escape';
 
-      if(hasClicked || escPressed) closeAllModals()
+      if (hasClicked || escPressed) closeAllModals()
     }
 
     if(hasOpened) {
@@ -38,7 +38,7 @@ export default function useModal() {
       document.addEventListener('keydown', handleListenerClose)
     }
 
-    return ()=> {
+    return () => {
       document.removeEventListener('keydown', handleListenerClose)
       document.removeEventListener('click', handleListenerClose)
     }
