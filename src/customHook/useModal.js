@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 
-export default function useModal() {
+export default function useModal(...theModals) {
   const
-    settedFalse = useRef(Object.fromEntries([...arguments].map(key => [key, false]))),
+    settedFalse = useRef(Object.fromEntries(theModals.map(key => [key, false]))),
     [modals, setModalOpen] = useState(settedFalse.current),
 
     openModal = useCallback(function (modal) {

@@ -13,24 +13,24 @@ export default function Form({
   },
 }) {
   const
-    haveInputs = children ? true : false,
-    [disabled, setDisabled] = useState(haveInputs),
+    hasInputs = Boolean(children),
+    [disabled, setDisabled] = useState(hasInputs),
 
     btnOff = disabled ? ' button_inactive' : '';
 
   function handleValidation(e) {
     const
-      field = e.currentTarget.elements,
-      hasValid = Array(...field).every(input =>
+      fieldset = e.currentTarget.elements,
+      isValid = Array(...fieldset).every(input =>
         input.validity.valid
       )
 
-    setDisabled(hasValid ? false : true)
+    setDisabled(!isValid)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    onSubmit(e, () => setDisabled(haveInputs))
+    onSubmit(e, () => setDisabled(hasInputs))
   }
 
   return (
