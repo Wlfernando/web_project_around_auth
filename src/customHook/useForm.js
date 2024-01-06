@@ -4,10 +4,10 @@ export default function useForm(formName) {
   const
     [inputs, setInputs] = useState({}),
     base = useRef(undefined),
-    
+
     handleChange = useCallback((e) => {
       setInputs((input) => {
-        const 
+        const
           target = e.target,
           aName = target.name;
 
@@ -20,13 +20,13 @@ export default function useForm(formName) {
     }, []),
 
     resetForm = useCallback(() => {
-      setInputs(base.current)
+      setInputs(structuredClone(base.current))
     }, []),
 
-    reduceToValue = () => Object
+    theValues = Object
       .entries(inputs)
       .reduce((obj, [key, { value }]) => Object.assign(obj, {[key]: value}), {});
-  
+
   useEffect(() => {
     const formInputs = Object.fromEntries(
       Array
@@ -41,7 +41,7 @@ export default function useForm(formName) {
 
   return {
     inputs,
-    form: reduceToValue(),
+    form: theValues,
     handleChange,
     resetForm,
   }
